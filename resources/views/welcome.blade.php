@@ -19,6 +19,9 @@
     <div class="container mx-auto mt-16">
         <h1 class="my-8">A List of Articles, loaded with Laravel Eloquent model into
             a Blade view</h1>
+        <p class="mb-4">
+            The list of articles are generared with Laravel v8 and Tailwind CSS v1.9.
+        </p>
         <div class="flex flex-col">
             <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div
