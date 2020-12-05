@@ -10,6 +10,7 @@
  */
 
 use Illuminate\Support\Facades\Route;
+use App\Models\Article;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,5 +24,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $articles = Article::where('state', 1)
+        ->orderBy('title', 'asc')
+        ->take(10)
+        ->get();
+
+    return view('welcome', ['articles' => $articles]);
 });

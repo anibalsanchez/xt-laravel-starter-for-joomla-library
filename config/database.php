@@ -56,7 +56,7 @@ return [
         'mysql' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST', '127.0.0.1', $config->get('host')),
+            'host' => env('DB_HOST', $config->get('host')),
             'port' => env('DB_PORT', '3306'),
             'database' => env('DB_DATABASE', $config->get('db')),
             'username' => env('DB_USERNAME', $config->get('user')),
