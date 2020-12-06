@@ -36,7 +36,20 @@
         "php-prefixer": {
             "project-name": "XT Laravel Starter for Joomla",
             "namespaces-prefix": "Extly",
-            "global-scope-prefix": "XT_"
+            "global-scope-prefix": "XT_",
+            "includeExtraSourcePaths": [
+                "bootstrap",
+                "config",
+                "database",
+                "public",
+                "resources",
+                "routes",
+                "tests"
+              ],
+            "ignoreGlobalObjects": [
+                "session",
+                "dispatch"
+            ]
         }
     },
     "autoload": {

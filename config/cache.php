@@ -13,6 +13,9 @@ use Illuminate\Support\Str;
 use Joomla\CMS\Factory as CMSFactory;
 
 $config = CMSFactory::getConfig();
+$sitename = $config->get('sitename', 'Laravel');
+$appName = env('APP_NAME', $sitename);
+$cachePrefix = Str::slug($appName, '_');
 
 return [
     /*
@@ -108,5 +111,5 @@ return [
     |
     */
 
-    'prefix' => env('CACHE_PREFIX', Str::slug(env('APP_NAME', $config->get('sitename', 'Laravel')), '_').'_cache'),
+    'prefix' => env('CACHE_PREFIX', $cachePrefix.'_cache'),
 ];
