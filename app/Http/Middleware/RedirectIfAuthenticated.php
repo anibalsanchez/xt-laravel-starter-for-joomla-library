@@ -9,9 +9,9 @@
  * @link       https://www.extly.com
  */
 
-namespace App\Http\Middleware;
+namespace XtLaravelStarterApp\Http\Middleware;
 
-use App\Providers\RouteServiceProvider;
+use XtLaravelStarterApp\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

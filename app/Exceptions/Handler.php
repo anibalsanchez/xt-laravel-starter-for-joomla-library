@@ -9,7 +9,7 @@
  * @link       https://www.extly.com
  */
 
-namespace App\Exceptions;
+namespace XtLaravelStarterApp\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;

@@ -9,7 +9,7 @@
  * @link       https://www.extly.com
  */
 
-namespace App\Http;
+namespace XtLaravelStarterApp\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 

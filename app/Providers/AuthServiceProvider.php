@@ -9,7 +9,7 @@
  * @link       https://www.extly.com
  */
 
-namespace App\Providers;
+namespace XtLaravelStarterApp\Providers;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 

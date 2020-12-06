@@ -9,7 +9,7 @@
  * @link       https://www.extly.com
  */
 
-namespace App\Http\Middleware;
+namespace XtLaravelStarterApp\Http\Middleware;
 
 use Fideloper\Proxy\TrustProxies as Middleware;
 use Illuminate\Http\Request;

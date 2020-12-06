@@ -9,7 +9,7 @@
  * @link       https://www.extly.com
  */
 
-namespace App\Http\Controllers;
+namespace XtLaravelStarterApp\Http\Controllers;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;

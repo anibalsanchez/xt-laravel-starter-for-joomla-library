@@ -9,7 +9,7 @@
  * @link       https://www.extly.com
  */
 
-namespace App\Http\Middleware;
+namespace XtLaravelStarterApp\Http\Middleware;
 
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
 
