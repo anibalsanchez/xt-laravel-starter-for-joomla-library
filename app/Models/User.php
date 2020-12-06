@@ -9,7 +9,7 @@
  * @link       https://www.extly.com
  */
 
-namespace App\Models;
+namespace XtLaravelStarterApp\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;

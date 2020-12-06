@@ -9,7 +9,7 @@
  * @link       https://www.extly.com
  */
 
-namespace App\Http\Middleware;
+namespace XtLaravelStarterApp\Http\Middleware;
 
 use Illuminate\Cookie\Middleware\EncryptCookies as Middleware;
 

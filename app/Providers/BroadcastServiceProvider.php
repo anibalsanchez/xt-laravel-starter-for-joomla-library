@@ -9,7 +9,7 @@
  * @link       https://www.extly.com
  */
 
-namespace App\Providers;
+namespace XtLaravelStarterApp\Providers;
 
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\ServiceProvider;

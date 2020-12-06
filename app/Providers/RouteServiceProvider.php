@@ -9,7 +9,7 @@
  * @link       https://www.extly.com
  */
 
-namespace App\Providers;
+namespace XtLaravelStarterApp\Providers;
 
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
