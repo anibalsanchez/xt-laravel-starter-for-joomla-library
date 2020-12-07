@@ -1,5 +1,4 @@
 <?php
-/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 
 /*
  * @package    XT Laravel Starter for Joomla
@@ -10,7 +9,7 @@
  * @link       https://www.extly.com
  */
 
-use Extly\Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Route;
 use XtLaravelStarterApp\Models\Article;
 
 /*
