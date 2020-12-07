@@ -1,4 +1,5 @@
 <?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 
 /*
  * @package    XT Laravel Starter for Joomla
@@ -11,8 +12,8 @@
 
 namespace XtLaravelStarterApp\Http\Middleware;
 
-use Fideloper\Proxy\TrustProxies as Middleware;
-use Illuminate\Http\Request;
+use Extly\Fideloper\Proxy\TrustProxies as Middleware;
+use Extly\Illuminate\Http\Request;
 
 class TrustProxies extends Middleware
 {

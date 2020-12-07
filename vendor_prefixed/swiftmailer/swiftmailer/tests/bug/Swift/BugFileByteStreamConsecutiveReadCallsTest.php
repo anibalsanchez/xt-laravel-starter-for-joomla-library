@@ -1,0 +1,19 @@
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+
+class Swift_FileByteStreamConsecutiveReadCalls extends \PHPUnit\Framework\TestCase
+{
+    /**
+     * @test
+     * @expectedException \Swift_IoException
+     */
+    public function shouldThrowExceptionOnConsecutiveRead()
+    {
+        $fbs = new \Swift_ByteStream_FileByteStream('does not exist');
+        try {
+            $fbs->read(100);
+        } catch (\Swift_IoException $exc) {
+            $fbs->read(100);
+        }
+    }
+}

@@ -1,4 +1,5 @@
 <?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 
 /*
  * @package    XT Laravel Starter for Joomla
@@ -11,9 +12,9 @@
 
 namespace XtLaravelStarterApp\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Extly\Illuminate\Database\Eloquent\Factories\HasFactory;
+use Extly\Illuminate\Foundation\Auth\User as Authenticatable;
+use Extly\Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {

@@ -1,4 +1,5 @@
 <?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 
 /*
  * @package    XT Laravel Starter for Joomla
@@ -9,7 +10,7 @@
  * @link       https://www.extly.com
  */
 
-use Illuminate\Support\Str;
+use Extly\Illuminate\Support\Str;
 use Joomla\CMS\Factory as CMSFactory;
 
 $config = CMSFactory::getConfig();
@@ -26,7 +27,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+    'default' => XT_env('DB_CONNECTION', 'mysql'),
 
     /*
     |--------------------------------------------------------------------------
@@ -47,21 +48,21 @@ return [
     'connections' => [
         'sqlite' => [
             'driver' => 'sqlite',
-            'url' => env('DATABASE_URL'),
-            'database' => env('DB_DATABASE', database_path('database.sqlite')),
+            'url' => XT_env('DATABASE_URL'),
+            'database' => XT_env('DB_DATABASE', XT_database_path('database.sqlite')),
             'prefix' => '',
-            'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
+            'foreign_key_constraints' => XT_env('DB_FOREIGN_KEYS', true),
         ],
 
         'mysql' => [
             'driver' => 'mysql',
-            'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST', $config->get('host')),
-            'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', $config->get('db')),
-            'username' => env('DB_USERNAME', $config->get('user')),
-            'password' => env('DB_PASSWORD', $config->get('password')),
-            'unix_socket' => env('DB_SOCKET', ''),
+            'url' => XT_env('DATABASE_URL'),
+            'host' => XT_env('DB_HOST', $config->get('host')),
+            'port' => XT_env('DB_PORT', '3306'),
+            'database' => XT_env('DB_DATABASE', $config->get('db')),
+            'username' => XT_env('DB_USERNAME', $config->get('user')),
+            'password' => XT_env('DB_PASSWORD', $config->get('password')),
+            'unix_socket' => XT_env('DB_SOCKET', ''),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
             'prefix' => $config->get('dbprefix'),
@@ -69,18 +70,18 @@ return [
             'strict' => true,
             'engine' => null,
             'options' => extension_loaded('pdo_mysql') ? array_filter([
-                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+                PDO::MYSQL_ATTR_SSL_CA => XT_env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
         ],
 
         'pgsql' => [
             'driver' => 'pgsql',
-            'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '5432'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
+            'url' => XT_env('DATABASE_URL'),
+            'host' => XT_env('DB_HOST', '127.0.0.1'),
+            'port' => XT_env('DB_PORT', '5432'),
+            'database' => XT_env('DB_DATABASE', 'forge'),
+            'username' => XT_env('DB_USERNAME', 'forge'),
+            'password' => XT_env('DB_PASSWORD', ''),
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
@@ -90,12 +91,12 @@ return [
 
         'sqlsrv' => [
             'driver' => 'sqlsrv',
-            'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST', 'localhost'),
-            'port' => env('DB_PORT', '1433'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
+            'url' => XT_env('DATABASE_URL'),
+            'host' => XT_env('DB_HOST', 'localhost'),
+            'port' => XT_env('DB_PORT', '1433'),
+            'database' => XT_env('DB_DATABASE', 'forge'),
+            'username' => XT_env('DB_USERNAME', 'forge'),
+            'password' => XT_env('DB_PASSWORD', ''),
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,

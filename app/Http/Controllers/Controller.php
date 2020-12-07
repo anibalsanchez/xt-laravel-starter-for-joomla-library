@@ -1,4 +1,5 @@
 <?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 
 /*
  * @package    XT Laravel Starter for Joomla
@@ -11,10 +12,10 @@
 
 namespace XtLaravelStarterApp\Http\Controllers;
 
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Routing\Controller as BaseController;
+use Extly\Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Extly\Illuminate\Foundation\Bus\DispatchesJobs;
+use Extly\Illuminate\Foundation\Validation\ValidatesRequests;
+use Extly\Illuminate\Routing\Controller as BaseController;
 
 class Controller extends BaseController
 {

@@ -1,4 +1,5 @@
 <?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 
 /*
  * @package    XT Laravel Starter for Joomla
@@ -11,7 +12,7 @@
 
 namespace XtLaravelStarterApp\Http;
 
-use Illuminate\Foundation\Http\Kernel as HttpKernel;
+use Extly\Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
 {
@@ -25,11 +26,11 @@ class Kernel extends HttpKernel
     protected $middleware = [
         \XtLaravelStarterApp\Http\Middleware\TrustHosts::class,
         \XtLaravelStarterApp\Http\Middleware\TrustProxies::class,
-        \Fruitcake\Cors\HandleCors::class,
+        \Extly\Fruitcake\Cors\HandleCors::class,
         \XtLaravelStarterApp\Http\Middleware\PreventRequestsDuringMaintenance::class,
-        \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
+        \Extly\Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \XtLaravelStarterApp\Http\Middleware\TrimStrings::class,
-        \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+        \Extly\Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
     ];
 
     /**
@@ -40,17 +41,17 @@ class Kernel extends HttpKernel
     protected $middlewareGroups = [
         'web' => [
             \XtLaravelStarterApp\Http\Middleware\EncryptCookies::class,
-            \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
-            \Illuminate\Session\Middleware\StartSession::class,
+            \Extly\Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+            \Extly\Illuminate\Session\Middleware\StartSession::class,
             // \Illuminate\Session\Middleware\AuthenticateSession::class,
-            \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+            \Extly\Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \XtLaravelStarterApp\Http\Middleware\VerifyCsrfToken::class,
-            \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \Extly\Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
 
         'api' => [
             'throttle:api',
-            \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \Extly\Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
     ];
 
@@ -63,13 +64,13 @@ class Kernel extends HttpKernel
      */
     protected $routeMiddleware = [
         'auth' => \XtLaravelStarterApp\Http\Middleware\Authenticate::class,
-        'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
-        'can' => \Illuminate\Auth\Middleware\Authorize::class,
+        'auth.basic' => \Extly\Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+        'cache.headers' => \Extly\Illuminate\Http\Middleware\SetCacheHeaders::class,
+        'can' => \Extly\Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \XtLaravelStarterApp\Http\Middleware\RedirectIfAuthenticated::class,
-        'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
-        'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
-        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'password.confirm' => \Extly\Illuminate\Auth\Middleware\RequirePassword::class,
+        'signed' => \Extly\Illuminate\Routing\Middleware\ValidateSignature::class,
+        'throttle' => \Extly\Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'verified' => \Extly\Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
     ];
 }

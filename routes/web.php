@@ -36,5 +36,5 @@ Route::get('/', function () {
     }
 
     // Development mode
-    return view('welcome', ['articles' => $articles]);
+    return XT_view('welcome', ['articles' => $articles]);
 });

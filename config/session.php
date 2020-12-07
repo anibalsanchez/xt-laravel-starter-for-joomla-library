@@ -1,4 +1,5 @@
 <?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 
 /*
  * @package    XT Laravel Starter for Joomla
@@ -9,9 +10,9 @@
  * @link       https://www.extly.com
  */
 
-use Illuminate\Support\Str;
+use Extly\Illuminate\Support\Str;
 
-$appName = env('APP_NAME', 'laravel');
+$appName = XT_env('APP_NAME', 'laravel');
 $appName = Str::slug($appName, '_');
 
 return [
@@ -29,7 +30,7 @@ return [
     |
     */
 
-    'driver' => env('SESSION_DRIVER', 'file'),
+    'driver' => XT_env('SESSION_DRIVER', 'file'),
 
     /*
     |--------------------------------------------------------------------------
@@ -42,7 +43,7 @@ return [
     |
     */
 
-    'lifetime' => env('SESSION_LIFETIME', 120),
+    'lifetime' => XT_env('SESSION_LIFETIME', 120),
 
     'expire_on_close' => false,
 
@@ -57,7 +58,7 @@ return [
     |
     */
 
-    'encrypt' => false,
+    'XT_encrypt' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -70,7 +71,7 @@ return [
     |
     */
 
-    'files' => storage_path('framework/sessions'),
+    'files' => XT_storage_path('framework/sessions'),
 
     /*
     |--------------------------------------------------------------------------
@@ -83,7 +84,7 @@ return [
     |
     */
 
-    'connection' => env('SESSION_CONNECTION', null),
+    'connection' => XT_env('SESSION_CONNECTION', null),
 
     /*
     |--------------------------------------------------------------------------
@@ -111,7 +112,7 @@ return [
     |
     */
 
-    'store' => env('SESSION_STORE', null),
+    'store' => XT_env('SESSION_STORE', null),
 
     /*
     |--------------------------------------------------------------------------
@@ -137,8 +138,7 @@ return [
     |
     */
 
-    'cookie' => env(
-        'SESSION_COOKIE',
+    'cookie' => XT_env('SESSION_COOKIE',
         $appName.'_session'
     ),
 
@@ -166,7 +166,7 @@ return [
     |
     */
 
-    'domain' => env('SESSION_DOMAIN', null),
+    'domain' => XT_env('SESSION_DOMAIN', null),
 
     /*
     |--------------------------------------------------------------------------
@@ -179,7 +179,7 @@ return [
     |
     */
 
-    'secure' => env('SESSION_SECURE_COOKIE'),
+    'secure' => XT_env('SESSION_SECURE_COOKIE'),
 
     /*
     |--------------------------------------------------------------------------

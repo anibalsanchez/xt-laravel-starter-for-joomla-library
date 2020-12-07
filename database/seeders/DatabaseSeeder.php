@@ -1,4 +1,5 @@
 <?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 
 /*
  * @package    XT Laravel Starter for Joomla
@@ -11,7 +12,7 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
+use Extly\Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
