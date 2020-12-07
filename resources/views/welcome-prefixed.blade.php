@@ -17,7 +17,7 @@
 
 <body class="bg-gray-100 h-screen antialiased leading-none font-sans">
     <div class="container mx-auto mt-16">
-        <h1 class="my-8">A List of Articles, loaded with Laravel Eloquent model into
+        <h1>A List of Articles, loaded with Laravel Eloquent model into
             a Blade view</h1>
         <p class="mb-4">
             The list of articles are generared with Laravel v8 and Tailwind CSS v1.9.
