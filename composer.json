@@ -37,6 +37,7 @@
             "project-name": "XT Laravel Starter for Joomla",
             "namespaces-prefix": "Extly",
             "global-scope-prefix": "XT_",
+
             "prefix-extra-folders": [
                 "bootstrap",
                 "config",
@@ -46,7 +47,7 @@
                 "routes",
                 "tests"
             ],
-            "ignore": [
+            "ignore-from-global-scope": [
                 "session",
                 "dispatch"
             ]
