@@ -1,4 +1,5 @@
 <?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 
 /*
  * @package    XT Laravel Starter for Joomla
@@ -22,7 +23,7 @@ return [
     */
 
     'paths' => [
-        resource_path('views'),
+        XT_resource_path('views'),
     ],
 
     /*
@@ -36,8 +37,7 @@ return [
     |
     */
 
-    'compiled' => env(
-        'VIEW_COMPILED_PATH',
-        realpath(storage_path('framework/views'))
+    'compiled' => XT_env('VIEW_COMPILED_PATH',
+        realpath(XT_storage_path('framework/views'))
     ),
 ];

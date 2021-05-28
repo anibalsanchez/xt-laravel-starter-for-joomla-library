@@ -1,4 +1,5 @@
 <?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 
 /*
  * @package    XT Laravel Starter for Joomla
@@ -13,8 +14,8 @@ namespace XtLaravelStarterApp\Http\Middleware;
 
 use XtLaravelStarterApp\Providers\RouteServiceProvider;
 use Closure;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Extly\Illuminate\Http\Request;
+use Extly\Illuminate\Support\Facades\Auth;
 
 class RedirectIfAuthenticated
 {
@@ -31,7 +32,7 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+                return XT_redirect(RouteServiceProvider::HOME);
             }
         }
 

@@ -1,4 +1,5 @@
 <?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 
 /*
  * @package    XT Laravel Starter for Joomla
@@ -9,9 +10,9 @@
  * @link       https://www.extly.com
  */
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+use Extly\Illuminate\Database\Migrations\Migration;
+use Extly\Illuminate\Database\Schema\Blueprint;
+use Extly\Illuminate\Support\Facades\Schema;
 
 class CreatePasswordResetsTable extends Migration
 {

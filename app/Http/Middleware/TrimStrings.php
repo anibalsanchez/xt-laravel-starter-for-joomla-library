@@ -1,4 +1,5 @@
 <?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 
 /*
  * @package    XT Laravel Starter for Joomla
@@ -11,7 +12,7 @@
 
 namespace XtLaravelStarterApp\Http\Middleware;
 
-use Illuminate\Foundation\Http\Middleware\TrimStrings as Middleware;
+use Extly\Illuminate\Foundation\Http\Middleware\TrimStrings as Middleware;
 
 class TrimStrings extends Middleware
 {

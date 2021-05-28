@@ -1,4 +1,5 @@
 <?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 
 /*
  * @package    XT Laravel Starter for Joomla
@@ -11,11 +12,11 @@
 
 namespace XtLaravelStarterApp\Providers;
 
-use Illuminate\Cache\RateLimiting\Limit;
-use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\RateLimiter;
-use Illuminate\Support\Facades\Route;
+use Extly\Illuminate\Cache\RateLimiting\Limit;
+use Extly\Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Extly\Illuminate\Http\Request;
+use Extly\Illuminate\Support\Facades\RateLimiter;
+use Extly\Illuminate\Support\Facades\Route;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -50,11 +51,11 @@ class RouteServiceProvider extends ServiceProvider
             Route::prefix('api')
                 ->middleware('api')
                 ->namespace($this->namespace)
-                ->group(base_path('routes/api.php'));
+                ->group(XT_base_path('routes/api.php'));
 
             Route::middleware('web')
                 ->namespace($this->namespace)
-                ->group(base_path('routes/web.php'));
+                ->group(XT_base_path('routes/web.php'));
         });
     }
 
@@ -66,7 +67,7 @@ class RouteServiceProvider extends ServiceProvider
     protected function configureRateLimiting()
     {
         RateLimiter::for('api', function (Request $request) {
-            return Limit::perMinute(60)->by(optional($request->user())->id ?: $request->ip());
+            return Limit::perMinute(60)->by(XT_optional($request->user())->id ?: $request->ip());
         });
     }
 }

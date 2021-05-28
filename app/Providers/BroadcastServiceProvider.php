@@ -1,4 +1,5 @@
 <?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 
 /*
  * @package    XT Laravel Starter for Joomla
@@ -11,8 +12,8 @@
 
 namespace XtLaravelStarterApp\Providers;
 
-use Illuminate\Support\Facades\Broadcast;
-use Illuminate\Support\ServiceProvider;
+use Extly\Illuminate\Support\Facades\Broadcast;
+use Extly\Illuminate\Support\ServiceProvider;
 
 class BroadcastServiceProvider extends ServiceProvider
 {
@@ -25,6 +26,6 @@ class BroadcastServiceProvider extends ServiceProvider
     {
         Broadcast::routes();
 
-        require base_path('routes/channels.php');
+        require XT_base_path('routes/channels.php');
     }
 }

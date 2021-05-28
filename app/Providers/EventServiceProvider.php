@@ -1,4 +1,5 @@
 <?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 
 /*
  * @package    XT Laravel Starter for Joomla
@@ -11,10 +12,10 @@
 
 namespace XtLaravelStarterApp\Providers;
 
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
-use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
+use Extly\Illuminate\Auth\Events\Registered;
+use Extly\Illuminate\Auth\Listeners\SendEmailVerificationNotification;
+use Extly\Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use Extly\Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {

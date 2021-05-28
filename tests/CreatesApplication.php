@@ -1,4 +1,5 @@
 <?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 
 /*
  * @package    XT Laravel Starter for Joomla
@@ -11,7 +12,7 @@
 
 namespace Tests;
 
-use Illuminate\Contracts\Console\Kernel;
+use Extly\Illuminate\Contracts\Console\Kernel;
 
 trait CreatesApplication
 {

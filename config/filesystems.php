@@ -1,4 +1,5 @@
 <?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 
 /*
  * @package    XT Laravel Starter for Joomla
@@ -21,7 +22,7 @@ return [
     |
     */
 
-    'default' => env('FILESYSTEM_DRIVER', 'local'),
+    'default' => XT_env('FILESYSTEM_DRIVER', 'local'),
 
     /*
     |--------------------------------------------------------------------------
@@ -39,24 +40,24 @@ return [
     'disks' => [
         'local' => [
             'driver' => 'local',
-            'root' => storage_path('app'),
+            'root' => XT_storage_path('app'),
         ],
 
         'public' => [
             'driver' => 'local',
-            'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
+            'root' => XT_storage_path('app/public'),
+            'url' => XT_env('APP_URL').'/storage',
             'visibility' => 'public',
         ],
 
         's3' => [
             'driver' => 's3',
-            'key' => env('AWS_ACCESS_KEY_ID'),
-            'secret' => env('AWS_SECRET_ACCESS_KEY'),
-            'region' => env('AWS_DEFAULT_REGION'),
-            'bucket' => env('AWS_BUCKET'),
-            'url' => env('AWS_URL'),
-            'endpoint' => env('AWS_ENDPOINT'),
+            'key' => XT_env('AWS_ACCESS_KEY_ID'),
+            'secret' => XT_env('AWS_SECRET_ACCESS_KEY'),
+            'region' => XT_env('AWS_DEFAULT_REGION'),
+            'bucket' => XT_env('AWS_BUCKET'),
+            'url' => XT_env('AWS_URL'),
+            'endpoint' => XT_env('AWS_ENDPOINT'),
         ],
     ],
 
@@ -72,6 +73,6 @@ return [
     */
 
     'links' => [
-        public_path('storage') => storage_path('app/public'),
+        XT_public_path('storage') => XT_storage_path('app/public'),
     ],
 ];

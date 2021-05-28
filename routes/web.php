@@ -1,4 +1,5 @@
 <?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 
 /*
  * @package    XT Laravel Starter for Joomla
@@ -9,7 +10,7 @@
  * @link       https://www.extly.com
  */
 
-use Illuminate\Support\Facades\Route;
+use Extly\Illuminate\Support\Facades\Route;
 use XtLaravelStarterApp\Models\Article;
 
 /*
@@ -35,5 +36,5 @@ Route::get('/', function () {
     }
 
     // Development mode
-    return view('welcome', ['articles' => $articles]);
+    return XT_view('welcome', ['articles' => $articles]);
 });

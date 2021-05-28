@@ -1,0 +1,34 @@
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+
+/*
+ * This file is part of Psy Shell.
+ *
+ * (c) 2012-2020 Justin Hileman
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace Extly\Psy\CodeCleaner;
+
+use Extly\PhpParser\Node;
+use Extly\PhpParser\Node\Expr\Exit_;
+use Extly\PhpParser\Node\Expr\StaticCall;
+use Extly\PhpParser\Node\Name\FullyQualified as FullyQualifiedName;
+use Extly\Psy\Exception\BreakException;
+
+class ExitPass extends CodeCleanerPass
+{
+    /**
+     * Converts exit calls to BreakExceptions.
+     *
+     * @param \PhpParser\Node $node
+     */
+    public function leaveNode(Node $node)
+    {
+        if ($node instanceof Exit_) {
+            return new StaticCall(new FullyQualifiedName(BreakException::class), 'exitShell');
+        }
+    }
+}

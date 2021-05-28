@@ -1,4 +1,5 @@
 <?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 
 /*
  * @package    XT Laravel Starter for Joomla
@@ -11,7 +12,7 @@
 
 namespace XtLaravelStarterApp\Http\Middleware;
 
-use Illuminate\Auth\Middleware\Authenticate as Middleware;
+use Extly\Illuminate\Auth\Middleware\Authenticate as Middleware;
 
 class Authenticate extends Middleware
 {
@@ -25,7 +26,7 @@ class Authenticate extends Middleware
     protected function redirectTo($request)
     {
         if (!$request->expectsJson()) {
-            return route('login');
+            return XT_route('login');
         }
     }
 }

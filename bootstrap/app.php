@@ -1,4 +1,5 @@
 <?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 
 /*
  * @package    XT Laravel Starter for Joomla
@@ -9,7 +10,7 @@
  * @link       https://www.extly.com
  */
 
-$app = new /* PREFIX */ \Illuminate\Foundation\Application(
+$app = new \Extly\Illuminate\Foundation\Application(
     $_ENV['APP_BASE_PATH'] ?? dirname(__DIR__)
 );
 
@@ -25,17 +26,17 @@ $app = new /* PREFIX */ \Illuminate\Foundation\Application(
 */
 
 $app->singleton(
-    /* PREFIX */ \Illuminate\Contracts\Http\Kernel::class,
+    \Extly\Illuminate\Contracts\Http\Kernel::class,
     XtLaravelStarterApp\Http\Kernel::class
 );
 
 $app->singleton(
-    /* PREFIX */ \Illuminate\Contracts\Console\Kernel::class,
+    \Extly\Illuminate\Contracts\Console\Kernel::class,
     XtLaravelStarterApp\Console\Kernel::class
 );
 
 $app->singleton(
-    /* PREFIX */ \Illuminate\Contracts\Debug\ExceptionHandler::class,
+    \Extly\Illuminate\Contracts\Debug\ExceptionHandler::class,
     XtLaravelStarterApp\Exceptions\Handler::class
 );
 

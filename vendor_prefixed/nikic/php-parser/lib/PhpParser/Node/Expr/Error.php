@@ -1,0 +1,32 @@
+<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+declare(strict_types=1);
+
+namespace Extly\PhpParser\Node\Expr;
+
+use Extly\PhpParser\Node\Expr;
+
+/**
+ * Error node used during parsing with error recovery.
+ *
+ * An error node may be placed at a position where an expression is required, but an error occurred.
+ * Error nodes will not be present if the parser is run in throwOnError mode (the default).
+ */
+class Error extends Expr
+{
+    /**
+     * Constructs an error node.
+     *
+     * @param array $attributes Additional attributes
+     */
+    public function __construct(array $attributes = []) {
+        $this->attributes = $attributes;
+    }
+
+    public function getSubNodeNames() : array {
+        return [];
+    }
+    
+    public function getType() : string {
+        return 'Expr_Error';
+    }
+}

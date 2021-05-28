@@ -1,4 +1,5 @@
 <?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 
 /*
  * @package    XT Laravel Starter for Joomla
@@ -27,7 +28,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', $config->get('sitename', 'Laravel')),
+    'name' => XT_env('APP_NAME', $config->get('sitename', 'Laravel')),
 
     /*
     |--------------------------------------------------------------------------
@@ -40,7 +41,7 @@ return [
     |
     */
 
-    'env' => env('APP_ENV', 'production'),
+    'env' => XT_env('APP_ENV', 'production'),
 
     /*
     |--------------------------------------------------------------------------
@@ -53,7 +54,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', '1' === $config->get('debug')),
+    'debug' => (bool) XT_env('APP_DEBUG', '1' === $config->get('debug')),
 
     /*
     |--------------------------------------------------------------------------
@@ -66,10 +67,10 @@ return [
     |
     */
 
-    'url' => env('APP_URL', $rootUrl),
+    'url' => XT_env('APP_URL', $rootUrl),
 
-    'asset_url' => env('ASSET_URL', $rootUrl.'/media/lib_xtlaravelstarter/public'),
-    'mix_url' => env('MIX_URL', $rootUrl.'/media/lib_xtlaravelstarter/public'),
+    'asset_url' => XT_env('ASSET_URL', $rootUrl.'/media/lib_xtlaravelstarter/public'),
+    'mix_url' => XT_env('MIX_URL', $rootUrl.'/media/lib_xtlaravelstarter/public'),
 
     /*
     |--------------------------------------------------------------------------
@@ -134,7 +135,7 @@ return [
     |
     */
 
-    'key' => env('APP_KEY', 'base64:'.base64_encode(substr(sha1($config->get('secret')), 8))),
+    'key' => XT_env('APP_KEY', 'base64:'.base64_encode(substr(sha1($config->get('secret')), 8))),
 
     'cipher' => 'AES-256-CBC',
 
@@ -151,28 +152,28 @@ return [
 
     'providers' => [
         // Laravel Framework Service Providers...
-        /* PREFIX */ \Illuminate\Auth\AuthServiceProvider::class,
-        /* PREFIX */ \Illuminate\Broadcasting\BroadcastServiceProvider::class,
-        /* PREFIX */ \Illuminate\Bus\BusServiceProvider::class,
-        /* PREFIX */ \Illuminate\Cache\CacheServiceProvider::class,
-        /* PREFIX */ \Illuminate\Foundation\Providers\ConsoleSupportServiceProvider::class,
-        /* PREFIX */ \Illuminate\Cookie\CookieServiceProvider::class,
-        /* PREFIX */ \Illuminate\Database\DatabaseServiceProvider::class,
-        /* PREFIX */ \Illuminate\Encryption\EncryptionServiceProvider::class,
-        /* PREFIX */ \Illuminate\Filesystem\FilesystemServiceProvider::class,
-        /* PREFIX */ \Illuminate\Foundation\Providers\FoundationServiceProvider::class,
-        /* PREFIX */ \Illuminate\Hashing\HashServiceProvider::class,
-        /* PREFIX */ \Illuminate\Mail\MailServiceProvider::class,
-        /* PREFIX */ \Illuminate\Notifications\NotificationServiceProvider::class,
-        /* PREFIX */ \Illuminate\Pagination\PaginationServiceProvider::class,
-        /* PREFIX */ \Illuminate\Pipeline\PipelineServiceProvider::class,
-        /* PREFIX */ \Illuminate\Queue\QueueServiceProvider::class,
-        /* PREFIX */ \Illuminate\Redis\RedisServiceProvider::class,
-        /* PREFIX */ \Illuminate\Auth\Passwords\PasswordResetServiceProvider::class,
-        /* PREFIX */ \Illuminate\Session\SessionServiceProvider::class,
-        /* PREFIX */ \Illuminate\Translation\TranslationServiceProvider::class,
-        /* PREFIX */ \Illuminate\Validation\ValidationServiceProvider::class,
-        /* PREFIX */ \Illuminate\View\ViewServiceProvider::class,
+        \Extly\Illuminate\Auth\AuthServiceProvider::class,
+        \Extly\Illuminate\Broadcasting\BroadcastServiceProvider::class,
+        \Extly\Illuminate\Bus\BusServiceProvider::class,
+        \Extly\Illuminate\Cache\CacheServiceProvider::class,
+        \Extly\Illuminate\Foundation\Providers\ConsoleSupportServiceProvider::class,
+        \Extly\Illuminate\Cookie\CookieServiceProvider::class,
+        \Extly\Illuminate\Database\DatabaseServiceProvider::class,
+        \Extly\Illuminate\Encryption\EncryptionServiceProvider::class,
+        \Extly\Illuminate\Filesystem\FilesystemServiceProvider::class,
+        \Extly\Illuminate\Foundation\Providers\FoundationServiceProvider::class,
+        \Extly\Illuminate\Hashing\HashServiceProvider::class,
+        \Extly\Illuminate\Mail\MailServiceProvider::class,
+        \Extly\Illuminate\Notifications\NotificationServiceProvider::class,
+        \Extly\Illuminate\Pagination\PaginationServiceProvider::class,
+        \Extly\Illuminate\Pipeline\PipelineServiceProvider::class,
+        \Extly\Illuminate\Queue\QueueServiceProvider::class,
+        \Extly\Illuminate\Redis\RedisServiceProvider::class,
+        \Extly\Illuminate\Auth\Passwords\PasswordResetServiceProvider::class,
+        \Extly\Illuminate\Session\SessionServiceProvider::class,
+        \Extly\Illuminate\Translation\TranslationServiceProvider::class,
+        \Extly\Illuminate\Validation\ValidationServiceProvider::class,
+        \Extly\Illuminate\View\ViewServiceProvider::class,
 
         // Package Service Providers...
 
@@ -196,41 +197,41 @@ return [
     */
 
     'aliases' => [
-        'App' => Illuminate\Support\Facades\App::class,
-        'Arr' => Illuminate\Support\Arr::class,
-        'Artisan' => Illuminate\Support\Facades\Artisan::class,
-        'Auth' => Illuminate\Support\Facades\Auth::class,
-        'Blade' => Illuminate\Support\Facades\Blade::class,
-        'Broadcast' => Illuminate\Support\Facades\Broadcast::class,
-        'Bus' => Illuminate\Support\Facades\Bus::class,
-        'Cache' => Illuminate\Support\Facades\Cache::class,
-        'Config' => Illuminate\Support\Facades\Config::class,
-        'Cookie' => Illuminate\Support\Facades\Cookie::class,
-        'Crypt' => Illuminate\Support\Facades\Crypt::class,
-        'DB' => Illuminate\Support\Facades\DB::class,
-        'Eloquent' => Illuminate\Database\Eloquent\Model::class,
-        'Event' => Illuminate\Support\Facades\Event::class,
-        'File' => Illuminate\Support\Facades\File::class,
-        'Gate' => Illuminate\Support\Facades\Gate::class,
-        'Hash' => Illuminate\Support\Facades\Hash::class,
-        'Http' => Illuminate\Support\Facades\Http::class,
-        'Lang' => Illuminate\Support\Facades\Lang::class,
-        'Log' => Illuminate\Support\Facades\Log::class,
-        'Mail' => Illuminate\Support\Facades\Mail::class,
-        'Notification' => Illuminate\Support\Facades\Notification::class,
-        'Password' => Illuminate\Support\Facades\Password::class,
-        'Queue' => Illuminate\Support\Facades\Queue::class,
-        'Redirect' => Illuminate\Support\Facades\Redirect::class,
+        'App' => Extly\Illuminate\Support\Facades\App::class,
+        'Arr' => Extly\Illuminate\Support\Arr::class,
+        'Artisan' => Extly\Illuminate\Support\Facades\Artisan::class,
+        'Auth' => Extly\Illuminate\Support\Facades\Auth::class,
+        'Blade' => Extly\Illuminate\Support\Facades\Blade::class,
+        'Broadcast' => Extly\Illuminate\Support\Facades\Broadcast::class,
+        'Bus' => Extly\Illuminate\Support\Facades\Bus::class,
+        'Cache' => Extly\Illuminate\Support\Facades\Cache::class,
+        'Config' => Extly\Illuminate\Support\Facades\Config::class,
+        'Cookie' => Extly\Illuminate\Support\Facades\Cookie::class,
+        'Crypt' => Extly\Illuminate\Support\Facades\Crypt::class,
+        'DB' => Extly\Illuminate\Support\Facades\DB::class,
+        'Eloquent' => Extly\Illuminate\Database\Eloquent\Model::class,
+        'Event' => Extly\Illuminate\Support\Facades\Event::class,
+        'File' => Extly\Illuminate\Support\Facades\File::class,
+        'Gate' => Extly\Illuminate\Support\Facades\Gate::class,
+        'Hash' => Extly\Illuminate\Support\Facades\Hash::class,
+        'Http' => Extly\Illuminate\Support\Facades\Http::class,
+        'Lang' => Extly\Illuminate\Support\Facades\Lang::class,
+        'Log' => Extly\Illuminate\Support\Facades\Log::class,
+        'Mail' => Extly\Illuminate\Support\Facades\Mail::class,
+        'Notification' => Extly\Illuminate\Support\Facades\Notification::class,
+        'Password' => Extly\Illuminate\Support\Facades\Password::class,
+        'Queue' => Extly\Illuminate\Support\Facades\Queue::class,
+        'Redirect' => Extly\Illuminate\Support\Facades\Redirect::class,
         // 'Redis' => Illuminate\Support\Facades\Redis::class,
-        'Request' => Illuminate\Support\Facades\Request::class,
-        'Response' => Illuminate\Support\Facades\Response::class,
-        'Route' => Illuminate\Support\Facades\Route::class,
-        'Schema' => Illuminate\Support\Facades\Schema::class,
-        'Session' => Illuminate\Support\Facades\Session::class,
-        'Storage' => Illuminate\Support\Facades\Storage::class,
-        'Str' => Illuminate\Support\Str::class,
-        'URL' => Illuminate\Support\Facades\URL::class,
-        'Validator' => Illuminate\Support\Facades\Validator::class,
-        'View' => Illuminate\Support\Facades\View::class,
+        'Request' => Extly\Illuminate\Support\Facades\Request::class,
+        'Response' => Extly\Illuminate\Support\Facades\Response::class,
+        'Route' => Extly\Illuminate\Support\Facades\Route::class,
+        'Schema' => Extly\Illuminate\Support\Facades\Schema::class,
+        'Session' => Extly\Illuminate\Support\Facades\Session::class,
+        'Storage' => Extly\Illuminate\Support\Facades\Storage::class,
+        'Str' => Extly\Illuminate\Support\Str::class,
+        'URL' => Extly\Illuminate\Support\Facades\URL::class,
+        'Validator' => Extly\Illuminate\Support\Facades\Validator::class,
+        'View' => Extly\Illuminate\Support\Facades\View::class,
     ],
 ];
