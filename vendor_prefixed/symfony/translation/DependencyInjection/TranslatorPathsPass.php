@@ -34,6 +34,10 @@ class TranslatorPathsPass extends AbstractRecursivePass
 
     public function __construct(string $translatorServiceId = 'translator', string $debugCommandServiceId = 'console.command.translation_debug', string $updateCommandServiceId = 'console.command.translation_update', string $resolverServiceId = 'argument_resolver.service')
     {
+        if (0 < \func_num_args()) {
+            XT_trigger_deprecation('symfony/translation', '5.3', 'Configuring "%s" is deprecated.', __CLASS__);
+        }
+
         $this->translatorServiceId = $translatorServiceId;
         $this->debugCommandServiceId = $debugCommandServiceId;
         $this->updateCommandServiceId = $updateCommandServiceId;

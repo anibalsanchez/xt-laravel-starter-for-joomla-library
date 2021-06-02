@@ -43,18 +43,20 @@ abstract class Helper implements HelperInterface
     /**
      * Returns the length of a string, using mb_strwidth if it is available.
      *
+     * @deprecated since 5.3
+     *
      * @return int The length of the string
      */
     public static function strlen(?string $string)
     {
+        XT_trigger_deprecation('symfony/console', '5.3', 'Method "%s()" is deprecated and will be removed in Symfony 6.0. Use Helper::width() or Helper::length() instead.', __METHOD__);
+
         return self::width($string);
     }
 
     /**
      * Returns the width of a string, using mb_strwidth if it is available.
      * The width is how many characters positions the string will use.
-     *
-     * @internal in Symfony 5.2
      */
     public static function width(?string $string): int
     {
@@ -74,8 +76,6 @@ abstract class Helper implements HelperInterface
     /**
      * Returns the length of a string, using mb_strlen if it is available.
      * The length is related to how many bytes the string will use.
-     *
-     * @internal in Symfony 5.2
      */
     public static function length(?string $string): int
     {
@@ -154,8 +154,13 @@ abstract class Helper implements HelperInterface
         return sprintf('%d B', $memory);
     }
 
+    /**
+     * @deprecated since 5.3
+     */
     public static function strlenWithoutDecoration(OutputFormatterInterface $formatter, ?string $string)
     {
+        XT_trigger_deprecation('symfony/console', '5.3', 'Method "%s()" is deprecated and will be removed in Symfony 6.0. Use Helper::removeDecoration() instead.', __METHOD__);
+
         return self::width(self::removeDecoration($formatter, $string));
     }
 

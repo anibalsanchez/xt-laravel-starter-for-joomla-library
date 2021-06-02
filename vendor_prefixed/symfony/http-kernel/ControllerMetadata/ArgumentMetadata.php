@@ -21,15 +21,20 @@ use Extly\Symfony\Component\HttpKernel\Attribute\ArgumentInterface;
  */
 class ArgumentMetadata
 {
+    public const IS_INSTANCEOF = 2;
+
     private $name;
     private $type;
     private $isVariadic;
     private $hasDefaultValue;
     private $defaultValue;
     private $isNullable;
-    private $attribute;
+    private $attributes;
 
-    public function __construct(string $name, ?string $type, bool $isVariadic, bool $hasDefaultValue, $defaultValue, bool $isNullable = false, ?ArgumentInterface $attribute = null)
+    /**
+     * @param object[] $attributes
+     */
+    public function __construct(string $name, ?string $type, bool $isVariadic, bool $hasDefaultValue, $defaultValue, bool $isNullable = false, $attributes = [])
     {
         $this->name = $name;
         $this->type = $type;
@@ -37,7 +42,13 @@ class ArgumentMetadata
         $this->hasDefaultValue = $hasDefaultValue;
         $this->defaultValue = $defaultValue;
         $this->isNullable = $isNullable || null === $type || ($hasDefaultValue && null === $defaultValue);
-        $this->attribute = $attribute;
+
+        if (null === $attributes || $attributes instanceof ArgumentInterface) {
+            XT_trigger_deprecation('symfony/http-kernel', '5.3', 'The "%s" constructor expects an array of PHP attributes as last argument, %s given.', __CLASS__, get_debug_type($attributes));
+            $attributes = $attributes ? [$attributes] : [];
+        }
+
+        $this->attributes = $attributes;
     }
 
     /**
@@ -115,6 +126,39 @@ class ArgumentMetadata
      */
     public function getAttribute(): ?ArgumentInterface
     {
-        return $this->attribute;
+        XT_trigger_deprecation('symfony/http-kernel', '5.3', 'Method "%s()" is deprecated, use "getAttributes()" instead.', __METHOD__);
+
+        if (!$this->attributes) {
+            return null;
+        }
+
+        return $this->attributes[0] instanceof ArgumentInterface ? $this->attributes[0] : null;
+    }
+
+    /**
+     * @return object[]
+     */
+    public function getAttributes(string $name = null, int $flags = 0): array
+    {
+        if (!$name) {
+            return $this->attributes;
+        }
+
+        $attributes = [];
+        if ($flags & self::IS_INSTANCEOF) {
+            foreach ($this->attributes as $attribute) {
+                if ($attribute instanceof $name) {
+                    $attributes[] = $attribute;
+                }
+            }
+        } else {
+            foreach ($this->attributes as $attribute) {
+                if (\get_class($attribute) === $name) {
+                    $attributes[] = $attribute;
+                }
+            }
+        }
+
+        return $attributes;
     }
 }

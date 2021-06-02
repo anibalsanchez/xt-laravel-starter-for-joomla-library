@@ -13,6 +13,7 @@
 namespace Extly\Symfony\Component\HttpKernel\DependencyInjection;
 
 use Extly\Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Extly\Symfony\Component\DependencyInjection\Attribute\Target;
 use Extly\Symfony\Component\DependencyInjection\ChildDefinition;
 use Extly\Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Extly\Symfony\Component\DependencyInjection\Compiler\ServiceLocatorTagPass;
@@ -24,6 +25,7 @@ use Extly\Symfony\Component\DependencyInjection\LazyProxy\ProxyHelper;
 use Extly\Symfony\Component\DependencyInjection\Reference;
 use Extly\Symfony\Component\DependencyInjection\TypedReference;
 use Extly\Symfony\Component\HttpFoundation\Request;
+use Extly\Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * Creates the service-locators required by ServiceValueResolver.
@@ -39,6 +41,10 @@ class RegisterControllerArgumentLocatorsPass implements CompilerPassInterface
 
     public function __construct(string $resolverServiceId = 'argument_resolver.service', string $controllerTag = 'controller.service_arguments', string $controllerLocator = 'argument_resolver.controller_locator', string $notTaggedControllerResolverServiceId = 'argument_resolver.not_tagged_controller')
     {
+        if (0 < \func_num_args()) {
+            XT_trigger_deprecation('symfony/http-kernel', '5.3', 'Configuring "%s" is deprecated.', __CLASS__);
+        }
+
         $this->resolverServiceId = $resolverServiceId;
         $this->controllerTag = $controllerTag;
         $this->controllerLocator = $controllerLocator;
@@ -144,7 +150,7 @@ class RegisterControllerArgumentLocatorsPass implements CompilerPassInterface
                         } elseif ($p->allowsNull() && !$p->isOptional()) {
                             $invalidBehavior = ContainerInterface::NULL_ON_INVALID_REFERENCE;
                         }
-                    } elseif (isset($bindings[$bindingName = $type.' $'.$p->name]) || isset($bindings[$bindingName = '$'.$p->name]) || isset($bindings[$bindingName = $type])) {
+                    } elseif (isset($bindings[$bindingName = $type.' $'.$name = Target::parseName($p)]) || isset($bindings[$bindingName = '$'.$name]) || isset($bindings[$bindingName = $type])) {
                         $binding = $bindings[$bindingName];
 
                         [$bindingValue, $bindingId, , $bindingType, $bindingFile] = $binding->getValues();
@@ -166,7 +172,7 @@ class RegisterControllerArgumentLocatorsPass implements CompilerPassInterface
                         $invalidBehavior = ContainerInterface::RUNTIME_EXCEPTION_ON_INVALID_REFERENCE;
                     }
 
-                    if (Request::class === $type) {
+                    if (Request::class === $type || SessionInterface::class === $type) {
                         continue;
                     }
 

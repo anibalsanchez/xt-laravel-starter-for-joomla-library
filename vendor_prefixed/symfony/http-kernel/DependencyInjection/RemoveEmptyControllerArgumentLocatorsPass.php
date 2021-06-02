@@ -26,6 +26,10 @@ class RemoveEmptyControllerArgumentLocatorsPass implements CompilerPassInterface
 
     public function __construct(string $controllerLocator = 'argument_resolver.controller_locator')
     {
+        if (0 < \func_num_args()) {
+            XT_trigger_deprecation('symfony/http-kernel', '5.3', 'Configuring "%s" is deprecated.', __CLASS__);
+        }
+
         $this->controllerLocator = $controllerLocator;
     }
 

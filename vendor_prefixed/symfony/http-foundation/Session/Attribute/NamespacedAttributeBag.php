@@ -12,11 +12,15 @@
 
 namespace Extly\Symfony\Component\HttpFoundation\Session\Attribute;
 
+XT_trigger_deprecation('symfony/http-foundation', '5.3', 'The "%s" class is deprecated.', NamespacedAttributeBag::class);
+
 /**
  * This class provides structured storage of session attributes using
  * a name spacing character in the key.
  *
  * @author Drak <drak@zikula.org>
+ *
+ * @deprecated since Symfony 5.3
  */
 class NamespacedAttributeBag extends AttributeBag
 {

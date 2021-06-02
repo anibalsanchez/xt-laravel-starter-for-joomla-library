@@ -14,6 +14,7 @@ namespace Extly\Symfony\Component\Console;
 
 use Extly\Symfony\Component\Console\Command\Command;
 use Extly\Symfony\Component\Console\Command\HelpCommand;
+use Extly\Symfony\Component\Console\Command\LazyCommand;
 use Extly\Symfony\Component\Console\Command\ListCommand;
 use Extly\Symfony\Component\Console\Command\SignalableCommandInterface;
 use Extly\Symfony\Component\Console\CommandLoader\CommandLoaderInterface;
@@ -490,8 +491,10 @@ class Application implements ResetInterface
             return null;
         }
 
-        // Will throw if the command is not correctly initialized.
-        $command->getDefinition();
+        if (!$command instanceof LazyCommand) {
+            // Will throw if the command is not correctly initialized.
+            $command->getDefinition();
+        }
 
         if (!$command->getName()) {
             throw new LogicException(sprintf('The command defined in "%s" cannot have an empty name.', get_debug_type($command)));
@@ -587,7 +590,7 @@ class Application implements ResetInterface
     public function findNamespace(string $namespace)
     {
         $allNamespaces = $this->getNamespaces();
-        $expr = preg_replace_callback('{([^:]+|)}', function ($matches) { return preg_quote($matches[1]).'[^:]*'; }, $namespace);
+        $expr = implode('[^:]*:', array_map('preg_quote', explode(':', $namespace))).'[^:]*';
         $namespaces = preg_grep('{^'.$expr.'}', $allNamespaces);
 
         if (empty($namespaces)) {
@@ -643,7 +646,7 @@ class Application implements ResetInterface
         }
 
         $allCommands = $this->commandLoader ? array_merge($this->commandLoader->getNames(), array_keys($this->commands)) : array_keys($this->commands);
-        $expr = preg_replace_callback('{([^:]+|)}', function ($matches) { return preg_quote($matches[1]).'[^:]*'; }, $name);
+        $expr = implode('[^:]*:', array_map('preg_quote', explode(':', $name))).'[^:]*';
         $commands = preg_grep('{^'.$expr.'}', $allCommands);
 
         if (empty($commands)) {
@@ -697,7 +700,7 @@ class Application implements ResetInterface
             $abbrevs = array_values($commands);
             $maxLen = 0;
             foreach ($abbrevs as $abbrev) {
-                $maxLen = max(Helper::strlen($abbrev), $maxLen);
+                $maxLen = max(Helper::width($abbrev), $maxLen);
             }
             $abbrevs = array_map(function ($cmd) use ($commandList, $usableWidth, $maxLen, &$commands) {
                 if ($commandList[$cmd]->isHidden()) {
@@ -708,7 +711,7 @@ class Application implements ResetInterface
 
                 $abbrev = str_pad($cmd, $maxLen, ' ').' '.$commandList[$cmd]->getDescription();
 
-                return Helper::strlen($abbrev) > $usableWidth ? Helper::substr($abbrev, 0, $usableWidth - 3).'...' : $abbrev;
+                return Helper::width($abbrev) > $usableWidth ? Helper::substr($abbrev, 0, $usableWidth - 3).'...' : $abbrev;
             }, array_values($commands));
 
             if (\count($commands) > 1) {
@@ -808,7 +811,7 @@ class Application implements ResetInterface
             if ('' === $message || OutputInterface::VERBOSITY_VERBOSE <= $output->getVerbosity()) {
                 $class = get_debug_type($e);
                 $title = sprintf('  [%s%s]  ', $class, 0 !== ($code = $e->getCode()) ? ' ('.$code.')' : '');
-                $len = Helper::strlen($title);
+                $len = Helper::width($title);
             } else {
                 $len = 0;
             }
@@ -824,7 +827,7 @@ class Application implements ResetInterface
             foreach ('' !== $message ? preg_split('/\r?\n/', $message) : [] as $line) {
                 foreach ($this->splitStringByWidth($line, $width - 4) as $line) {
                     // pre-format lines to get the right string length
-                    $lineLength = Helper::strlen($line) + 4;
+                    $lineLength = Helper::width($line) + 4;
                     $lines[] = [$line, $lineLength];
 
                     $len = max($lineLength, $len);
@@ -837,7 +840,7 @@ class Application implements ResetInterface
             }
             $messages[] = $emptyLine = sprintf('<error>%s</error>', str_repeat(' ', $len));
             if ('' === $message || OutputInterface::VERBOSITY_VERBOSE <= $output->getVerbosity()) {
-                $messages[] = sprintf('<error>%s%s</error>', $title, str_repeat(' ', max(0, $len - Helper::strlen($title))));
+                $messages[] = sprintf('<error>%s%s</error>', $title, str_repeat(' ', max(0, $len - Helper::width($title))));
             }
             foreach ($lines as $line) {
                 $messages[] = sprintf('<error>  %s  %s</error>', OutputFormatter::escape($line[0]), str_repeat(' ', $len - $line[1]));
@@ -1034,8 +1037,7 @@ class Application implements ResetInterface
             new InputOption('--quiet', '-q', InputOption::VALUE_NONE, 'Do not output any message'),
             new InputOption('--verbose', '-v|vv|vvv', InputOption::VALUE_NONE, 'Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug'),
             new InputOption('--version', '-V', InputOption::VALUE_NONE, 'Display this application version'),
-            new InputOption('--ansi', '', InputOption::VALUE_NONE, 'Force ANSI output'),
-            new InputOption('--no-ansi', '', InputOption::VALUE_NONE, 'Disable ANSI output'),
+            new InputOption('--ansi', '', InputOption::VALUE_NEGATABLE, 'Force (or disable --no-ansi) ANSI output', false),
             new InputOption('--no-interaction', '-n', InputOption::VALUE_NONE, 'Do not ask any interactive question'),
         ]);
     }

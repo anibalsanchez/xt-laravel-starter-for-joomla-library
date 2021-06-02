@@ -28,6 +28,8 @@ use Extly\Symfony\Component\HttpKernel\KernelEvents;
  * @author Nicolas Grekas <p@tchwork.com>
  *
  * @final
+ *
+ * @internal since Symfony 5.3
  */
 class DebugHandlersListener implements EventSubscriberInterface
 {
@@ -75,7 +77,7 @@ class DebugHandlersListener implements EventSubscriberInterface
         if ($event instanceof ConsoleEvent && !\in_array(\PHP_SAPI, ['cli', 'phpdbg'], true)) {
             return;
         }
-        if (!$event instanceof KernelEvent ? !$this->firstCall : !$event->isMasterRequest()) {
+        if (!$event instanceof KernelEvent ? !$this->firstCall : !$event->isMainRequest()) {
             return;
         }
         $this->firstCall = $this->hasTerminatedWithException = false;

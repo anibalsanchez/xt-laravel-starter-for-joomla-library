@@ -13,6 +13,7 @@
 namespace Extly\Symfony\Component\Console\Command;
 
 use Extly\Symfony\Component\Console\Application;
+use Extly\Symfony\Component\Console\Attribute\AsCommand;
 use Extly\Symfony\Component\Console\Exception\ExceptionInterface;
 use Extly\Symfony\Component\Console\Exception\InvalidArgumentException;
 use Extly\Symfony\Component\Console\Exception\LogicException;
@@ -33,11 +34,17 @@ class Command
     // see https://tldp.org/LDP/abs/html/exitcodes.html
     public const SUCCESS = 0;
     public const FAILURE = 1;
+    public const INVALID = 2;
 
     /**
      * @var string|null The default command name
      */
     protected static $defaultName;
+
+    /**
+     * @var string|null The default command description
+     */
+    protected static $defaultDescription;
 
     private $application;
     private $name;
@@ -60,9 +67,30 @@ class Command
     public static function getDefaultName()
     {
         $class = static::class;
+
+        if (\PHP_VERSION_ID >= 80000 && $attribute = (new \ReflectionClass($class))->getAttributes(AsCommand::class)) {
+            return $attribute[0]->newInstance()->name;
+        }
+
         $r = new \ReflectionProperty($class, 'defaultName');
 
         return $class === $r->class ? static::$defaultName : null;
+    }
+
+    /**
+     * @return string|null The default command description or null when no default description is set
+     */
+    public static function getDefaultDescription(): ?string
+    {
+        $class = static::class;
+
+        if (\PHP_VERSION_ID >= 80000 && $attribute = (new \ReflectionClass($class))->getAttributes(AsCommand::class)) {
+            return $attribute[0]->newInstance()->description;
+        }
+
+        $r = new \ReflectionProperty($class, 'defaultDescription');
+
+        return $class === $r->class ? static::$defaultDescription : null;
     }
 
     /**
@@ -76,6 +104,10 @@ class Command
 
         if (null !== $name || null !== $name = static::getDefaultName()) {
             $this->setName($name);
+        }
+
+        if ('' === $this->description) {
+            $this->setDescription(static::getDefaultDescription() ?? '');
         }
 
         $this->configure();
@@ -305,6 +337,8 @@ class Command
      * This method is not part of public API and should not be used directly.
      *
      * @param bool $mergeArgs Whether to merge or not the Application definition arguments to Command definition arguments
+     *
+     * @internal
      */
     public function mergeApplicationDefinition(bool $mergeArgs = true)
     {
@@ -561,11 +595,14 @@ class Command
      */
     public function setAliases(iterable $aliases)
     {
+        $list = [];
+
         foreach ($aliases as $alias) {
             $this->validateName($alias);
+            $list[] = $alias;
         }
 
-        $this->aliases = $aliases;
+        $this->aliases = \is_array($aliases) ? $aliases : $list;
 
         return $this;
     }

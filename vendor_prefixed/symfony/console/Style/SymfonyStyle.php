@@ -77,7 +77,7 @@ class SymfonyStyle extends OutputStyle
         $this->autoPrependBlock();
         $this->writeln([
             sprintf('<comment>%s</>', OutputFormatter::escapeTrailingBackslash($message)),
-            sprintf('<comment>%s</>', str_repeat('=', Helper::strlenWithoutDecoration($this->getFormatter(), $message))),
+            sprintf('<comment>%s</>', str_repeat('=', Helper::width(Helper::removeDecoration($this->getFormatter(), $message)))),
         ]);
         $this->newLine();
     }
@@ -90,7 +90,7 @@ class SymfonyStyle extends OutputStyle
         $this->autoPrependBlock();
         $this->writeln([
             sprintf('<comment>%s</>', OutputFormatter::escapeTrailingBackslash($message)),
-            sprintf('<comment>%s</>', str_repeat('-', Helper::strlenWithoutDecoration($this->getFormatter(), $message))),
+            sprintf('<comment>%s</>', str_repeat('-', Helper::width(Helper::removeDecoration($this->getFormatter(), $message)))),
         ]);
         $this->newLine();
     }
@@ -462,7 +462,7 @@ class SymfonyStyle extends OutputStyle
     private function createBlock(iterable $messages, string $type = null, string $style = null, string $prefix = ' ', bool $padding = false, bool $escape = false): array
     {
         $indentLength = 0;
-        $prefixLength = Helper::strlenWithoutDecoration($this->getFormatter(), $prefix);
+        $prefixLength = Helper::width(Helper::removeDecoration($this->getFormatter(), $prefix));
         $lines = [];
 
         if (null !== $type) {
@@ -477,7 +477,7 @@ class SymfonyStyle extends OutputStyle
                 $message = OutputFormatter::escape($message);
             }
 
-            $decorationLength = Helper::strlen($message) - Helper::strlenWithoutDecoration($this->getFormatter(), $message);
+            $decorationLength = Helper::width($message) - Helper::width(Helper::removeDecoration($this->getFormatter(), $message));
             $messageLineLength = min($this->lineLength - $prefixLength - $indentLength + $decorationLength, $this->lineLength);
             $messageLines = explode(\PHP_EOL, wordwrap($message, $messageLineLength, \PHP_EOL, true));
             foreach ($messageLines as $messageLine) {
@@ -502,7 +502,7 @@ class SymfonyStyle extends OutputStyle
             }
 
             $line = $prefix.$line;
-            $line .= str_repeat(' ', max($this->lineLength - Helper::strlenWithoutDecoration($this->getFormatter(), $line), 0));
+            $line .= str_repeat(' ', max($this->lineLength - Helper::width(Helper::removeDecoration($this->getFormatter(), $line)), 0));
 
             if ($style) {
                 $line = sprintf('<%s>%s</>', $style, $line);

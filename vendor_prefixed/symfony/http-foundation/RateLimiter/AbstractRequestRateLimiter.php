@@ -23,7 +23,7 @@ use Extly\Symfony\Component\RateLimiter\RateLimit;
  *
  * @author Wouter de Jong <wouter@wouterj.nl>
  *
- * @experimental in 5.2
+ * @experimental in 5.3
  */
 abstract class AbstractRequestRateLimiter implements RequestRateLimiterInterface
 {

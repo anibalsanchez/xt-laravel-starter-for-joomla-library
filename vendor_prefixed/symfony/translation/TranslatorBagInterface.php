@@ -17,6 +17,8 @@ use Extly\Symfony\Component\Translation\Exception\InvalidArgumentException;
 /**
  * TranslatorBagInterface.
  *
+ * @method MessageCatalogueInterface[] getCatalogues() Returns all catalogues of the instance
+ *
  * @author Abdellatif Ait boudad <a.aitboudad@gmail.com>
  */
 interface TranslatorBagInterface

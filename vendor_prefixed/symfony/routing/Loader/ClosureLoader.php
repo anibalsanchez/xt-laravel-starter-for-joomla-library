@@ -34,7 +34,7 @@ class ClosureLoader extends Loader
      */
     public function load($closure, string $type = null)
     {
-        return $closure();
+        return $closure($this->env);
     }
 
     /**

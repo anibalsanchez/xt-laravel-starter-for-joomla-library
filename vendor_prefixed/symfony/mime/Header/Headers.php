@@ -255,9 +255,6 @@ final class Headers
         return $arr;
     }
 
-    /**
-     * @internal
-     */
     public function getHeaderBody($name)
     {
         return $this->has($name) ? $this->get($name)->getBody() : null;
@@ -275,9 +272,6 @@ final class Headers
         }
     }
 
-    /**
-     * @internal
-     */
     public function getHeaderParameter(string $name, string $parameter): ?string
     {
         if (!$this->has($name)) {
