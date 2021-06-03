@@ -6,6 +6,7 @@ namespace Extly\Illuminate\Broadcasting\Broadcasters;
 use Exception;
 use Extly\Illuminate\Container\Container;
 use Extly\Illuminate\Contracts\Broadcasting\Broadcaster as BroadcasterContract;
+use Extly\Illuminate\Contracts\Broadcasting\HasBroadcastChannel;
 use Extly\Illuminate\Contracts\Routing\BindingRegistrar;
 use Extly\Illuminate\Contracts\Routing\UrlRoutable;
 use Extly\Illuminate\Support\Arr;
@@ -41,13 +42,19 @@ abstract class Broadcaster implements BroadcasterContract
     /**
      * Register a channel authenticator.
      *
-     * @param  string  $channel
+     * @param  \Illuminate\Contracts\Broadcasting\HasBroadcastChannel|string  $channel
      * @param  callable|string  $callback
      * @param  array  $options
      * @return $this
      */
     public function channel($channel, $callback, $options = [])
     {
+        if ($channel instanceof HasBroadcastChannel) {
+            $channel = $channel->broadcastChannelRoute();
+        } elseif (is_string($channel) && class_exists($channel) && is_a($channel, HasBroadcastChannel::class, true)) {
+            $channel = (new $channel)->broadcastChannelRoute();
+        }
+
         $this->channels[$channel] = $callback;
 
         $this->channelOptions[$channel] = $options;

@@ -4,6 +4,7 @@
 namespace Extly\Illuminate\Database\Eloquent;
 
 use ArrayAccess;
+use Extly\Illuminate\Contracts\Broadcasting\HasBroadcastChannel;
 use Extly\Illuminate\Contracts\Queue\QueueableCollection;
 use Extly\Illuminate\Contracts\Queue\QueueableEntity;
 use Extly\Illuminate\Contracts\Routing\UrlRoutable;
@@ -22,7 +23,7 @@ use Extly\Illuminate\Support\Traits\ForwardsCalls;
 use JsonSerializable;
 use LogicException;
 
-abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializable, QueueableEntity, UrlRoutable
+abstract class Model implements Arrayable, ArrayAccess, HasBroadcastChannel, Jsonable, JsonSerializable, QueueableEntity, UrlRoutable
 {
     use Concerns\HasAttributes,
         Concerns\HasEvents,
@@ -1857,6 +1858,26 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     public static function preventsLazyLoading()
     {
         return static::$modelsShouldPreventLazyLoading;
+    }
+
+    /**
+     * Get the broadcast channel route definition that is associated with the given entity.
+     *
+     * @return string
+     */
+    public function broadcastChannelRoute()
+    {
+        return str_replace('\\', '.', get_class($this)).'.{'.Str::camel(XT_class_basename($this)).'}';
+    }
+
+    /**
+     * Get the broadcast channel name that is associated with the given entity.
+     *
+     * @return string
+     */
+    public function broadcastChannel()
+    {
+        return str_replace('\\', '.', get_class($this)).'.'.$this->getKey();
     }
 
     /**

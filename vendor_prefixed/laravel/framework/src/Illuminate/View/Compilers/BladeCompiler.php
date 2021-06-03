@@ -3,8 +3,10 @@
 
 namespace Extly\Illuminate\View\Compilers;
 
+use Closure;
 use Extly\Illuminate\Support\Arr;
 use Extly\Illuminate\Support\Str;
+use Extly\Illuminate\Support\Traits\ReflectsClosures;
 use InvalidArgumentException;
 
 class BladeCompiler extends Compiler implements CompilerInterface
@@ -23,7 +25,8 @@ class BladeCompiler extends Compiler implements CompilerInterface
         Concerns\CompilesLoops,
         Concerns\CompilesRawPhp,
         Concerns\CompilesStacks,
-        Concerns\CompilesTranslations;
+        Concerns\CompilesTranslations,
+        ReflectsClosures;
 
     /**
      * All of the registered extensions.
@@ -99,6 +102,13 @@ class BladeCompiler extends Compiler implements CompilerInterface
      * @var string
      */
     protected $echoFormat = 'e(%s)';
+
+    /**
+     * Custom rendering callbacks for stringable objects.
+     *
+     * @var array
+     */
+    public $echoHandlers = [];
 
     /**
      * Array of footer lines to be added to the template.
@@ -700,6 +710,22 @@ class BladeCompiler extends Compiler implements CompilerInterface
     public function getCustomDirectives()
     {
         return $this->customDirectives;
+    }
+
+    /**
+     * Add a handler to be executed before echoing a given class.
+     *
+     * @param  string|callable  $class
+     * @param  callable|null  $handler
+     * @return void
+     */
+    public function stringable($class, $handler = null)
+    {
+        if ($class instanceof Closure) {
+            [$class, $handler] = [$this->firstClosureParameterType($class), $class];
+        }
+
+        $this->echoHandlers[$class] = $handler;
     }
 
     /**

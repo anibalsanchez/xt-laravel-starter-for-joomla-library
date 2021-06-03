@@ -3,8 +3,12 @@
 
 namespace Extly\Illuminate\Validation\Rules;
 
+use Extly\Illuminate\Support\Traits\Conditionable;
+
 class Dimensions
 {
+    use Conditionable;
+
     /**
      * The constraints for the dimensions rule.
      *

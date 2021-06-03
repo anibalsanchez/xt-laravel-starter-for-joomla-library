@@ -15,7 +15,9 @@ class DbCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'db {connection? : The database connection that should be used}';
+    protected $signature = 'db {connection? : The database connection that should be used}
+               {--read : Connect to the read connection}
+               {--write : Connect to the write connection}';
 
     /**
      * The console command description.
@@ -63,6 +65,12 @@ class DbCommand extends Command
 
         if (! empty($connection['url'])) {
             $connection = (new ConfigurationUrlParser)->parseConfiguration($connection);
+        }
+
+        if ($this->option('read')) {
+            $connection = array_merge($connection, $connection['read']);
+        } elseif ($this->option('write')) {
+            $connection = array_merge($connection, $connection['write']);
         }
 
         return $connection;

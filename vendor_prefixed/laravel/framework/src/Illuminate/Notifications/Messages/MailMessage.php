@@ -7,9 +7,12 @@ use Extly\Illuminate\Container\Container;
 use Extly\Illuminate\Contracts\Support\Arrayable;
 use Extly\Illuminate\Contracts\Support\Renderable;
 use Extly\Illuminate\Mail\Markdown;
+use Extly\Illuminate\Support\Traits\Conditionable;
 
 class MailMessage extends SimpleMessage implements Renderable
 {
+    use Conditionable;
+
     /**
      * The view to be rendered.
      *
@@ -328,44 +331,6 @@ class MailMessage extends SimpleMessage implements Renderable
     public function withSwiftMessage($callback)
     {
         $this->callbacks[] = $callback;
-
-        return $this;
-    }
-
-    /**
-     * Apply the callback's message changes if the given "value" is true.
-     *
-     * @param  mixed  $value
-     * @param  callable  $callback
-     * @param  callable|null  $default
-     * @return mixed|$this
-     */
-    public function when($value, $callback, $default = null)
-    {
-        if ($value) {
-            return $callback($this, $value) ?: $this;
-        } elseif ($default) {
-            return $default($this, $value) ?: $this;
-        }
-
-        return $this;
-    }
-
-    /**
-     * Apply the callback's message changes if the given "value" is false.
-     *
-     * @param  mixed  $value
-     * @param  callable  $callback
-     * @param  callable|null  $default
-     * @return mixed|$this
-     */
-    public function unless($value, $callback, $default = null)
-    {
-        if (! $value) {
-            return $callback($this, $value) ?: $this;
-        } elseif ($default) {
-            return $default($this, $value) ?: $this;
-        }
 
         return $this;
     }

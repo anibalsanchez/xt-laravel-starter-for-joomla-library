@@ -4,10 +4,11 @@
 namespace Extly\Illuminate\Validation\Rules;
 
 use Extly\Illuminate\Database\Eloquent\Model;
+use Extly\Illuminate\Support\Traits\Conditionable;
 
 class Unique
 {
-    use DatabaseRule;
+    use Conditionable, DatabaseRule;
 
     /**
      * The ID that should be ignored.

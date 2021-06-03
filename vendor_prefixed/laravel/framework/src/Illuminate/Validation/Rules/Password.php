@@ -9,10 +9,13 @@ use Extly\Illuminate\Contracts\Validation\Rule;
 use Extly\Illuminate\Contracts\Validation\UncompromisedVerifier;
 use Extly\Illuminate\Support\Arr;
 use Extly\Illuminate\Support\Facades\Validator;
+use Extly\Illuminate\Support\Traits\Conditionable;
 use InvalidArgumentException;
 
 class Password implements Rule, DataAwareRule
 {
+    use Conditionable;
+
     /**
      * The data under validation.
      *

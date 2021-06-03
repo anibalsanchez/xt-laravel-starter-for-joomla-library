@@ -6,7 +6,6 @@ namespace Extly\Illuminate\Foundation\Console;
 use Exception;
 use Extly\Illuminate\Console\Command;
 use Extly\Illuminate\Foundation\Exceptions\RegisterErrorViewPaths;
-use Extly\Illuminate\Support\Facades\View;
 
 class DownCommand extends Command
 {

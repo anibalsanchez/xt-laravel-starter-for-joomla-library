@@ -4,6 +4,7 @@
 namespace Extly\Illuminate\Support;
 
 use Closure;
+use Extly\Illuminate\Support\Traits\Conditionable;
 use Extly\Illuminate\Support\Traits\Macroable;
 use Extly\Illuminate\Support\Traits\Tappable;
 use JsonSerializable;
@@ -11,7 +12,7 @@ use Extly\Symfony\Component\VarDumper\VarDumper;
 
 class Stringable implements JsonSerializable
 {
-    use Macroable, Tappable;
+    use Conditionable, Macroable, Tappable;
 
     /**
      * The underlying string value.
@@ -707,38 +708,6 @@ class Stringable implements JsonSerializable
     public function ucfirst()
     {
         return new static(Str::ucfirst($this->value));
-    }
-
-    /**
-     * Apply the callback's string changes if the given "value" is false.
-     *
-     * @param  mixed  $value
-     * @param  callable  $callback
-     * @param  callable|null  $default
-     * @return mixed|$this
-     */
-    public function unless($value, $callback, $default = null)
-    {
-        return $this->when(! $value, $callback, $default);
-    }
-
-    /**
-     * Apply the callback's string changes if the given "value" is true.
-     *
-     * @param  mixed  $value
-     * @param  callable  $callback
-     * @param  callable|null  $default
-     * @return mixed|$this
-     */
-    public function when($value, $callback, $default = null)
-    {
-        if ($value) {
-            return $callback($this, $value) ?: $this;
-        } elseif ($default) {
-            return $default($this, $value) ?: $this;
-        }
-
-        return $this;
     }
 
     /**

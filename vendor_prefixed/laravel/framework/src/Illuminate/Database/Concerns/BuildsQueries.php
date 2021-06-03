@@ -11,11 +11,14 @@ use Extly\Illuminate\Pagination\LengthAwarePaginator;
 use Extly\Illuminate\Pagination\Paginator;
 use Extly\Illuminate\Support\Collection;
 use Extly\Illuminate\Support\LazyCollection;
+use Extly\Illuminate\Support\Traits\Conditionable;
 use InvalidArgumentException;
 use RuntimeException;
 
 trait BuildsQueries
 {
+    use Conditionable;
+
     /**
      * Chunk the results of the query.
      *
@@ -280,25 +283,6 @@ trait BuildsQueries
     }
 
     /**
-     * Apply the callback's query changes if the given "value" is true.
-     *
-     * @param  mixed  $value
-     * @param  callable  $callback
-     * @param  callable|null  $default
-     * @return mixed|$this
-     */
-    public function when($value, $callback, $default = null)
-    {
-        if ($value) {
-            return $callback($this, $value) ?: $this;
-        } elseif ($default) {
-            return $default($this, $value) ?: $this;
-        }
-
-        return $this;
-    }
-
-    /**
      * Pass the query to a given callback.
      *
      * @param  callable  $callback
@@ -307,25 +291,6 @@ trait BuildsQueries
     public function tap($callback)
     {
         return $this->when(true, $callback);
-    }
-
-    /**
-     * Apply the callback's query changes if the given "value" is false.
-     *
-     * @param  mixed  $value
-     * @param  callable  $callback
-     * @param  callable|null  $default
-     * @return mixed|$this
-     */
-    public function unless($value, $callback, $default = null)
-    {
-        if (! $value) {
-            return $callback($this, $value) ?: $this;
-        } elseif ($default) {
-            return $default($this, $value) ?: $this;
-        }
-
-        return $this;
     }
 
     /**
