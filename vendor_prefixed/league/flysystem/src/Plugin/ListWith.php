@@ -18,9 +18,9 @@ class ListWith extends AbstractPlugin
     /**
      * List contents with metadata.
      *
-     * @param array  $keys
-     * @param string $directory
-     * @param bool   $recursive
+     * @param string[] $keys
+     * @param string   $directory
+     * @param bool     $recursive
      *
      * @return array listing with metadata
      */

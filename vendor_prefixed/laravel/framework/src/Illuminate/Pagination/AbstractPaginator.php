@@ -9,13 +9,14 @@ use Extly\Illuminate\Support\Arr;
 use Extly\Illuminate\Support\Collection;
 use Extly\Illuminate\Support\Str;
 use Extly\Illuminate\Support\Traits\ForwardsCalls;
+use Extly\Illuminate\Support\Traits\Tappable;
 
 /**
  * @mixin \Illuminate\Support\Collection
  */
 abstract class AbstractPaginator implements Htmlable
 {
-    use ForwardsCalls;
+    use ForwardsCalls, Tappable;
 
     /**
      * All of the items being paginated.

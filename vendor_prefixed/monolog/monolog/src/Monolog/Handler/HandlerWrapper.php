@@ -45,7 +45,7 @@ class HandlerWrapper implements HandlerInterface, ProcessableHandlerInterface, F
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function isHandling(array $record): bool
     {
@@ -53,7 +53,7 @@ class HandlerWrapper implements HandlerInterface, ProcessableHandlerInterface, F
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function handle(array $record): bool
     {
@@ -61,7 +61,7 @@ class HandlerWrapper implements HandlerInterface, ProcessableHandlerInterface, F
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function handleBatch(array $records): void
     {
@@ -69,7 +69,7 @@ class HandlerWrapper implements HandlerInterface, ProcessableHandlerInterface, F
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function close(): void
     {
@@ -77,7 +77,7 @@ class HandlerWrapper implements HandlerInterface, ProcessableHandlerInterface, F
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function pushProcessor(callable $callback): HandlerInterface
     {
@@ -91,7 +91,7 @@ class HandlerWrapper implements HandlerInterface, ProcessableHandlerInterface, F
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function popProcessor(): callable
     {
@@ -103,7 +103,7 @@ class HandlerWrapper implements HandlerInterface, ProcessableHandlerInterface, F
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function setFormatter(FormatterInterface $formatter): HandlerInterface
     {
@@ -117,7 +117,7 @@ class HandlerWrapper implements HandlerInterface, ProcessableHandlerInterface, F
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getFormatter(): FormatterInterface
     {

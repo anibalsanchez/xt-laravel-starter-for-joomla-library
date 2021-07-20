@@ -6,6 +6,7 @@ namespace Extly\PhpParser\Builder;
 
 use Extly\PhpParser;
 use Extly\PhpParser\BuilderHelpers;
+use Extly\PhpParser\Node;
 use Extly\PhpParser\Node\Const_;
 use Extly\PhpParser\Node\Identifier;
 use Extly\PhpParser\Node\Stmt;
@@ -15,6 +16,9 @@ class ClassConst implements PhpParser\Builder
     protected $flags = 0;
     protected $attributes = [];
     protected $constants = [];
+
+    /** @var Node\AttributeGroup[] */
+    protected $attributeGroups = [];
 
     /**
      * Creates a class constant builder
@@ -89,6 +93,19 @@ class ClassConst implements PhpParser\Builder
     }
 
     /**
+     * Adds an attribute group.
+     *
+     * @param Node\Attribute|Node\AttributeGroup $attribute
+     *
+     * @return $this The builder instance (for fluid interface)
+     */
+    public function addAttribute($attribute) {
+        $this->attributeGroups[] = BuilderHelpers::normalizeAttribute($attribute);
+
+        return $this;
+    }
+
+    /**
      * Returns the built class node.
      *
      * @return Stmt\ClassConst The built constant node
@@ -97,7 +114,8 @@ class ClassConst implements PhpParser\Builder
         return new Stmt\ClassConst(
             $this->constants,
             $this->flags,
-            $this->attributes
+            $this->attributes,
+            $this->attributeGroups
         );
     }
 }

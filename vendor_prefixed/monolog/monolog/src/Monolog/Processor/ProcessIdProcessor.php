@@ -19,6 +19,9 @@ namespace Extly\Monolog\Processor;
  */
 class ProcessIdProcessor implements ProcessorInterface
 {
+    /**
+     * {@inheritDoc}
+     */
     public function __invoke(array $record): array
     {
         $record['extra']['process_id'] = getmypid();

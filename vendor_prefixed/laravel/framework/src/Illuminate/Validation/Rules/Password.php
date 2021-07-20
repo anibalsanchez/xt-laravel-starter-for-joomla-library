@@ -7,14 +7,22 @@ use Extly\Illuminate\Container\Container;
 use Extly\Illuminate\Contracts\Validation\DataAwareRule;
 use Extly\Illuminate\Contracts\Validation\Rule;
 use Extly\Illuminate\Contracts\Validation\UncompromisedVerifier;
+use Extly\Illuminate\Contracts\Validation\ValidatorAwareRule;
 use Extly\Illuminate\Support\Arr;
 use Extly\Illuminate\Support\Facades\Validator;
 use Extly\Illuminate\Support\Traits\Conditionable;
 use InvalidArgumentException;
 
-class Password implements Rule, DataAwareRule
+class Password implements Rule, DataAwareRule, ValidatorAwareRule
 {
     use Conditionable;
+
+    /**
+     * The validator performing the validation.
+     *
+     * @var \Illuminate\Contracts\Validation\Validator
+     */
+    protected $validator;
 
     /**
      * The data under validation.
@@ -125,7 +133,9 @@ class Password implements Rule, DataAwareRule
      */
     public static function default()
     {
-        $password = XT_value(static::$defaultCallback);
+        $password = is_callable(static::$defaultCallback)
+                            ? call_user_func(static::$defaultCallback)
+                            : static::$defaultCallback;
 
         return $password instanceof Rule ? $password : static::min(8);
     }
@@ -148,6 +158,19 @@ class Password implements Rule, DataAwareRule
     public static function sometimes()
     {
         return ['sometimes', static::default()];
+    }
+
+    /**
+     * Set the performing validator.
+     *
+     * @param \Illuminate\Contracts\Validation\Validator $validator
+     * @return $this
+     */
+    public function setValidator($validator)
+    {
+        $this->validator = $validator;
+
+        return $this;
     }
 
     /**
@@ -307,7 +330,7 @@ class Password implements Rule, DataAwareRule
     protected function fail($messages)
     {
         $messages = XT_collect(Arr::wrap($messages))->map(function ($message) {
-            return __($message);
+            return $this->validator->getTranslator()->get($message);
         })->all();
 
         $this->messages = array_merge($this->messages, $messages);

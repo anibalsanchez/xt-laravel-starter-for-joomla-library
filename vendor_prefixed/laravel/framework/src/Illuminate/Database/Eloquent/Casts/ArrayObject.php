@@ -6,6 +6,7 @@ namespace Extly\Illuminate\Database\Eloquent\Casts;
 use ArrayObject as BaseArrayObject;
 use Extly\Illuminate\Contracts\Support\Arrayable;
 use JsonSerializable;
+use ReturnTypeWillChange;
 
 class ArrayObject extends BaseArrayObject implements Arrayable, JsonSerializable
 {
@@ -34,6 +35,7 @@ class ArrayObject extends BaseArrayObject implements Arrayable, JsonSerializable
      *
      * @return array
      */
+    #[ReturnTypeWillChange]
     public function jsonSerialize()
     {
         return $this->getArrayCopy();

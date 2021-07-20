@@ -17,14 +17,14 @@ class Sequence
      *
      * @var int
      */
-    protected $count;
+    public $count;
 
     /**
-     * The current index of the sequence.
+     * The current index of the sequence iteration.
      *
      * @var int
      */
-    protected $index = 0;
+    public $index = 0;
 
     /**
      * Create a new sequence instance.
@@ -45,11 +45,7 @@ class Sequence
      */
     public function __invoke()
     {
-        if ($this->index >= $this->count) {
-            $this->index = 0;
-        }
-
-        return XT_tap(XT_value($this->sequence[$this->index]), function () {
+        return XT_tap(XT_value($this->sequence[$this->index % $this->count], $this), function () {
             $this->index = $this->index + 1;
         });
     }

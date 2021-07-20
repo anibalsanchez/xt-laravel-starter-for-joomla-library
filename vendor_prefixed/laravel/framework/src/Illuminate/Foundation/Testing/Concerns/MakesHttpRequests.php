@@ -7,6 +7,7 @@ use Extly\Illuminate\Contracts\Http\Kernel as HttpKernel;
 use Extly\Illuminate\Cookie\CookieValuePrefix;
 use Extly\Illuminate\Http\Request;
 use Extly\Illuminate\Support\Str;
+use Extly\Illuminate\Testing\LoggedExceptionCollection;
 use Extly\Illuminate\Testing\TestResponse;
 use Extly\Symfony\Component\HttpFoundation\File\UploadedFile as SymfonyUploadedFile;
 use Extly\Symfony\Component\HttpFoundation\Request as SymfonyRequest;
@@ -642,6 +643,12 @@ trait MakesHttpRequests
      */
     protected function createTestResponse($response)
     {
-        return TestResponse::fromBaseResponse($response);
+        return XT_tap(TestResponse::fromBaseResponse($response), function ($response) {
+            $response->withExceptions(
+                $this->app->bound(LoggedExceptionCollection::class)
+                    ? $this->app->make(LoggedExceptionCollection::class)
+                    : new LoggedExceptionCollection
+            );
+        });
     }
 }

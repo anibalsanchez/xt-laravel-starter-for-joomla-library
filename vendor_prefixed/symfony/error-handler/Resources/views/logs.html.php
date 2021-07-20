@@ -19,7 +19,7 @@ e class="logs" data-filter-level="Emergency,Alert,Critical,Error,Warning,Notice,
             $status = 'warning';
         } else {
             $severity = 0;
-            if (($exception = $log['context']['exception'] ?? null) instanceof \ErrorException) {
+            if (($exception = $log['context']['exception'] ?? null) instanceof \ErrorException || $exception instanceof \Symfony\Component\ErrorHandler\Exception\SilencedErrorContext) {
                 $severity = $exception->getSeverity();
             }
             $status = \E_DEPRECATED === $severity || \E_USER_DEPRECATED === $severity ? 'warning' : 'normal';

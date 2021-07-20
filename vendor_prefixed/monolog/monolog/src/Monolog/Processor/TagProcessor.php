@@ -19,13 +19,20 @@ namespace Extly\Monolog\Processor;
  */
 class TagProcessor implements ProcessorInterface
 {
+    /** @var string[] */
     private $tags;
 
+    /**
+     * @param string[] $tags
+     */
     public function __construct(array $tags = [])
     {
         $this->setTags($tags);
     }
 
+    /**
+     * @param string[] $tags
+     */
     public function addTags(array $tags = []): self
     {
         $this->tags = array_merge($this->tags, $tags);
@@ -33,6 +40,9 @@ class TagProcessor implements ProcessorInterface
         return $this;
     }
 
+    /**
+     * @param string[] $tags
+     */
     public function setTags(array $tags = []): self
     {
         $this->tags = $tags;
@@ -40,6 +50,9 @@ class TagProcessor implements ProcessorInterface
         return $this;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function __invoke(array $record): array
     {
         $record['extra']['tags'] = $this->tags;

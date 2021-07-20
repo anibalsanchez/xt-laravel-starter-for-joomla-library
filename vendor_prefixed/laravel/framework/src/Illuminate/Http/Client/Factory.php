@@ -4,7 +4,9 @@
 namespace Extly\Illuminate\Http\Client;
 
 use Closure;
+use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\Response as Psr7Response;
+use GuzzleHttp\TransferStats;
 use Extly\Illuminate\Contracts\Events\Dispatcher;
 use Extly\Illuminate\Support\Str;
 use Extly\Illuminate\Support\Traits\Macroable;
@@ -163,11 +165,20 @@ class Factory
         }
 
         $this->stubCallbacks = $this->stubCallbacks->merge(XT_collect([
-            $callback instanceof Closure
-                    ? $callback
-                    : function () use ($callback) {
-                        return $callback;
-                    },
+            function ($request, $options) use ($callback) {
+                $response = $callback instanceof Closure
+                                ? $callback($request, $options)
+                                : $callback;
+
+                if ($response instanceof PromiseInterface) {
+                    $options['on_stats'](new TransferStats(
+                        $request->toPsrRequest(),
+                        $response->wait(),
+                    ));
+                }
+
+                return $response;
+            },
         ]));
 
         return $this;

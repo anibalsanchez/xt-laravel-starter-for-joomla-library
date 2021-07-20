@@ -21,6 +21,7 @@ use Extly\Monolog\ResettableInterface;
  */
 class UidProcessor implements ProcessorInterface, ResettableInterface
 {
+    /** @var string */
     private $uid;
 
     public function __construct(int $length = 7)
@@ -32,6 +33,9 @@ class UidProcessor implements ProcessorInterface, ResettableInterface
         $this->uid = $this->generateUid($length);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function __invoke(array $record): array
     {
         $record['extra']['uid'] = $this->uid;

@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Extly\Monolog\Handler;
 
 use Extly\Monolog\Logger;
+use Psr\Log\LogLevel;
 
 /**
  * Blackhole
@@ -21,6 +22,9 @@ use Extly\Monolog\Logger;
  * to put on top of an existing stack to override it temporarily.
  *
  * @author Jordi Boggiano <j.boggiano@seld.be>
+ *
+ * @phpstan-import-type Level from \Monolog\Logger
+ * @phpstan-import-type LevelName from \Monolog\Logger
  */
 class NullHandler extends Handler
 {
@@ -31,6 +35,8 @@ class NullHandler extends Handler
 
     /**
      * @param string|int $level The minimum logging level at which this handler will be triggered
+     *
+     * @phpstan-param Level|LevelName|LogLevel::* $level
      */
     public function __construct($level = Logger::DEBUG)
     {
@@ -38,7 +44,7 @@ class NullHandler extends Handler
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function isHandling(array $record): bool
     {
@@ -46,7 +52,7 @@ class NullHandler extends Handler
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function handle(array $record): bool
     {

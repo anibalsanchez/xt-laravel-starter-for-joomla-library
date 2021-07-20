@@ -20,6 +20,9 @@ namespace Extly\Monolog\Processor;
  */
 class MemoryUsageProcessor extends MemoryProcessor
 {
+    /**
+     * {@inheritDoc}
+     */
     public function __invoke(array $record): array
     {
         $usage = memory_get_usage($this->realUsage);

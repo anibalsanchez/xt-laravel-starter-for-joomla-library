@@ -4,6 +4,7 @@
 namespace Extly\Illuminate\Session;
 
 use Extly\Illuminate\Support\InteractsWithTime;
+use ReturnTypeWillChange;
 use SessionHandlerInterface;
 
 class ArraySessionHandler implements SessionHandlerInterface
@@ -38,6 +39,7 @@ class ArraySessionHandler implements SessionHandlerInterface
     /**
      * {@inheritdoc}
      */
+    #[ReturnTypeWillChange]
     public function open($savePath, $sessionName)
     {
         return true;
@@ -46,6 +48,7 @@ class ArraySessionHandler implements SessionHandlerInterface
     /**
      * {@inheritdoc}
      */
+    #[ReturnTypeWillChange]
     public function close()
     {
         return true;
@@ -54,6 +57,7 @@ class ArraySessionHandler implements SessionHandlerInterface
     /**
      * {@inheritdoc}
      */
+    #[ReturnTypeWillChange]
     public function read($sessionId)
     {
         if (! isset($this->storage[$sessionId])) {
@@ -74,6 +78,7 @@ class ArraySessionHandler implements SessionHandlerInterface
     /**
      * {@inheritdoc}
      */
+    #[ReturnTypeWillChange]
     public function write($sessionId, $data)
     {
         $this->storage[$sessionId] = [
@@ -87,6 +92,7 @@ class ArraySessionHandler implements SessionHandlerInterface
     /**
      * {@inheritdoc}
      */
+    #[ReturnTypeWillChange]
     public function destroy($sessionId)
     {
         if (isset($this->storage[$sessionId])) {
@@ -99,6 +105,7 @@ class ArraySessionHandler implements SessionHandlerInterface
     /**
      * {@inheritdoc}
      */
+    #[ReturnTypeWillChange]
     public function gc($lifetime)
     {
         $expiration = $this->calculateExpiration($lifetime);

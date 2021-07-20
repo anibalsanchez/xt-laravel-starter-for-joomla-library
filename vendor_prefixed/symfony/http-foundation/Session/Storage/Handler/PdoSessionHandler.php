@@ -263,6 +263,7 @@ class PdoSessionHandler extends AbstractSessionHandler
     /**
      * @return bool
      */
+    #[\ReturnTypeWillChange]
     public function open($savePath, $sessionName)
     {
         $this->sessionExpired = false;
@@ -277,6 +278,7 @@ class PdoSessionHandler extends AbstractSessionHandler
     /**
      * @return string
      */
+    #[\ReturnTypeWillChange]
     public function read($sessionId)
     {
         try {
@@ -291,6 +293,7 @@ class PdoSessionHandler extends AbstractSessionHandler
     /**
      * @return bool
      */
+    #[\ReturnTypeWillChange]
     public function gc($maxlifetime)
     {
         // We delay gc() to close() so that it is executed outside the transactional and blocking read-write process.
@@ -370,6 +373,7 @@ class PdoSessionHandler extends AbstractSessionHandler
     /**
      * @return bool
      */
+    #[\ReturnTypeWillChange]
     public function updateTimestamp($sessionId, $data)
     {
         $expiry = time() + (int) ini_get('session.gc_maxlifetime');
@@ -394,6 +398,7 @@ class PdoSessionHandler extends AbstractSessionHandler
     /**
      * @return bool
      */
+    #[\ReturnTypeWillChange]
     public function close()
     {
         $this->commit();

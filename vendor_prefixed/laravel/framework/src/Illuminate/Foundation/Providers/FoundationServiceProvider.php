@@ -4,8 +4,10 @@
 namespace Extly\Illuminate\Foundation\Providers;
 
 use Extly\Illuminate\Http\Request;
+use Extly\Illuminate\Log\Events\MessageLogged;
 use Extly\Illuminate\Support\AggregateServiceProvider;
 use Extly\Illuminate\Support\Facades\URL;
+use Extly\Illuminate\Testing\LoggedExceptionCollection;
 use Extly\Illuminate\Testing\ParallelTestingServiceProvider;
 use Extly\Illuminate\Validation\ValidationException;
 
@@ -46,6 +48,7 @@ class FoundationServiceProvider extends AggregateServiceProvider
 
         $this->registerRequestValidation();
         $this->registerRequestSignatureValidation();
+        $this->registerExceptionTracking();
     }
 
     /**
@@ -85,6 +88,30 @@ class FoundationServiceProvider extends AggregateServiceProvider
 
         Request::macro('hasValidRelativeSignature', function () {
             return URL::hasValidSignature($this, $absolute = false);
+        });
+    }
+
+    /**
+     * Register an event listener to track logged exceptions.
+     *
+     * @return void
+     */
+    protected function registerExceptionTracking()
+    {
+        if (! $this->app->runningUnitTests()) {
+            return;
+        }
+
+        $this->app->instance(
+            LoggedExceptionCollection::class,
+            new LoggedExceptionCollection
+        );
+
+        $this->app->make('events')->listen(MessageLogged::class, function ($event) {
+            if (isset($event->context['exception'])) {
+                $this->app->make(LoggedExceptionCollection::class)
+                        ->push($event->context['exception']);
+            }
         });
     }
 }

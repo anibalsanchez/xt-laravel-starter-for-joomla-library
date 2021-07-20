@@ -97,6 +97,8 @@ trait SoftDeletes
         $query->update($columns);
 
         $this->syncOriginalAttributes(array_keys($columns));
+
+        $this->fireModelEvent('trashed', false);
     }
 
     /**
@@ -135,6 +137,17 @@ trait SoftDeletes
     public function trashed()
     {
         return ! is_null($this->{$this->getDeletedAtColumn()});
+    }
+
+    /**
+     * Register a "softDeleted" model event callback with the dispatcher.
+     *
+     * @param  \Closure|string  $callback
+     * @return void
+     */
+    public static function softDeleted($callback)
+    {
+        static::registerModelEvent('trashed', $callback);
     }
 
     /**

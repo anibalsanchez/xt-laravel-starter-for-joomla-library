@@ -13,21 +13,25 @@ declare(strict_types=1);
 namespace Extly\Monolog\Handler;
 
 use Extly\Monolog\ResettableInterface;
+use Extly\Monolog\Processor\ProcessorInterface;
 
 /**
  * Helper trait for implementing ProcessableInterface
  *
  * @author Jordi Boggiano <j.boggiano@seld.be>
+ *
+ * @phpstan-import-type Record from \Monolog\Logger
  */
 trait ProcessableHandlerTrait
 {
     /**
      * @var callable[]
+     * @phpstan-var array<ProcessorInterface|callable(Record): Record>
      */
     protected $processors = [];
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function pushProcessor(callable $callback): HandlerInterface
     {
@@ -37,7 +41,7 @@ trait ProcessableHandlerTrait
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function popProcessor(): callable
     {
@@ -50,6 +54,9 @@ trait ProcessableHandlerTrait
 
     /**
      * Processes a record.
+     *
+     * @phpstan-param  Record $record
+     * @phpstan-return Record
      */
     protected function processRecord(array $record): array
     {

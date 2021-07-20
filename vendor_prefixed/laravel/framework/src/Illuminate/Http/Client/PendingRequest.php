@@ -9,6 +9,7 @@ use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Exception\TransferException;
 use GuzzleHttp\HandlerStack;
+use Extly\Illuminate\Http\Client\Events\ConnectionFailed;
 use Extly\Illuminate\Http\Client\Events\RequestSending;
 use Extly\Illuminate\Http\Client\Events\ResponseReceived;
 use Extly\Illuminate\Support\Collection;
@@ -157,11 +158,11 @@ class PendingRequest
             'http_errors' => false,
         ];
 
-        $this->beforeSendingCallbacks = XT_collect([function (Request $request, array $options) {
-            $this->request = $request;
-            $this->cookies = $options['cookies'];
+        $this->beforeSendingCallbacks = XT_collect([function (Request $request, array $options, PendingRequest $pendingRequest) {
+            $pendingRequest->request = $request;
+            $pendingRequest->cookies = $options['cookies'];
 
-            $this->dispatchRequestSendingEvent();
+            $pendingRequest->dispatchRequestSendingEvent();
         }]);
     }
 
@@ -624,8 +625,6 @@ class PendingRequest
             $results[$key] = $item instanceof static ? $item->getPromise()->wait() : $item->wait();
         }
 
-        ksort($results);
-
         return $results;
     }
 
@@ -677,6 +676,8 @@ class PendingRequest
                     $this->dispatchResponseReceivedEvent($response);
                 });
             } catch (ConnectException $e) {
+                $this->dispatchConnectionFailedEvent();
+
                 throw new ConnectionException($e->getMessage(), 0, $e);
             }
         }, $this->retryDelay ?? 100);
@@ -707,7 +708,10 @@ class PendingRequest
     {
         return $this->promise = $this->sendRequest($method, $url, $options)
             ->then(function (MessageInterface $message) {
-                return $this->populateResponse(new Response($message));
+                return XT_tap(new Response($message), function ($response) {
+                    $this->populateResponse($response);
+                    $this->dispatchResponseReceivedEvent($response);
+                });
             })
             ->otherwise(function (TransferException $e) {
                 return $e instanceof RequestException ? $this->populateResponse(new Response($e->getResponse())) : $e;
@@ -914,7 +918,8 @@ class PendingRequest
         return XT_tap($request, function ($request) use ($options) {
             $this->beforeSendingCallbacks->each->__invoke(
                 (new Request($request))->withData($options['laravel_data']),
-                $options
+                $options,
+                $this
             );
         });
     }
@@ -986,8 +991,23 @@ class PendingRequest
      */
     protected function dispatchResponseReceivedEvent(Response $response)
     {
+        if (! ($dispatcher = XT_optional($this->factory)->getDispatcher()) ||
+            ! $this->request) {
+            return;
+        }
+
+        $dispatcher->dispatch(new ResponseReceived($this->request, $response));
+    }
+
+    /**
+     * Dispatch the ConnectionFailed event if a dispatcher is available.
+     *
+     * @return void
+     */
+    protected function dispatchConnectionFailedEvent()
+    {
         if ($dispatcher = XT_optional($this->factory)->getDispatcher()) {
-            $dispatcher->dispatch(new ResponseReceived($this->request, $response));
+            $dispatcher->dispatch(new ConnectionFailed($this->request));
         }
     }
 

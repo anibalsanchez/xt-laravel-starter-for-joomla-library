@@ -12,6 +12,7 @@ use Extly\Illuminate\Queue\SerializableClosure;
 use Extly\Illuminate\Support\Arr;
 use Extly\Illuminate\Support\Collection;
 use JsonSerializable;
+use ReturnTypeWillChange;
 use Throwable;
 
 class Batch implements Arrayable, JsonSerializable
@@ -460,6 +461,7 @@ class Batch implements Arrayable, JsonSerializable
      *
      * @return array
      */
+    #[ReturnTypeWillChange]
     public function jsonSerialize()
     {
         return $this->toArray();

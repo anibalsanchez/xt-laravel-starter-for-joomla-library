@@ -24,6 +24,7 @@ use Doctrine\CouchDB\CouchDBClient;
  */
 class DoctrineCouchDBHandler extends AbstractProcessingHandler
 {
+    /** @var CouchDBClient */
     private $client;
 
     public function __construct(CouchDBClient $client, $level = Logger::DEBUG, bool $bubble = true)

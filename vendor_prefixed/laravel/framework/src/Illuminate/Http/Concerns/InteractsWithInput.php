@@ -113,12 +113,17 @@ trait InteractsWithInput
      *
      * @param  string  $key
      * @param  callable  $callback
+     * @param  callable|null  $default
      * @return $this|mixed
      */
-    public function whenHas($key, callable $callback)
+    public function whenHas($key, callable $callback, callable $default = null)
     {
         if ($this->has($key)) {
             return $callback(XT_data_get($this->all(), $key)) ?: $this;
+        }
+
+        if ($default) {
+            return $default();
         }
 
         return $this;
@@ -186,12 +191,17 @@ trait InteractsWithInput
      *
      * @param  string  $key
      * @param  callable  $callback
+     * @param  callable|null  $default
      * @return $this|mixed
      */
-    public function whenFilled($key, callable $callback)
+    public function whenFilled($key, callable $callback, callable $default = null)
     {
         if ($this->filled($key)) {
             return $callback(XT_data_get($this->all(), $key)) ?: $this;
+        }
+
+        if ($default) {
+            return $default();
         }
 
         return $this;

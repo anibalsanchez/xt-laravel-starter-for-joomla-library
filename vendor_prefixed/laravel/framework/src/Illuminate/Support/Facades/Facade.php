@@ -5,7 +5,7 @@ namespace Extly\Illuminate\Support\Facades;
 
 use Closure;
 use Mockery;
-use Mockery\MockInterface;
+use Mockery\LegacyMockInterface;
 use RuntimeException;
 
 abstract class Facade
@@ -127,7 +127,7 @@ abstract class Facade
         $name = static::getFacadeAccessor();
 
         return isset(static::$resolvedInstance[$name]) &&
-               static::$resolvedInstance[$name] instanceof MockInterface;
+               static::$resolvedInstance[$name] instanceof LegacyMockInterface;
     }
 
     /**

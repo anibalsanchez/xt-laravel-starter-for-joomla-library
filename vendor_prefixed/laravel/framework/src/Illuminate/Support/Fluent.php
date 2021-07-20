@@ -7,6 +7,7 @@ use ArrayAccess;
 use Extly\Illuminate\Contracts\Support\Arrayable;
 use Extly\Illuminate\Contracts\Support\Jsonable;
 use JsonSerializable;
+use ReturnTypeWillChange;
 
 class Fluent implements Arrayable, ArrayAccess, Jsonable, JsonSerializable
 {
@@ -71,6 +72,7 @@ class Fluent implements Arrayable, ArrayAccess, Jsonable, JsonSerializable
      *
      * @return array
      */
+    #[ReturnTypeWillChange]
     public function jsonSerialize()
     {
         return $this->toArray();

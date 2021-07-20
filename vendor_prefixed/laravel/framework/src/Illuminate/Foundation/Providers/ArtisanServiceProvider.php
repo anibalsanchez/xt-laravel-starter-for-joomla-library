@@ -16,6 +16,7 @@ use Extly\Illuminate\Contracts\Support\DeferrableProvider;
 use Extly\Illuminate\Database\Console\DbCommand;
 use Extly\Illuminate\Database\Console\DumpCommand;
 use Extly\Illuminate\Database\Console\Factories\FactoryMakeCommand;
+use Extly\Illuminate\Database\Console\PruneCommand;
 use Extly\Illuminate\Database\Console\Seeds\SeedCommand;
 use Extly\Illuminate\Database\Console\Seeds\SeederMakeCommand;
 use Extly\Illuminate\Database\Console\WipeCommand;
@@ -69,6 +70,7 @@ use Extly\Illuminate\Queue\Console\ForgetFailedCommand as ForgetFailedQueueComma
 use Extly\Illuminate\Queue\Console\ListenCommand as QueueListenCommand;
 use Extly\Illuminate\Queue\Console\ListFailedCommand as ListFailedQueueCommand;
 use Extly\Illuminate\Queue\Console\PruneBatchesCommand as PruneBatchesQueueCommand;
+use Extly\Illuminate\Queue\Console\PruneFailedJobsCommand;
 use Extly\Illuminate\Queue\Console\RestartCommand as QueueRestartCommand;
 use Extly\Illuminate\Queue\Console\RetryBatchCommand as QueueRetryBatchCommand;
 use Extly\Illuminate\Queue\Console\RetryCommand as QueueRetryCommand;
@@ -94,6 +96,7 @@ class ArtisanServiceProvider extends ServiceProvider implements DeferrableProvid
         'ConfigCache' => 'command.config.cache',
         'ConfigClear' => 'command.config.clear',
         'Db' => DbCommand::class,
+        'DbPrune' => 'command.db.prune',
         'DbWipe' => 'command.db.wipe',
         'Down' => 'command.down',
         'Environment' => 'command.environment',
@@ -110,6 +113,7 @@ class ArtisanServiceProvider extends ServiceProvider implements DeferrableProvid
         'QueueForget' => 'command.queue.forget',
         'QueueListen' => 'command.queue.listen',
         'QueuePruneBatches' => 'command.queue.prune-batches',
+        'QueuePruneFailedJobs' => 'command.queue.prune-failed-jobs',
         'QueueRestart' => 'command.queue.restart',
         'QueueRetry' => 'command.queue.retry',
         'QueueRetryBatch' => 'command.queue.retry-batch',
@@ -349,6 +353,18 @@ class ArtisanServiceProvider extends ServiceProvider implements DeferrableProvid
     protected function registerDbCommand()
     {
         $this->app->singleton(DbCommand::class);
+    }
+
+    /**
+     * Register the command.
+     *
+     * @return void
+     */
+    protected function registerDbPruneCommand()
+    {
+        $this->app->singleton('command.db.prune', function ($app) {
+            return new PruneCommand($app['events']);
+        });
     }
 
     /**
@@ -696,6 +712,18 @@ class ArtisanServiceProvider extends ServiceProvider implements DeferrableProvid
     {
         $this->app->singleton('command.queue.prune-batches', function () {
             return new PruneBatchesQueueCommand;
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @return void
+     */
+    protected function registerQueuePruneFailedJobsCommand()
+    {
+        $this->app->singleton('command.queue.prune-failed-jobs', function () {
+            return new PruneFailedJobsCommand;
         });
     }
 

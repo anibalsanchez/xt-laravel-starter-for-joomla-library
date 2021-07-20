@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Extly\Monolog\Handler;
 
+use Elastica\Document;
 use Extly\Monolog\Formatter\FormatterInterface;
 use Extly\Monolog\Formatter\ElasticaFormatter;
 use Extly\Monolog\Logger;
@@ -42,15 +43,13 @@ class ElasticaHandler extends AbstractProcessingHandler
     protected $client;
 
     /**
-     * @var array Handler config options
+     * @var mixed[] Handler config options
      */
     protected $options = [];
 
     /**
-     * @param Client     $client  Elastica Client object
-     * @param array      $options Handler configuration
-     * @param int|string $level   The minimum logging level at which this handler will be triggered
-     * @param bool       $bubble  Whether the messages that are handled can bubble up the stack or not
+     * @param Client  $client  Elastica Client object
+     * @param mixed[] $options Handler configuration
      */
     public function __construct(Client $client, array $options = [], $level = Logger::DEBUG, bool $bubble = true)
     {
@@ -75,7 +74,7 @@ class ElasticaHandler extends AbstractProcessingHandler
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function setFormatter(FormatterInterface $formatter): HandlerInterface
     {
@@ -86,6 +85,9 @@ class ElasticaHandler extends AbstractProcessingHandler
         throw new \InvalidArgumentException('ElasticaHandler is only compatible with ElasticaFormatter');
     }
 
+    /**
+     * @return mixed[]
+     */
     public function getOptions(): array
     {
         return $this->options;
@@ -100,7 +102,7 @@ class ElasticaHandler extends AbstractProcessingHandler
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function handleBatch(array $records): void
     {
@@ -110,6 +112,9 @@ class ElasticaHandler extends AbstractProcessingHandler
 
     /**
      * Use Elasticsearch bulk API to send list of documents
+     *
+     * @param Document[] $documents
+     *
      * @throws \RuntimeException
      */
     protected function bulkSend(array $documents): void

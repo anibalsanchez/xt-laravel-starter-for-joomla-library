@@ -1,4 +1,5 @@
-<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 
 /*
  * This file is part of the Symfony package.
@@ -42,7 +43,7 @@ class CliDescriptor implements DumpDescriptorInterface
         $io = $output instanceof SymfonyStyle ? $output : new SymfonyStyle(new ArrayInput([]), $output);
         $this->dumper->setColors($output->isDecorated());
 
-        $rows = [['date', date('r', $context['timestamp'])]];
+        $rows = [['date', date('r', (int) $context['timestamp'])]];
         $lastIdentifier = $this->lastIdentifier;
         $this->lastIdentifier = $clientId;
 

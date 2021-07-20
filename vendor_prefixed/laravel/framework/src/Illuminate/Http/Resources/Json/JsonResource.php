@@ -12,6 +12,7 @@ use Extly\Illuminate\Database\Eloquent\JsonEncodingException;
 use Extly\Illuminate\Http\Resources\ConditionallyLoadsAttributes;
 use Extly\Illuminate\Http\Resources\DelegatesToResource;
 use JsonSerializable;
+use ReturnTypeWillChange;
 
 class JsonResource implements ArrayAccess, JsonSerializable, Responsable, UrlRoutable
 {
@@ -109,7 +110,7 @@ class JsonResource implements ArrayAccess, JsonSerializable, Responsable, UrlRou
      * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
     public function toArray($request)
     {
@@ -227,6 +228,7 @@ class JsonResource implements ArrayAccess, JsonSerializable, Responsable, UrlRou
      *
      * @return array
      */
+    #[ReturnTypeWillChange]
     public function jsonSerialize()
     {
         return $this->resolve(Container::getInstance()->make('XT_request'));

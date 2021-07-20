@@ -34,7 +34,7 @@ class Application extends Container implements ApplicationContract, CachesConfig
      *
      * @var string
      */
-    const VERSION = '8.45.0';
+    const VERSION = '8.51.0';
 
     /**
      * The base path for the Laravel installation.
@@ -639,7 +639,7 @@ class Application extends Container implements ApplicationContract, CachesConfig
      */
     public function registerConfiguredProviders()
     {
-        $providers = Collection::make($this->config['app.providers'])
+        $providers = Collection::make($this->make('config')->get('app.providers'))
                         ->partition(function ($provider) {
                             return strpos($provider, 'Extly\\Illuminate\\') === 0;
                         });
@@ -1294,44 +1294,44 @@ class Application extends Container implements ApplicationContract, CachesConfig
     public function registerCoreContainerAliases()
     {
         foreach ([
-            'app'                  => [self::class, \Extly\Illuminate\Contracts\Container\Container::class, \Extly\Illuminate\Contracts\Foundation\Application::class, \Psr\Container\ContainerInterface::class],
-            'auth'                 => [\Extly\Illuminate\Auth\AuthManager::class, \Extly\Illuminate\Contracts\Auth\Factory::class],
-            'auth.driver'          => [\Extly\Illuminate\Contracts\Auth\Guard::class],
-            'blade.compiler'       => [\Extly\Illuminate\View\Compilers\BladeCompiler::class],
-            'cache'                => [\Extly\Illuminate\Cache\CacheManager::class, \Extly\Illuminate\Contracts\Cache\Factory::class],
-            'cache.store'          => [\Extly\Illuminate\Cache\Repository::class, \Extly\Illuminate\Contracts\Cache\Repository::class, \Psr\SimpleCache\CacheInterface::class],
-            'cache.psr6'           => [\Extly\Symfony\Component\Cache\Adapter\Psr16Adapter::class, \Extly\Symfony\Component\Cache\Adapter\AdapterInterface::class, \Psr\Cache\CacheItemPoolInterface::class],
-            'config'               => [\Extly\Illuminate\Config\Repository::class, \Extly\Illuminate\Contracts\Config\Repository::class],
-            'cookie'               => [\Extly\Illuminate\Cookie\CookieJar::class, \Extly\Illuminate\Contracts\Cookie\Factory::class, \Extly\Illuminate\Contracts\Cookie\QueueingFactory::class],
-            'db'                   => [\Extly\Illuminate\Database\DatabaseManager::class, \Extly\Illuminate\Database\ConnectionResolverInterface::class],
-            'db.connection'        => [\Extly\Illuminate\Database\Connection::class, \Extly\Illuminate\Database\ConnectionInterface::class],
-            'encrypter'            => [\Extly\Illuminate\Encryption\Encrypter::class, \Extly\Illuminate\Contracts\Encryption\Encrypter::class, \Extly\Illuminate\Contracts\Encryption\StringEncrypter::class],
-            'events'               => [\Extly\Illuminate\Events\Dispatcher::class, \Extly\Illuminate\Contracts\Events\Dispatcher::class],
-            'files'                => [\Extly\Illuminate\Filesystem\Filesystem::class],
-            'filesystem'           => [\Extly\Illuminate\Filesystem\FilesystemManager::class, \Extly\Illuminate\Contracts\Filesystem\Factory::class],
-            'filesystem.disk'      => [\Extly\Illuminate\Contracts\Filesystem\Filesystem::class],
-            'filesystem.cloud'     => [\Extly\Illuminate\Contracts\Filesystem\Cloud::class],
-            'hash'                 => [\Extly\Illuminate\Hashing\HashManager::class],
-            'hash.driver'          => [\Extly\Illuminate\Contracts\Hashing\Hasher::class],
-            'translator'           => [\Extly\Illuminate\Translation\Translator::class, \Extly\Illuminate\Contracts\Translation\Translator::class],
-            'log'                  => [\Extly\Illuminate\Log\LogManager::class, \Psr\Log\LoggerInterface::class],
-            'mail.manager'         => [\Extly\Illuminate\Mail\MailManager::class, \Extly\Illuminate\Contracts\Mail\Factory::class],
-            'mailer'               => [\Extly\Illuminate\Mail\Mailer::class, \Extly\Illuminate\Contracts\Mail\Mailer::class, \Extly\Illuminate\Contracts\Mail\MailQueue::class],
-            'auth.password'        => [\Extly\Illuminate\Auth\Passwords\PasswordBrokerManager::class, \Extly\Illuminate\Contracts\Auth\PasswordBrokerFactory::class],
+            'app' => [self::class, \Extly\Illuminate\Contracts\Container\Container::class, \Extly\Illuminate\Contracts\Foundation\Application::class, \Psr\Container\ContainerInterface::class],
+            'auth' => [\Extly\Illuminate\Auth\AuthManager::class, \Extly\Illuminate\Contracts\Auth\Factory::class],
+            'auth.driver' => [\Extly\Illuminate\Contracts\Auth\Guard::class],
+            'blade.compiler' => [\Extly\Illuminate\View\Compilers\BladeCompiler::class],
+            'cache' => [\Extly\Illuminate\Cache\CacheManager::class, \Extly\Illuminate\Contracts\Cache\Factory::class],
+            'cache.store' => [\Extly\Illuminate\Cache\Repository::class, \Extly\Illuminate\Contracts\Cache\Repository::class, \Psr\SimpleCache\CacheInterface::class],
+            'cache.psr6' => [\Extly\Symfony\Component\Cache\Adapter\Psr16Adapter::class, \Extly\Symfony\Component\Cache\Adapter\AdapterInterface::class, \Psr\Cache\CacheItemPoolInterface::class],
+            'config' => [\Extly\Illuminate\Config\Repository::class, \Extly\Illuminate\Contracts\Config\Repository::class],
+            'cookie' => [\Extly\Illuminate\Cookie\CookieJar::class, \Extly\Illuminate\Contracts\Cookie\Factory::class, \Extly\Illuminate\Contracts\Cookie\QueueingFactory::class],
+            'db' => [\Extly\Illuminate\Database\DatabaseManager::class, \Extly\Illuminate\Database\ConnectionResolverInterface::class],
+            'db.connection' => [\Extly\Illuminate\Database\Connection::class, \Extly\Illuminate\Database\ConnectionInterface::class],
+            'encrypter' => [\Extly\Illuminate\Encryption\Encrypter::class, \Extly\Illuminate\Contracts\Encryption\Encrypter::class, \Extly\Illuminate\Contracts\Encryption\StringEncrypter::class],
+            'events' => [\Extly\Illuminate\Events\Dispatcher::class, \Extly\Illuminate\Contracts\Events\Dispatcher::class],
+            'files' => [\Extly\Illuminate\Filesystem\Filesystem::class],
+            'filesystem' => [\Extly\Illuminate\Filesystem\FilesystemManager::class, \Extly\Illuminate\Contracts\Filesystem\Factory::class],
+            'filesystem.disk' => [\Extly\Illuminate\Contracts\Filesystem\Filesystem::class],
+            'filesystem.cloud' => [\Extly\Illuminate\Contracts\Filesystem\Cloud::class],
+            'hash' => [\Extly\Illuminate\Hashing\HashManager::class],
+            'hash.driver' => [\Extly\Illuminate\Contracts\Hashing\Hasher::class],
+            'translator' => [\Extly\Illuminate\Translation\Translator::class, \Extly\Illuminate\Contracts\Translation\Translator::class],
+            'log' => [\Extly\Illuminate\Log\LogManager::class, \Psr\Log\LoggerInterface::class],
+            'mail.manager' => [\Extly\Illuminate\Mail\MailManager::class, \Extly\Illuminate\Contracts\Mail\Factory::class],
+            'mailer' => [\Extly\Illuminate\Mail\Mailer::class, \Extly\Illuminate\Contracts\Mail\Mailer::class, \Extly\Illuminate\Contracts\Mail\MailQueue::class],
+            'auth.password' => [\Extly\Illuminate\Auth\Passwords\PasswordBrokerManager::class, \Extly\Illuminate\Contracts\Auth\PasswordBrokerFactory::class],
             'auth.password.broker' => [\Extly\Illuminate\Auth\Passwords\PasswordBroker::class, \Extly\Illuminate\Contracts\Auth\PasswordBroker::class],
-            'queue'                => [\Extly\Illuminate\Queue\QueueManager::class, \Extly\Illuminate\Contracts\Queue\Factory::class, \Extly\Illuminate\Contracts\Queue\Monitor::class],
-            'queue.connection'     => [\Extly\Illuminate\Contracts\Queue\Queue::class],
-            'queue.failer'         => [\Extly\Illuminate\Queue\Failed\FailedJobProviderInterface::class],
-            'XT_redirect'             => [\Extly\Illuminate\Routing\Redirector::class],
-            'redis'                => [\Extly\Illuminate\Redis\RedisManager::class, \Extly\Illuminate\Contracts\Redis\Factory::class],
-            'redis.connection'     => [\Extly\Illuminate\Redis\Connections\Connection::class, \Extly\Illuminate\Contracts\Redis\Connection::class],
-            'XT_request'              => [\Extly\Illuminate\Http\Request::class, \Extly\Symfony\Component\HttpFoundation\Request::class],
-            'router'               => [\Extly\Illuminate\Routing\Router::class, \Extly\Illuminate\Contracts\Routing\Registrar::class, \Extly\Illuminate\Contracts\Routing\BindingRegistrar::class],
-            'session'              => [\Extly\Illuminate\Session\SessionManager::class],
-            'session.store'        => [\Extly\Illuminate\Session\Store::class, \Extly\Illuminate\Contracts\Session\Session::class],
-            'url'                  => [\Extly\Illuminate\Routing\UrlGenerator::class, \Extly\Illuminate\Contracts\Routing\UrlGenerator::class],
-            'XT_validator'            => [\Extly\Illuminate\Validation\Factory::class, \Extly\Illuminate\Contracts\Validation\Factory::class],
-            'view'                 => [\Extly\Illuminate\View\Factory::class, \Extly\Illuminate\Contracts\View\Factory::class],
+            'queue' => [\Extly\Illuminate\Queue\QueueManager::class, \Extly\Illuminate\Contracts\Queue\Factory::class, \Extly\Illuminate\Contracts\Queue\Monitor::class],
+            'queue.connection' => [\Extly\Illuminate\Contracts\Queue\Queue::class],
+            'queue.failer' => [\Extly\Illuminate\Queue\Failed\FailedJobProviderInterface::class],
+            'XT_redirect' => [\Extly\Illuminate\Routing\Redirector::class],
+            'redis' => [\Extly\Illuminate\Redis\RedisManager::class, \Extly\Illuminate\Contracts\Redis\Factory::class],
+            'redis.connection' => [\Extly\Illuminate\Redis\Connections\Connection::class, \Extly\Illuminate\Contracts\Redis\Connection::class],
+            'XT_request' => [\Extly\Illuminate\Http\Request::class, \Extly\Symfony\Component\HttpFoundation\Request::class],
+            'router' => [\Extly\Illuminate\Routing\Router::class, \Extly\Illuminate\Contracts\Routing\Registrar::class, \Extly\Illuminate\Contracts\Routing\BindingRegistrar::class],
+            'session' => [\Extly\Illuminate\Session\SessionManager::class],
+            'session.store' => [\Extly\Illuminate\Session\Store::class, \Extly\Illuminate\Contracts\Session\Session::class],
+            'url' => [\Extly\Illuminate\Routing\UrlGenerator::class, \Extly\Illuminate\Contracts\Routing\UrlGenerator::class],
+            'XT_validator' => [\Extly\Illuminate\Validation\Factory::class, \Extly\Illuminate\Contracts\Validation\Factory::class],
+            'view' => [\Extly\Illuminate\View\Factory::class, \Extly\Illuminate\Contracts\View\Factory::class],
         ] as $key => $aliases) {
             foreach ($aliases as $alias) {
                 $this->alias($key, $alias);

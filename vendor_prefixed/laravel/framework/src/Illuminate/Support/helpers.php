@@ -217,7 +217,7 @@ if (! function_exists('XT_retry')) {
      *
      * @param  int  $times
      * @param  callable  $callback
-     * @param  int  $sleepMilliseconds
+     * @param  int|\Closure  $sleepMilliseconds
      * @param  callable|null  $when
      * @return mixed
      *
@@ -239,7 +239,7 @@ if (! function_exists('XT_retry')) {
             }
 
             if ($sleepMilliseconds) {
-                usleep($sleepMilliseconds * 1000);
+                usleep(XT_value($sleepMilliseconds, $attempts) * 1000);
             }
 
             goto beginning;

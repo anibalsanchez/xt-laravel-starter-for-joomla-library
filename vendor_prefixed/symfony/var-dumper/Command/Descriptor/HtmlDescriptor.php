@@ -1,4 +1,5 @@
-<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 
 /*
  * This file is part of the Symfony package.
@@ -94,7 +95,7 @@ HTML
 
     private function extractDate(array $context, string $format = 'r'): string
     {
-        return date($format, $context['timestamp']);
+        return date($format, (int) $context['timestamp']);
     }
 
     private function renderTags(array $tags): string

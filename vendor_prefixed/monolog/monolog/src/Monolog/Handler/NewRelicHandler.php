@@ -31,14 +31,14 @@ class NewRelicHandler extends AbstractProcessingHandler
     /**
      * Name of the New Relic application that will receive logs from this handler.
      *
-     * @var string|null
+     * @var ?string
      */
     protected $appName;
 
     /**
      * Name of the current transaction
      *
-     * @var string|null
+     * @var ?string
      */
     protected $transactionName;
 
@@ -53,8 +53,6 @@ class NewRelicHandler extends AbstractProcessingHandler
     /**
      * {@inheritDoc}
      *
-     * @param string|int  $level           The minimum logging level at which this handler will be triggered.
-     * @param bool        $bubble          Whether the messages that are handled can bubble up the stack or not.
      * @param string|null $appName
      * @param bool        $explodeArrays
      * @param string|null $transactionName
@@ -136,6 +134,8 @@ class NewRelicHandler extends AbstractProcessingHandler
     /**
      * Returns the appname where this log should be sent. Each log can override the default appname, set in this
      * handler's constructor, by providing the appname in it's context.
+     *
+     * @param mixed[] $context
      */
     protected function getAppName(array $context): ?string
     {
@@ -149,6 +149,8 @@ class NewRelicHandler extends AbstractProcessingHandler
     /**
      * Returns the name of the current transaction. Each log can override the default transaction name, set in this
      * handler's constructor, by providing the transaction_name in it's context
+     *
+     * @param mixed[] $context
      */
     protected function getTransactionName(array $context): ?string
     {

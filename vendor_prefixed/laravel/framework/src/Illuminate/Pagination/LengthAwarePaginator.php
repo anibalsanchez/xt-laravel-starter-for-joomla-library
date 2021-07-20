@@ -11,6 +11,7 @@ use Extly\Illuminate\Contracts\Support\Jsonable;
 use Extly\Illuminate\Support\Collection;
 use IteratorAggregate;
 use JsonSerializable;
+use ReturnTypeWillChange;
 
 class LengthAwarePaginator extends AbstractPaginator implements Arrayable, ArrayAccess, Countable, IteratorAggregate, Jsonable, JsonSerializable, LengthAwarePaginatorContract
 {
@@ -214,6 +215,7 @@ class LengthAwarePaginator extends AbstractPaginator implements Arrayable, Array
      *
      * @return array
      */
+    #[ReturnTypeWillChange]
     public function jsonSerialize()
     {
         return $this->toArray();

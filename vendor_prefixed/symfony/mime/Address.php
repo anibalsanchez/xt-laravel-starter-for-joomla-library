@@ -12,9 +12,9 @@
 
 namespace Extly\Symfony\Component\Mime;
 
-use Egulias\EmailValidator\EmailValidator;
-use Egulias\EmailValidator\Validation\MessageIDValidation;
-use Egulias\EmailValidator\Validation\RFCValidation;
+use Extly\Egulias\EmailValidator\EmailValidator;
+use Extly\Egulias\EmailValidator\Validation\MessageIDValidation;
+use Extly\Egulias\EmailValidator\Validation\RFCValidation;
 use Extly\Symfony\Component\Mime\Encoder\IdnAddressEncoder;
 use Extly\Symfony\Component\Mime\Exception\InvalidArgumentException;
 use Extly\Symfony\Component\Mime\Exception\LogicException;

@@ -26,14 +26,12 @@ use Extly\Monolog\Formatter\FormatterInterface;
 class GelfHandler extends AbstractProcessingHandler
 {
     /**
-     * @var PublisherInterface|null the publisher object that sends the message to the server
+     * @var PublisherInterface the publisher object that sends the message to the server
      */
     protected $publisher;
 
     /**
-     * @param PublisherInterface $publisher a publisher object
-     * @param string|int         $level     The minimum logging level at which this handler will be triggered
-     * @param bool               $bubble    Whether the messages that are handled can bubble up the stack or not
+     * @param PublisherInterface $publisher a gelf publisher object
      */
     public function __construct(PublisherInterface $publisher, $level = Logger::DEBUG, bool $bubble = true)
     {
@@ -43,7 +41,7 @@ class GelfHandler extends AbstractProcessingHandler
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     protected function write(array $record): void
     {

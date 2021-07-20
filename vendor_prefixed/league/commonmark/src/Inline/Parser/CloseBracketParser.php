@@ -18,10 +18,12 @@ use Extly\League\CommonMark\Cursor;
 use Extly\League\CommonMark\Delimiter\DelimiterInterface;
 use Extly\League\CommonMark\EnvironmentAwareInterface;
 use Extly\League\CommonMark\EnvironmentInterface;
+use Extly\League\CommonMark\Extension\Mention\Mention;
 use Extly\League\CommonMark\Inline\AdjacentTextMerger;
 use Extly\League\CommonMark\Inline\Element\AbstractWebResource;
 use Extly\League\CommonMark\Inline\Element\Image;
 use Extly\League\CommonMark\Inline\Element\Link;
+use Extly\League\CommonMark\Inline\Element\Text;
 use Extly\League\CommonMark\InlineParserContext;
 use Extly\League\CommonMark\Reference\ReferenceInterface;
 use Extly\League\CommonMark\Reference\ReferenceMapInterface;
@@ -76,6 +78,13 @@ final class CloseBracketParser implements InlineParserInterface, EnvironmentAwar
         $inline = $this->createInline($link['url'], $link['title'], $isImage);
         $opener->getInlineNode()->replaceWith($inline);
         while (($label = $inline->next()) !== null) {
+            // Is there a Mention contained within this link?
+            // CommonMark does not allow nested links, so we'll restore the original text.
+            if ($label instanceof Mention) {
+                $label->replaceWith($replacement = new Text($label->getSymbol() . $label->getIdentifier()));
+                $label = $replacement;
+            }
+
             $inline->appendChild($label);
         }
 

@@ -6,10 +6,13 @@ namespace Extly\Illuminate\Http\Client;
 use ArrayAccess;
 use Extly\Illuminate\Support\Arr;
 use Extly\Illuminate\Support\Str;
+use Extly\Illuminate\Support\Traits\Macroable;
 use LogicException;
 
 class Request implements ArrayAccess
 {
+    use Macroable;
+
     /**
      * The underlying PSR request.
      *

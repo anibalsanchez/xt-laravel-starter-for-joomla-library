@@ -24,7 +24,7 @@ namespace Extly\Monolog\Handler;
 class NoopHandler extends Handler
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function isHandling(array $record): bool
     {
@@ -32,7 +32,7 @@ class NoopHandler extends Handler
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function handle(array $record): bool
     {

@@ -12,6 +12,7 @@ use Extly\Illuminate\Http\UploadedFile;
 use Extly\Illuminate\Support\Arr;
 use Extly\Illuminate\Support\Collection;
 use Extly\Illuminate\Support\Str;
+use Extly\Illuminate\Support\Traits\Macroable;
 use InvalidArgumentException;
 use Extly\League\Flysystem\Adapter\Ftp;
 use Extly\League\Flysystem\Adapter\Local as LocalAdapter;
@@ -33,6 +34,10 @@ use Extly\Symfony\Component\HttpFoundation\StreamedResponse;
  */
 class FilesystemAdapter implements CloudFilesystemContract
 {
+    use Macroable {
+        __call as macroCall;
+    }
+
     /**
      * The Flysystem filesystem implementation.
      *
@@ -785,6 +790,10 @@ class FilesystemAdapter implements CloudFilesystemContract
      */
     public function __call($method, array $parameters)
     {
+        if (static::hasMacro($method)) {
+            return $this->macroCall($method, $parameters);
+        }
+
         return $this->driver->{$method}(...array_values($parameters));
     }
 }

@@ -13,9 +13,9 @@ trait Dispatchable
      *
      * @return \Illuminate\Foundation\Bus\PendingDispatch
      */
-    public static function dispatch()
+    public static function dispatch(...$arguments)
     {
-        return new PendingDispatch(new static(...func_get_args()));
+        return new PendingDispatch(new static(...$arguments));
     }
 
     /**
@@ -53,9 +53,9 @@ trait Dispatchable
      *
      * @return mixed
      */
-    public static function dispatchSync()
+    public static function dispatchSync(...$arguments)
     {
-        return XT_app(Dispatcher::class)->dispatchSync(new static(...func_get_args()));
+        return XT_app(Dispatcher::class)->dispatchSync(new static(...$arguments));
     }
 
     /**
@@ -65,9 +65,9 @@ trait Dispatchable
      *
      * @deprecated Will be removed in a future Laravel version.
      */
-    public static function dispatchNow()
+    public static function dispatchNow(...$arguments)
     {
-        return XT_app(Dispatcher::class)->dispatchNow(new static(...func_get_args()));
+        return XT_app(Dispatcher::class)->dispatchNow(new static(...$arguments));
     }
 
     /**
@@ -75,9 +75,9 @@ trait Dispatchable
      *
      * @return mixed
      */
-    public static function dispatchAfterResponse()
+    public static function dispatchAfterResponse(...$arguments)
     {
-        return XT_app(Dispatcher::class)->dispatchAfterResponse(new static(...func_get_args()));
+        return XT_app(Dispatcher::class)->dispatchAfterResponse(new static(...$arguments));
     }
 
     /**

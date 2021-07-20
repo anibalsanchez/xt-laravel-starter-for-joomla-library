@@ -20,7 +20,7 @@ namespace Extly\Monolog\Handler;
 abstract class Handler implements HandlerInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function handleBatch(array $records): void
     {
@@ -30,7 +30,7 @@ abstract class Handler implements HandlerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function close(): void
     {

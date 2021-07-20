@@ -5,6 +5,7 @@ namespace Extly\PhpParser\Builder;
 
 use Extly\PhpParser;
 use Extly\PhpParser\BuilderHelpers;
+use Extly\PhpParser\Node;
 use Extly\PhpParser\Node\Name;
 use Extly\PhpParser\Node\Stmt;
 
@@ -14,6 +15,9 @@ class Interface_ extends Declaration
     protected $extends = [];
     protected $constants = [];
     protected $methods = [];
+
+    /** @var Node\AttributeGroup[] */
+    protected $attributeGroups = [];
 
     /**
      * Creates an interface builder.
@@ -63,6 +67,19 @@ class Interface_ extends Declaration
     }
 
     /**
+     * Adds an attribute group.
+     *
+     * @param Node\Attribute|Node\AttributeGroup $attribute
+     *
+     * @return $this The builder instance (for fluid interface)
+     */
+    public function addAttribute($attribute) {
+        $this->attributeGroups[] = BuilderHelpers::normalizeAttribute($attribute);
+
+        return $this;
+    }
+
+    /**
      * Returns the built interface node.
      *
      * @return Stmt\Interface_ The built interface node
@@ -71,6 +88,7 @@ class Interface_ extends Declaration
         return new Stmt\Interface_($this->name, [
             'extends' => $this->extends,
             'stmts' => array_merge($this->constants, $this->methods),
+            'attrGroups' => $this->attributeGroups,
         ], $this->attributes);
     }
 }

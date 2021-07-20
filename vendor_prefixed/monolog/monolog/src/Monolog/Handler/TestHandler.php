@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Extly\Monolog\Handler;
 
 use Extly\Monolog\Logger;
+use Psr\Log\LogLevel;
 
 /**
  * Used for testing purposes.
@@ -65,24 +66,42 @@ use Extly\Monolog\Logger;
  * @method bool hasNoticeThatPasses($message)
  * @method bool hasInfoThatPasses($message)
  * @method bool hasDebugThatPasses($message)
+ *
+ * @phpstan-import-type Record from \Monolog\Logger
+ * @phpstan-import-type Level from \Monolog\Logger
+ * @phpstan-import-type LevelName from \Monolog\Logger
  */
 class TestHandler extends AbstractProcessingHandler
 {
+    /** @var Record[] */
     protected $records = [];
+    /** @var array<Level, Record[]> */
     protected $recordsByLevel = [];
+    /** @var bool */
     private $skipReset = false;
 
+    /**
+     * @return array
+     *
+     * @phpstan-return Record[]
+     */
     public function getRecords()
     {
         return $this->records;
     }
 
+    /**
+     * @return void
+     */
     public function clear()
     {
         $this->records = [];
         $this->recordsByLevel = [];
     }
 
+    /**
+     * @return void
+     */
     public function reset()
     {
         if (!$this->skipReset) {
@@ -90,6 +109,9 @@ class TestHandler extends AbstractProcessingHandler
         }
     }
 
+    /**
+     * @return void
+     */
     public function setSkipReset(bool $skipReset)
     {
         $this->skipReset = $skipReset;
@@ -97,6 +119,8 @@ class TestHandler extends AbstractProcessingHandler
 
     /**
      * @param string|int $level Logging level value or name
+     *
+     * @phpstan-param Level|LevelName|LogLevel::* $level
      */
     public function hasRecords($level): bool
     {
@@ -106,6 +130,9 @@ class TestHandler extends AbstractProcessingHandler
     /**
      * @param string|array $record Either a message string or an array containing message and optionally context keys that will be checked against all records
      * @param string|int   $level  Logging level value or name
+     *
+     * @phpstan-param array{message: string, context?: mixed[]}|string $record
+     * @phpstan-param Level|LevelName|LogLevel::*                      $level
      */
     public function hasRecord($record, $level): bool
     {
@@ -127,6 +154,8 @@ class TestHandler extends AbstractProcessingHandler
 
     /**
      * @param string|int $level Logging level value or name
+     *
+     * @phpstan-param Level|LevelName|LogLevel::* $level
      */
     public function hasRecordThatContains(string $message, $level): bool
     {
@@ -137,6 +166,8 @@ class TestHandler extends AbstractProcessingHandler
 
     /**
      * @param string|int $level Logging level value or name
+     *
+     * @phpstan-param Level|LevelName|LogLevel::* $level
      */
     public function hasRecordThatMatches(string $regex, $level): bool
     {
@@ -146,10 +177,11 @@ class TestHandler extends AbstractProcessingHandler
     }
 
     /**
-     * @psalm-param callable(array, int): mixed $predicate
-     *
-     * @param string|int $level Logging level value or name
+     * @param  string|int $level Logging level value or name
      * @return bool
+     *
+     * @psalm-param callable(Record, int): mixed $predicate
+     * @phpstan-param Level|LevelName|LogLevel::* $level
      */
     public function hasRecordThatPasses(callable $predicate, $level)
     {
@@ -169,7 +201,7 @@ class TestHandler extends AbstractProcessingHandler
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     protected function write(array $record): void
     {
@@ -177,15 +209,21 @@ class TestHandler extends AbstractProcessingHandler
         $this->records[] = $record;
     }
 
+    /**
+     * @param  string  $method
+     * @param  mixed[] $args
+     * @return bool
+     */
     public function __call($method, $args)
     {
         if (preg_match('/(.*)(Debug|Info|Notice|Warning|Error|Critical|Alert|Emergency)(.*)/', $method, $matches) > 0) {
             $genericMethod = $matches[1] . ('Records' !== $matches[3] ? 'Record' : '') . $matches[3];
             $level = constant('Extly\Monolog\Logger::' . strtoupper($matches[2]));
-            if (method_exists($this, $genericMethod)) {
+            $callback = [$this, $genericMethod];
+            if (is_callable($callback)) {
                 $args[] = $level;
 
-                return call_user_func_array([$this, $genericMethod], $args);
+                return call_user_func_array($callback, $args);
             }
         }
 
