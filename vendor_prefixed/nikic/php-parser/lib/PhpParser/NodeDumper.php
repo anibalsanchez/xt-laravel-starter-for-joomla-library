@@ -129,6 +129,9 @@ class NodeDumper
         if ($flags & Class_::MODIFIER_FINAL) {
             $strs[] = 'MODIFIER_FINAL';
         }
+        if ($flags & Class_::MODIFIER_READONLY) {
+            $strs[] = 'MODIFIER_READONLY';
+        }
 
         if ($strs) {
             return implode(' | ', $strs) . ' (' . $flags . ')';
