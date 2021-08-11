@@ -1,4 +1,7 @@
-<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+
+declare(strict_types=1);
 
 /*
  * This file is part of the league/commonmark package.
@@ -11,18 +14,20 @@
 
 namespace Extly\League\CommonMark\Extension\HeadingPermalink;
 
-use Extly\League\CommonMark\Inline\Element\AbstractInline;
+use Extly\League\CommonMark\Node\Inline\AbstractInline;
 
 /**
  * Represents an anchor link within a heading
  */
 final class HeadingPermalink extends AbstractInline
 {
-    /** @var string */
-    private $slug;
+    /** @psalm-readonly */
+    private string $slug;
 
     public function __construct(string $slug)
     {
+        parent::__construct();
+
         $this->slug = $slug;
     }
 

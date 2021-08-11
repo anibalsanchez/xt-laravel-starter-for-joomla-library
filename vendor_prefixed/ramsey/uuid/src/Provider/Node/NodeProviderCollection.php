@@ -16,14 +16,15 @@ declare(strict_types=1);
 namespace Extly\Ramsey\Uuid\Provider\Node;
 
 use Extly\Ramsey\Collection\AbstractCollection;
-use Extly\Ramsey\Collection\CollectionInterface;
 use Extly\Ramsey\Uuid\Provider\NodeProviderInterface;
 use Extly\Ramsey\Uuid\Type\Hexadecimal;
 
 /**
  * A collection of NodeProviderInterface objects
+ *
+ * @extends AbstractCollection<NodeProviderInterface>
  */
-class NodeProviderCollection extends AbstractCollection implements CollectionInterface
+class NodeProviderCollection extends AbstractCollection
 {
     public function getType(): string
     {
@@ -37,10 +38,11 @@ class NodeProviderCollection extends AbstractCollection implements CollectionInt
      *     a UuidInterface instance
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+     * @psalm-suppress RedundantConditionGivenDocblockType
      */
     public function unserialize($serialized): void
     {
-        /** @var mixed[] $data */
+        /** @var array<array-key, NodeProviderInterface> $data */
         $data = unserialize($serialized, [
             'allowed_classes' => [
                 Hexadecimal::class,
@@ -50,6 +52,11 @@ class NodeProviderCollection extends AbstractCollection implements CollectionInt
             ],
         ]);
 
-        $this->data = $data;
+        $this->data = array_filter(
+            $data,
+            function ($unserialized): bool {
+                return $unserialized instanceof NodeProviderInterface;
+            }
+        );
     }
 }

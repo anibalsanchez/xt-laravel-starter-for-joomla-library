@@ -1,4 +1,7 @@
-<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+
+declare(strict_types=1);
 
 /*
  * This file is part of the league/commonmark package.
@@ -18,7 +21,7 @@
 namespace Extly\League\CommonMark\Delimiter\Processor;
 
 use Extly\League\CommonMark\Delimiter\DelimiterInterface;
-use Extly\League\CommonMark\Inline\Element\AbstractStringContainer;
+use Extly\League\CommonMark\Node\Inline\AbstractStringContainer;
 
 /**
  * Interface for a delimiter processor
@@ -29,8 +32,6 @@ interface DelimiterProcessorInterface
      * Returns the character that marks the beginning of a delimited node.
      *
      * This must not clash with any other processors being added to the environment.
-     *
-     * @return string
      */
     public function getOpeningCharacter(): string;
 
@@ -40,8 +41,6 @@ interface DelimiterProcessorInterface
      * This must not clash with any other processors being added to the environment.
      *
      * Note that for a symmetric delimiter such as "*", this is the same as the opening.
-     *
-     * @return string
      */
     public function getClosingCharacter(): string;
 
@@ -49,8 +48,6 @@ interface DelimiterProcessorInterface
      * Minimum number of delimiter characters that are needed to active this.
      *
      * Must be at least 1.
-     *
-     * @return int
      */
     public function getMinLength(): int;
 
@@ -64,8 +61,6 @@ interface DelimiterProcessorInterface
      *
      * @param DelimiterInterface $opener The opening delimiter run
      * @param DelimiterInterface $closer The closing delimiter run
-     *
-     * @return int
      */
     public function getDelimiterUse(DelimiterInterface $opener, DelimiterInterface $closer): int;
 
@@ -79,8 +74,6 @@ interface DelimiterProcessorInterface
      * @param AbstractStringContainer $opener       The node that contained the opening delimiter
      * @param AbstractStringContainer $closer       The node that contained the closing delimiter
      * @param int                     $delimiterUse The number of delimiters that were used
-     *
-     * @return void
      */
-    public function process(AbstractStringContainer $opener, AbstractStringContainer $closer, int $delimiterUse);
+    public function process(AbstractStringContainer $opener, AbstractStringContainer $closer, int $delimiterUse): void;
 }

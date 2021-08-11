@@ -1,4 +1,7 @@
-<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+
+declare(strict_types=1);
 
 /*
  * This file is part of the league/commonmark package.
@@ -12,12 +15,11 @@
 namespace Extly\League\CommonMark\Extension\Mention\Generator;
 
 use Extly\League\CommonMark\Extension\Mention\Mention;
-use Extly\League\CommonMark\Inline\Element\AbstractInline;
+use Extly\League\CommonMark\Node\Inline\AbstractInline;
 
 final class StringTemplateLinkGenerator implements MentionGeneratorInterface
 {
-    /** @var string */
-    private $urlTemplate;
+    private string $urlTemplate;
 
     public function __construct(string $urlTemplate)
     {
@@ -26,6 +28,8 @@ final class StringTemplateLinkGenerator implements MentionGeneratorInterface
 
     public function generateMention(Mention $mention): ?AbstractInline
     {
-        return $mention->setUrl(\sprintf($this->urlTemplate, $mention->getIdentifier()));
+        $mention->setUrl(\sprintf($this->urlTemplate, $mention->getIdentifier()));
+
+        return $mention;
     }
 }

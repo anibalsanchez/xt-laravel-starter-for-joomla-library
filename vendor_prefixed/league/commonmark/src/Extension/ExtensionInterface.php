@@ -1,4 +1,7 @@
-<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+
+declare(strict_types=1);
 
 /*
  * This file is part of the league/commonmark package.
@@ -14,14 +17,9 @@
 
 namespace Extly\League\CommonMark\Extension;
 
-use Extly\League\CommonMark\ConfigurableEnvironmentInterface;
+use Extly\League\CommonMark\Environment\EnvironmentBuilderInterface;
 
 interface ExtensionInterface
 {
-    /**
-     * @param ConfigurableEnvironmentInterface $environment
-     *
-     * @return void
-     */
-    public function register(ConfigurableEnvironmentInterface $environment);
+    public function register(EnvironmentBuilderInterface $environment): void;
 }

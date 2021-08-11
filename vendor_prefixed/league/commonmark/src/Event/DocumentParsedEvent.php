@@ -1,4 +1,7 @@
-<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+
+declare(strict_types=1);
 
 /*
  * This file is part of the league/commonmark package.
@@ -11,15 +14,15 @@
 
 namespace Extly\League\CommonMark\Event;
 
-use Extly\League\CommonMark\Block\Element\Document;
+use Extly\League\CommonMark\Node\Block\Document;
 
 /**
  * Event dispatched when the document has been fully parsed
  */
 final class DocumentParsedEvent extends AbstractEvent
 {
-    /** @var Document */
-    private $document;
+    /** @psalm-readonly */
+    private Document $document;
 
     public function __construct(Document $document)
     {

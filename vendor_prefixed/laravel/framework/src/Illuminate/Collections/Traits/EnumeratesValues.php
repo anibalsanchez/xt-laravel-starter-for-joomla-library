@@ -14,7 +14,6 @@ use Extly\Illuminate\Support\Enumerable;
 use Extly\Illuminate\Support\HigherOrderCollectionProxy;
 use Extly\Illuminate\Support\HigherOrderWhenProxy;
 use JsonSerializable;
-use ReturnTypeWillChange;
 use Extly\Symfony\Component\VarDumper\VarDumper;
 use Traversable;
 
@@ -835,7 +834,7 @@ trait EnumeratesValues
      *
      * @return array
      */
-    #[ReturnTypeWillChange]
+    #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
         return array_map(function ($value) {

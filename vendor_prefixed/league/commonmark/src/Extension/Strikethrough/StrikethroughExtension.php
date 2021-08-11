@@ -1,4 +1,7 @@
-<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+
+declare(strict_types=1);
 
 /*
  * This file is part of the league/commonmark package.
@@ -11,14 +14,14 @@
 
 namespace Extly\League\CommonMark\Extension\Strikethrough;
 
-use Extly\League\CommonMark\ConfigurableEnvironmentInterface;
+use Extly\League\CommonMark\Environment\EnvironmentBuilderInterface;
 use Extly\League\CommonMark\Extension\ExtensionInterface;
 
 final class StrikethroughExtension implements ExtensionInterface
 {
-    public function register(ConfigurableEnvironmentInterface $environment)
+    public function register(EnvironmentBuilderInterface $environment): void
     {
         $environment->addDelimiterProcessor(new StrikethroughDelimiterProcessor());
-        $environment->addInlineRenderer(Strikethrough::class, new StrikethroughRenderer());
+        $environment->addRenderer(Strikethrough::class, new StrikethroughRenderer());
     }
 }

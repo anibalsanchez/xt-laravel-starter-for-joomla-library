@@ -178,6 +178,7 @@ final class Fields implements FieldsInterface
             return null;
         }
 
+        /** @var array $parts */
         $parts = unpack('n*', $this->bytes);
 
         return (int) $parts[4] >> 12;

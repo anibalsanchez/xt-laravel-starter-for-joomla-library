@@ -86,7 +86,7 @@ trait Has
     /**
      * Assert that all of the given props exist.
      *
-     * @param  array|string $key
+     * @param  array|string  $key
      * @return $this
      */
     public function hasAll($key): self
@@ -107,7 +107,7 @@ trait Has
     /**
      * Assert that none of the given props exist.
      *
-     * @param  array|string $key
+     * @param  array|string  $key
      * @return $this
      */
     public function missingAll($key): self

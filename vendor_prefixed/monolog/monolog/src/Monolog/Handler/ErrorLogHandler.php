@@ -15,6 +15,7 @@ namespace Extly\Monolog\Handler;
 use Extly\Monolog\Formatter\LineFormatter;
 use Extly\Monolog\Formatter\FormatterInterface;
 use Extly\Monolog\Logger;
+use Extly\Monolog\Utils;
 
 /**
  * Stores to PHP error_log() handler.
@@ -81,7 +82,8 @@ class ErrorLogHandler extends AbstractProcessingHandler
 
         $lines = preg_split('{[\r\n]+}', (string) $record['formatted']);
         if ($lines === false) {
-            throw new \RuntimeException('Failed to preg_split formatted string: '.preg_last_error().' / '.preg_last_error_msg());
+            $pcreErrorCode = preg_last_error();
+            throw new \RuntimeException('Failed to preg_split formatted string: ' . $pcreErrorCode . ' / '. Utils::pcreLastErrorMessage($pcreErrorCode));
         }
         foreach ($lines as $line) {
             error_log($line, $this->messageType);

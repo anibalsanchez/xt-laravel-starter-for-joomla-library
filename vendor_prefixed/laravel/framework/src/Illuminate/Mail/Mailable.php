@@ -78,7 +78,7 @@ class Mailable implements MailableContract, Renderable
      *
      * @var string
      */
-    protected $markdown;
+    public $markdown;
 
     /**
      * The HTML to use for the message.

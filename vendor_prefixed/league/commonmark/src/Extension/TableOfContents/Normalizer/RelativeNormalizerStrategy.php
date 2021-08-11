@@ -1,4 +1,7 @@
-<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+
+declare(strict_types=1);
 
 /*
  * This file is part of the league/commonmark package.
@@ -11,17 +14,21 @@
 
 namespace Extly\League\CommonMark\Extension\TableOfContents\Normalizer;
 
-use Extly\League\CommonMark\Block\Element\ListBlock;
-use Extly\League\CommonMark\Block\Element\ListItem;
+use Extly\League\CommonMark\Extension\CommonMark\Node\Block\ListBlock;
+use Extly\League\CommonMark\Extension\CommonMark\Node\Block\ListItem;
 use Extly\League\CommonMark\Extension\TableOfContents\Node\TableOfContents;
 
 final class RelativeNormalizerStrategy implements NormalizerStrategyInterface
 {
-    /** @var TableOfContents */
-    private $toc;
+    /** @psalm-readonly */
+    private TableOfContents $toc;
 
-    /** @var array<int, ListItem> */
-    private $listItemStack = [];
+    /**
+     * @var array<int, ListItem>
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
+    private array $listItemStack = [];
 
     public function __construct(TableOfContents $toc)
     {
@@ -30,18 +37,15 @@ final class RelativeNormalizerStrategy implements NormalizerStrategyInterface
 
     public function addItem(int $level, ListItem $listItemToAdd): void
     {
-        \end($this->listItemStack);
-        $previousLevel = \key($this->listItemStack);
+        $previousLevel = \array_key_last($this->listItemStack);
 
         // Pop the stack if we're too deep
         while ($previousLevel !== null && $level < $previousLevel) {
-            array_pop($this->listItemStack);
-            \end($this->listItemStack);
-            $previousLevel = \key($this->listItemStack);
+            \array_pop($this->listItemStack);
+            $previousLevel = \array_key_last($this->listItemStack);
         }
 
-        /** @var ListItem|false $lastListItem */
-        $lastListItem = \current($this->listItemStack);
+        $lastListItem = \end($this->listItemStack);
 
         // Need to go one level deeper? Add that level
         if ($lastListItem !== false && $level > $previousLevel) {
@@ -62,6 +66,3 @@ final class RelativeNormalizerStrategy implements NormalizerStrategyInterface
         $this->listItemStack[$level] = $listItemToAdd;
     }
 }
-
-// Trigger autoload without causing a deprecated error
-\class_exists(TableOfContents::class);

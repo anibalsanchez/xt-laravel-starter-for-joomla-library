@@ -1,4 +1,5 @@
-<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 
 /*
  * This file is part of the league/commonmark package.
@@ -14,9 +15,8 @@ declare(strict_types=1);
 
 namespace Extly\League\CommonMark\Extension\Attributes\Util;
 
-use Extly\League\CommonMark\Block\Element\AbstractBlock;
-use Extly\League\CommonMark\Cursor;
-use Extly\League\CommonMark\Inline\Element\AbstractInline;
+use Extly\League\CommonMark\Node\Node;
+use Extly\League\CommonMark\Parser\Cursor;
 use Extly\League\CommonMark\Util\RegexHelper;
 
 /**
@@ -24,29 +24,28 @@ use Extly\League\CommonMark\Util\RegexHelper;
  */
 final class AttributesHelper
 {
+    private const REGEX = '/^\s*([.#][_a-z0-9-]+|' . RegexHelper::PARTIAL_ATTRIBUTENAME . RegexHelper::PARTIAL_ATTRIBUTEVALUESPEC . ')(?<!})\s*/i';
+
     /**
-     * @param Cursor $cursor
-     *
      * @return array<string, mixed>
      */
     public static function parseAttributes(Cursor $cursor): array
     {
         $state = $cursor->saveState();
         $cursor->advanceToNextNonSpaceOrNewline();
-        if ($cursor->getCharacter() !== '{') {
+        if ($cursor->getCurrentCharacter() !== '{') {
             $cursor->restoreState($state);
 
             return [];
         }
 
         $cursor->advanceBy(1);
-        if ($cursor->getCharacter() === ':') {
+        if ($cursor->getCurrentCharacter() === ':') {
             $cursor->advanceBy(1);
         }
 
         $attributes = [];
-        $regex = '/^\s*([.#][_a-z0-9-]+|' . RegexHelper::PARTIAL_ATTRIBUTENAME . RegexHelper::PARTIAL_ATTRIBUTEVALUESPEC . ')(?<!})\s*/i';
-        while ($attribute = \trim((string) $cursor->match($regex))) {
+        while ($attribute = \trim((string) $cursor->match(self::REGEX))) {
             if ($attribute[0] === '#') {
                 $attributes['id'] = \substr($attribute, 1);
 
@@ -60,9 +59,10 @@ final class AttributesHelper
             }
 
             [$name, $value] = \explode('=', $attribute, 2);
+
             $first = $value[0];
-            $last = \substr($value, -1);
-            if ((($first === '"' && $last === '"') || ($first === "'" && $last === "'")) && \strlen($value) > 1) {
+            $last  = \substr($value, -1);
+            if (($first === '"' && $last === '"') || ($first === "'" && $last === "'") && \strlen($value) > 1) {
                 $value = \substr($value, 1, -1);
             }
 
@@ -71,7 +71,7 @@ final class AttributesHelper
                     $attributes['class'][] = $class;
                 }
             } else {
-                $attributes[trim($name)] = trim($value);
+                $attributes[\trim($name)] = \trim($value);
             }
         }
 
@@ -95,8 +95,8 @@ final class AttributesHelper
     }
 
     /**
-     * @param AbstractBlock|AbstractInline|array<string, mixed> $attributes1
-     * @param AbstractBlock|AbstractInline|array<string, mixed> $attributes2
+     * @param Node|array<string, mixed> $attributes1
+     * @param Node|array<string, mixed> $attributes2
      *
      * @return array<string, mixed>
      */
@@ -104,14 +104,18 @@ final class AttributesHelper
     {
         $attributes = [];
         foreach ([$attributes1, $attributes2] as $arg) {
-            if ($arg instanceof AbstractBlock || $arg instanceof AbstractInline) {
-                $arg = $arg->data['attributes'] ?? [];
+            if ($arg instanceof Node) {
+                $arg = $arg->data->get('attributes');
             }
 
             /** @var array<string, mixed> $arg */
             $arg = (array) $arg;
             if (isset($arg['class'])) {
-                foreach (\array_filter(\explode(' ', \trim($arg['class']))) as $class) {
+                if (\is_string($arg['class'])) {
+                    $arg['class'] = \array_filter(\explode(' ', \trim($arg['class'])));
+                }
+
+                foreach ($arg['class'] as $class) {
                     $attributes['class'][] = $class;
                 }
 

@@ -325,7 +325,7 @@ class Response
         }
 
         // Check if we need to send extra expire info headers
-        if ('1.0' == $this->getProtocolVersion() && false !== strpos($headers->get('Cache-Control'), 'no-cache')) {
+        if ('1.0' == $this->getProtocolVersion() && str_contains($headers->get('Cache-Control', ''), 'no-cache')) {
             $headers->set('pragma', 'no-cache');
             $headers->set('expires', -1);
         }
@@ -463,7 +463,7 @@ class Response
      *
      * @final
      */
-    public function setStatusCode(int $code, $text = null): object
+    public function setStatusCode(int $code, string $text = null): object
     {
         $this->statusCode = $code;
         if ($this->isInvalid()) {
@@ -927,7 +927,7 @@ class Response
         if (null === $etag) {
             $this->headers->remove('Etag');
         } else {
-            if (0 !== strpos($etag, '"')) {
+            if (!str_starts_with($etag, '"')) {
                 $etag = '"'.$etag.'"';
             }
 

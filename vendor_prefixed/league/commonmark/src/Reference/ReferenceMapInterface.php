@@ -1,4 +1,7 @@
-<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+
+declare(strict_types=1);
 
 /*
  * This file is part of the league/commonmark package.
@@ -16,34 +19,14 @@ namespace Extly\League\CommonMark\Reference;
 
 /**
  * A collection of references
+ *
+ * @phpstan-extends \IteratorAggregate<ReferenceInterface>
  */
-interface ReferenceMapInterface
+interface ReferenceMapInterface extends \IteratorAggregate, \Countable
 {
-    /**
-     * @param ReferenceInterface $reference
-     *
-     * @return void
-     */
-    public function addReference(ReferenceInterface $reference): void;
+    public function add(ReferenceInterface $reference): void;
 
-    /**
-     * @param string $label
-     *
-     * @return bool
-     */
     public function contains(string $label): bool;
 
-    /**
-     * @param string $label
-     *
-     * @return ReferenceInterface|null
-     */
-    public function getReference(string $label): ?ReferenceInterface;
-
-    /**
-     * Lists all registered references.
-     *
-     * @return ReferenceInterface[]
-     */
-    public function listReferences(): iterable;
+    public function get(string $label): ?ReferenceInterface;
 }

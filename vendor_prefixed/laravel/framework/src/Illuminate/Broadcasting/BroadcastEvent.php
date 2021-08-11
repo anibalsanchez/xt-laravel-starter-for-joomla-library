@@ -4,7 +4,7 @@
 namespace Extly\Illuminate\Broadcasting;
 
 use Extly\Illuminate\Bus\Queueable;
-use Extly\Illuminate\Contracts\Broadcasting\Broadcaster;
+use Extly\Illuminate\Contracts\Broadcasting\Factory as BroadcastingFactory;
 use Extly\Illuminate\Contracts\Queue\ShouldQueue;
 use Extly\Illuminate\Contracts\Support\Arrayable;
 use Extly\Illuminate\Support\Arr;
@@ -53,10 +53,10 @@ class BroadcastEvent implements ShouldQueue
     /**
      * Handle the queued job.
      *
-     * @param  \Illuminate\Contracts\Broadcasting\Broadcaster  $broadcaster
+     * @param  \Illuminate\Contracts\Broadcasting\Factory  $manager
      * @return void
      */
-    public function handle(Broadcaster $broadcaster)
+    public function handle(BroadcastingFactory $manager)
     {
         $name = method_exists($this->event, 'broadcastAs')
                 ? $this->event->broadcastAs() : get_class($this->event);
@@ -67,9 +67,16 @@ class BroadcastEvent implements ShouldQueue
             return;
         }
 
-        $broadcaster->broadcast($channels, $name,
-            $this->getPayloadFromEvent($this->event)
-        );
+        $connections = method_exists($this->event, 'broadcastConnections')
+                            ? $this->event->broadcastConnections()
+                            : [null];
+
+        $payload = $this->getPayloadFromEvent($this->event);
+
+        foreach ($connections as $connection) {
+            $manager->connection($connection)->broadcast($channels, $name, $payload
+            );
+        }
     }
 
     /**
@@ -80,10 +87,9 @@ class BroadcastEvent implements ShouldQueue
      */
     protected function getPayloadFromEvent($event)
     {
-        if (method_exists($event, 'broadcastWith')) {
-            return array_merge(
-                $event->broadcastWith(), ['socket' => XT_data_get($event, 'socket')]
-            );
+        if (method_exists($event, 'broadcastWith') &&
+            ! is_null($payload = $event->broadcastWith())) {
+            return array_merge($payload, ['socket' => XT_data_get($event, 'socket')]);
         }
 
         $payload = [];

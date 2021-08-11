@@ -1,4 +1,5 @@
-<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 
 declare(strict_types=1);
 
@@ -15,25 +16,44 @@ declare(strict_types=1);
 
 namespace Extly\League\CommonMark\Extension\Table;
 
-use Extly\League\CommonMark\Block\Element\AbstractBlock;
-use Extly\League\CommonMark\Block\Renderer\BlockRendererInterface;
-use Extly\League\CommonMark\ElementRendererInterface;
-use Extly\League\CommonMark\HtmlElement;
+use Extly\League\CommonMark\Node\Node;
+use Extly\League\CommonMark\Renderer\ChildNodeRendererInterface;
+use Extly\League\CommonMark\Renderer\NodeRendererInterface;
+use Extly\League\CommonMark\Util\HtmlElement;
+use Extly\League\CommonMark\Xml\XmlNodeRendererInterface;
 
-final class TableRenderer implements BlockRendererInterface
+final class TableRenderer implements NodeRendererInterface, XmlNodeRendererInterface
 {
-    public function render(AbstractBlock $block, ElementRendererInterface $htmlRenderer, bool $inTightList = false)
+    /**
+     * @param Table $node
+     *
+     * {@inheritDoc}
+     *
+     * @psalm-suppress MoreSpecificImplementedParamType
+     */
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer): \Stringable
     {
-        if (!$block instanceof Table) {
-            throw new \InvalidArgumentException('Incompatible block type: ' . get_class($block));
-        }
+        Table::assertInstanceOf($node);
 
-        $attrs = $block->getData('attributes', []);
+        $attrs = $node->data->get('attributes');
 
-        $separator = $htmlRenderer->getOption('inner_separator', "\n");
+        $separator = $childRenderer->getInnerSeparator();
 
-        $children = $htmlRenderer->renderBlocks($block->children());
+        $children = $childRenderer->renderNodes($node->children());
 
         return new HtmlElement('table', $attrs, $separator . \trim($children) . $separator);
+    }
+
+    public function getXmlTagName(Node $node): string
+    {
+        return 'table';
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getXmlAttributes(Node $node): array
+    {
+        return [];
     }
 }

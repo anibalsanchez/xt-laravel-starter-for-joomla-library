@@ -1,4 +1,5 @@
-<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 
 declare(strict_types=1);
 
@@ -15,34 +16,8 @@ declare(strict_types=1);
 
 namespace Extly\League\CommonMark\Extension\Table;
 
-use Extly\League\CommonMark\Block\Element\AbstractBlock;
-use Extly\League\CommonMark\Cursor;
-use Extly\League\CommonMark\Node\Node;
+use Extly\League\CommonMark\Node\Block\AbstractBlock;
 
 final class TableRow extends AbstractBlock
 {
-    public function canContain(AbstractBlock $block): bool
-    {
-        return $block instanceof TableCell;
-    }
-
-    public function isCode(): bool
-    {
-        return false;
-    }
-
-    public function matchesNextLine(Cursor $cursor): bool
-    {
-        return false;
-    }
-
-    /**
-     * @return AbstractBlock[]
-     */
-    public function children(): iterable
-    {
-        return array_filter((array) parent::children(), static function (Node $child): bool {
-            return $child instanceof AbstractBlock;
-        });
-    }
 }

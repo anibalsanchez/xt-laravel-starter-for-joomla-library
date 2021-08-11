@@ -1,4 +1,5 @@
-<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 
 /**
  * This file is part of the ramsey/collection library
@@ -26,8 +27,8 @@ use function in_array;
  * effort required to implement this interface.
  *
  * @template T
- * @template-extends AbstractArray<T>
- * @template-implements MapInterface<T>
+ * @extends AbstractArray<T>
+ * @implements MapInterface<T>
  */
 abstract class AbstractMap extends AbstractArray implements MapInterface
 {

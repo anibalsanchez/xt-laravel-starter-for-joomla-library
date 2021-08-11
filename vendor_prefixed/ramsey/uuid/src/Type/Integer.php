@@ -37,7 +37,7 @@ use function substr;
 final class Integer implements NumberInterface
 {
     /**
-     * @var string
+     * @psalm-var numeric-string
      */
     private $value;
 
@@ -81,7 +81,10 @@ final class Integer implements NumberInterface
             $this->isNegative = true;
         }
 
-        $this->value = $value;
+        /** @psalm-var numeric-string $numericValue */
+        $numericValue = $value;
+
+        $this->value = $numericValue;
     }
 
     public function isNegative(): bool
@@ -89,6 +92,9 @@ final class Integer implements NumberInterface
         return $this->isNegative;
     }
 
+    /**
+     * @psalm-return numeric-string
+     */
     public function toString(): string
     {
         return $this->value;
@@ -115,6 +121,7 @@ final class Integer implements NumberInterface
      * @param string $serialized The serialized string representation of the object
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+     * @psalm-suppress UnusedMethodCall
      */
     public function unserialize($serialized): void
     {

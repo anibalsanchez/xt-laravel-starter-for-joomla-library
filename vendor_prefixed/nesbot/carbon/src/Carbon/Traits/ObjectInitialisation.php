@@ -18,5 +18,5 @@ trait ObjectInitialisation
      *
      * @var string
      */
-    protected $constructedObjectId = null;
+    protected $constructedObjectId;
 }

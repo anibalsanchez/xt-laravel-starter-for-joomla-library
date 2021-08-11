@@ -1,4 +1,5 @@
-<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 
 /*
  * This file is part of the league/commonmark package.
@@ -16,33 +17,30 @@ namespace Extly\League\CommonMark\Extension\Attributes\Parser;
 
 use Extly\League\CommonMark\Extension\Attributes\Node\AttributesInline;
 use Extly\League\CommonMark\Extension\Attributes\Util\AttributesHelper;
-use Extly\League\CommonMark\Inline\Element\Text;
-use Extly\League\CommonMark\Inline\Parser\InlineParserInterface;
-use Extly\League\CommonMark\InlineParserContext;
+use Extly\League\CommonMark\Node\StringContainerInterface;
+use Extly\League\CommonMark\Parser\Inline\InlineParserInterface;
+use Extly\League\CommonMark\Parser\Inline\InlineParserMatch;
+use Extly\League\CommonMark\Parser\InlineParserContext;
 
 final class AttributesInlineParser implements InlineParserInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getCharacters(): array
+    public function getMatchDefinition(): InlineParserMatch
     {
-        return ['{'];
+        return InlineParserMatch::string('{');
     }
 
     public function parse(InlineParserContext $inlineContext): bool
     {
         $cursor = $inlineContext->getCursor();
-
-        $char = (string) $cursor->peek(-1);
+        $char   = (string) $cursor->peek(-1);
 
         $attributes = AttributesHelper::parseAttributes($cursor);
         if ($attributes === []) {
             return false;
         }
 
-        if ($char === ' ' && ($previousInline = $inlineContext->getContainer()->lastChild()) instanceof Text) {
-            $previousInline->setContent(\rtrim($previousInline->getContent(), ' '));
+        if ($char === ' ' && ($prev = $inlineContext->getContainer()->lastChild()) instanceof StringContainerInterface) {
+            $prev->setLiteral(\rtrim($prev->getLiteral(), ' '));
         }
 
         if ($char === '') {

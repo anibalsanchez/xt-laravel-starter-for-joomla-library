@@ -8,7 +8,6 @@ use Extly\Illuminate\Support\Traits\Conditionable;
 use Extly\Illuminate\Support\Traits\Macroable;
 use Extly\Illuminate\Support\Traits\Tappable;
 use JsonSerializable;
-use ReturnTypeWillChange;
 use Extly\Symfony\Component\VarDumper\VarDumper;
 
 class Stringable implements JsonSerializable
@@ -784,7 +783,7 @@ class Stringable implements JsonSerializable
      *
      * @return string
      */
-    #[ReturnTypeWillChange]
+    #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
         return $this->__toString();

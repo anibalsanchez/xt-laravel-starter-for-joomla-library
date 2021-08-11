@@ -1,4 +1,7 @@
-<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+
+declare(strict_types=1);
 
 /*
  * This file is part of the league/commonmark package.
@@ -11,16 +14,17 @@
 
 namespace Extly\League\CommonMark\Extension\TaskList;
 
-use Extly\League\CommonMark\Block\Element\ListItem;
-use Extly\League\CommonMark\Block\Element\Paragraph;
-use Extly\League\CommonMark\Inline\Parser\InlineParserInterface;
-use Extly\League\CommonMark\InlineParserContext;
+use Extly\League\CommonMark\Extension\CommonMark\Node\Block\ListItem;
+use Extly\League\CommonMark\Node\Block\Paragraph;
+use Extly\League\CommonMark\Parser\Inline\InlineParserInterface;
+use Extly\League\CommonMark\Parser\Inline\InlineParserMatch;
+use Extly\League\CommonMark\Parser\InlineParserContext;
 
 final class TaskListItemMarkerParser implements InlineParserInterface
 {
-    public function getCharacters(): array
+    public function getMatchDefinition(): InlineParserMatch
     {
-        return ['['];
+        return InlineParserMatch::oneOf('[ ]', '[x]');
     }
 
     public function parse(InlineParserContext $inlineContext): bool
@@ -28,17 +32,14 @@ final class TaskListItemMarkerParser implements InlineParserInterface
         $container = $inlineContext->getContainer();
 
         // Checkbox must come at the beginning of the first paragraph of the list item
-        if ($container->hasChildren() || !($container instanceof Paragraph && $container->parent() && $container->parent() instanceof ListItem)) {
+        if ($container->hasChildren() || ! ($container instanceof Paragraph && $container->parent() && $container->parent() instanceof ListItem)) {
             return false;
         }
 
-        $cursor = $inlineContext->getCursor();
+        $cursor   = $inlineContext->getCursor();
         $oldState = $cursor->saveState();
 
-        $m = $cursor->match('/\[[ xX]\]/');
-        if ($m === null) {
-            return false;
-        }
+        $cursor->advanceBy(3);
 
         if ($cursor->getNextNonSpaceCharacter() === null) {
             $cursor->restoreState($oldState);
@@ -46,7 +47,7 @@ final class TaskListItemMarkerParser implements InlineParserInterface
             return false;
         }
 
-        $isChecked = $m !== '[ ]';
+        $isChecked = $inlineContext->getFullMatch() !== '[ ]';
 
         $container->appendChild(new TaskListItemMarker($isChecked));
 

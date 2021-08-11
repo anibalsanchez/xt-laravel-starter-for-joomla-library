@@ -189,7 +189,7 @@ EOF;
                     $url = substr($url, 0, -1);
                 }
                 foreach ($dynamicRegex as [$hostRx, $rx, $prefix]) {
-                    if (('' === $prefix || 0 === strpos($url, $prefix)) && (preg_match($rx, $url) || preg_match($rx, $url.'/')) && (!$host || !$hostRx || preg_match($hostRx, $host))) {
+                    if (('' === $prefix || str_starts_with($url, $prefix)) && (preg_match($rx, $url) || preg_match($rx, $url.'/')) && (!$host || !$hostRx || preg_match($hostRx, $host))) {
                         $dynamicRegex[] = [$hostRegex, $regex, $staticPrefix];
                         $dynamicRoutes->add($name, $route);
                         continue 2;
@@ -351,7 +351,7 @@ EOF;
             $state->markTail = 0;
 
             // if the regex is too large, throw a signaling exception to recompute with smaller chunk size
-            set_error_handler(function ($type, $message) { throw false !== strpos($message, $this->signalingException->getMessage()) ? $this->signalingException : new \ErrorException($message); });
+            set_error_handler(function ($type, $message) { throw str_contains($message, $this->signalingException->getMessage()) ? $this->signalingException : new \ErrorException($message); });
             try {
                 preg_match($state->regex, '');
             } finally {
@@ -429,7 +429,7 @@ EOF;
 
         if ($condition = $route->getCondition()) {
             $condition = $this->getExpressionLanguage()->compile($condition, ['context', 'request']);
-            $condition = $conditions[$condition] ?? $conditions[$condition] = (false !== strpos($condition, '$request') ? 1 : -1) * \count($conditions);
+            $condition = $conditions[$condition] ?? $conditions[$condition] = (str_contains($condition, '$request') ? 1 : -1) * \count($conditions);
         } else {
             $condition = null;
         }

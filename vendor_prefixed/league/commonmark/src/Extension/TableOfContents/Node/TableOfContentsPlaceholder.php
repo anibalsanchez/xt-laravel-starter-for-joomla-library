@@ -1,4 +1,7 @@
-<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+
+declare(strict_types=1);
 
 /*
  * This file is part of the league/commonmark package.
@@ -11,23 +14,8 @@
 
 namespace Extly\League\CommonMark\Extension\TableOfContents\Node;
 
-use Extly\League\CommonMark\Block\Element\AbstractBlock;
-use Extly\League\CommonMark\Cursor;
+use Extly\League\CommonMark\Node\Block\AbstractBlock;
 
 final class TableOfContentsPlaceholder extends AbstractBlock
 {
-    public function canContain(AbstractBlock $block): bool
-    {
-        return false;
-    }
-
-    public function isCode(): bool
-    {
-        return false;
-    }
-
-    public function matchesNextLine(Cursor $cursor): bool
-    {
-        return false;
-    }
 }

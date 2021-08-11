@@ -1,4 +1,7 @@
-<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+
+declare(strict_types=1);
 
 /*
  * This file is part of the league/commonmark package.
@@ -11,12 +14,27 @@
 
 namespace Extly\League\CommonMark\Extension\Strikethrough;
 
-use Extly\League\CommonMark\Inline\Element\AbstractInline;
+use Extly\League\CommonMark\Node\Inline\AbstractInline;
+use Extly\League\CommonMark\Node\Inline\DelimitedInterface;
 
-final class Strikethrough extends AbstractInline
+final class Strikethrough extends AbstractInline implements DelimitedInterface
 {
-    public function isContainer(): bool
+    private string $delimiter;
+
+    public function __construct(string $delimiter = '~~')
     {
-        return true;
+        parent::__construct();
+
+        $this->delimiter = $delimiter;
+    }
+
+    public function getOpeningDelimiter(): string
+    {
+        return $this->delimiter;
+    }
+
+    public function getClosingDelimiter(): string
+    {
+        return $this->delimiter;
     }
 }

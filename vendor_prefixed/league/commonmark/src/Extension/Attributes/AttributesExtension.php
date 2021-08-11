@@ -1,4 +1,5 @@
-<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 
 /*
  * This file is part of the league/commonmark package.
@@ -14,18 +15,18 @@ declare(strict_types=1);
 
 namespace Extly\League\CommonMark\Extension\Attributes;
 
-use Extly\League\CommonMark\ConfigurableEnvironmentInterface;
+use Extly\League\CommonMark\Environment\EnvironmentBuilderInterface;
 use Extly\League\CommonMark\Event\DocumentParsedEvent;
 use Extly\League\CommonMark\Extension\Attributes\Event\AttributesListener;
-use Extly\League\CommonMark\Extension\Attributes\Parser\AttributesBlockParser;
+use Extly\League\CommonMark\Extension\Attributes\Parser\AttributesBlockStartParser;
 use Extly\League\CommonMark\Extension\Attributes\Parser\AttributesInlineParser;
 use Extly\League\CommonMark\Extension\ExtensionInterface;
 
 final class AttributesExtension implements ExtensionInterface
 {
-    public function register(ConfigurableEnvironmentInterface $environment)
+    public function register(EnvironmentBuilderInterface $environment): void
     {
-        $environment->addBlockParser(new AttributesBlockParser());
+        $environment->addBlockStartParser(new AttributesBlockStartParser());
         $environment->addInlineParser(new AttributesInlineParser());
         $environment->addEventListener(DocumentParsedEvent::class, [new AttributesListener(), 'processDocument']);
     }

@@ -1,4 +1,7 @@
-<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+
+declare(strict_types=1);
 
 /*
  * This file is part of the league/commonmark package.
@@ -16,24 +19,24 @@ namespace Extly\League\CommonMark\Extension\SmartPunct;
 
 use Extly\League\CommonMark\Delimiter\DelimiterInterface;
 use Extly\League\CommonMark\Delimiter\Processor\DelimiterProcessorInterface;
-use Extly\League\CommonMark\Inline\Element\AbstractStringContainer;
+use Extly\League\CommonMark\Node\Inline\AbstractStringContainer;
 
 final class QuoteProcessor implements DelimiterProcessorInterface
 {
-    /** @var string */
-    private $normalizedCharacter;
+    /** @psalm-readonly */
+    private string $normalizedCharacter;
 
-    /** @var string */
-    private $openerCharacter;
+    /** @psalm-readonly */
+    private string $openerCharacter;
 
-    /** @var string */
-    private $closerCharacter;
+    /** @psalm-readonly */
+    private string $closerCharacter;
 
     private function __construct(string $char, string $opener, string $closer)
     {
         $this->normalizedCharacter = $char;
-        $this->openerCharacter = $opener;
-        $this->closerCharacter = $closer;
+        $this->openerCharacter     = $opener;
+        $this->closerCharacter     = $closer;
     }
 
     public function getOpeningCharacter(): string
@@ -56,7 +59,7 @@ final class QuoteProcessor implements DelimiterProcessorInterface
         return 1;
     }
 
-    public function process(AbstractStringContainer $opener, AbstractStringContainer $closer, int $delimiterUse)
+    public function process(AbstractStringContainer $opener, AbstractStringContainer $closer, int $delimiterUse): void
     {
         $opener->insertAfter(new Quote($this->openerCharacter));
         $closer->insertBefore(new Quote($this->closerCharacter));
@@ -64,11 +67,6 @@ final class QuoteProcessor implements DelimiterProcessorInterface
 
     /**
      * Create a double-quote processor
-     *
-     * @param string $opener
-     * @param string $closer
-     *
-     * @return QuoteProcessor
      */
     public static function createDoubleQuoteProcessor(string $opener = Quote::DOUBLE_QUOTE_OPENER, string $closer = Quote::DOUBLE_QUOTE_CLOSER): self
     {
@@ -77,11 +75,6 @@ final class QuoteProcessor implements DelimiterProcessorInterface
 
     /**
      * Create a single-quote processor
-     *
-     * @param string $opener
-     * @param string $closer
-     *
-     * @return QuoteProcessor
      */
     public static function createSingleQuoteProcessor(string $opener = Quote::SINGLE_QUOTE_OPENER, string $closer = Quote::SINGLE_QUOTE_CLOSER): self
     {

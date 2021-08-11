@@ -1,4 +1,5 @@
-<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 
 /*
  * This file is part of the league/commonmark package.
@@ -14,19 +15,22 @@ declare(strict_types=1);
 
 namespace Extly\League\CommonMark\Extension\Footnote\Node;
 
-use Extly\League\CommonMark\Inline\Element\AbstractInline;
+use Extly\League\CommonMark\Node\Inline\AbstractInline;
 use Extly\League\CommonMark\Reference\ReferenceInterface;
+use Extly\League\CommonMark\Reference\ReferenceableInterface;
 
 /**
  * Link from the footnote on the bottom of the document back to the reference
  */
-final class FootnoteBackref extends AbstractInline
+final class FootnoteBackref extends AbstractInline implements ReferenceableInterface
 {
-    /** @var ReferenceInterface */
-    private $reference;
+    /** @psalm-readonly */
+    private ReferenceInterface $reference;
 
     public function __construct(ReferenceInterface $reference)
     {
+        parent::__construct();
+
         $this->reference = $reference;
     }
 

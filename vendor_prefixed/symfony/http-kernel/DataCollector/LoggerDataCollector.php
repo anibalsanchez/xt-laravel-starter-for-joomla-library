@@ -19,8 +19,6 @@ use Extly\Symfony\Component\HttpFoundation\Response;
 use Extly\Symfony\Component\HttpKernel\Log\DebugLoggerInterface;
 
 /**
- * LogDataCollector.
- *
  * @author Fabien Potencier <fabien@symfony.com>
  *
  * @final
@@ -32,7 +30,7 @@ class LoggerDataCollector extends DataCollector implements LateDataCollectorInte
     private $currentRequest;
     private $requestStack;
 
-    public function __construct($logger = null, string $containerPathPrefix = null, RequestStack $requestStack = null)
+    public function __construct(object $logger = null, string $containerPathPrefix = null, RequestStack $requestStack = null)
     {
         if (null !== $logger && $logger instanceof DebugLoggerInterface) {
             $this->logger = $logger;

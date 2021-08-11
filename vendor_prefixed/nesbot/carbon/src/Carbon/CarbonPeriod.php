@@ -877,7 +877,7 @@ class CarbonPeriod implements Iterator, Countable, JsonSerializable
      */
     public function setOptions($options)
     {
-        if (!\is_int($options) && !\is_null($options)) {
+        if (!\is_int($options) && $options !== null) {
             throw new InvalidPeriodParameterException('Invalid options.');
         }
 
@@ -1222,7 +1222,7 @@ class CarbonPeriod implements Iterator, Countable, JsonSerializable
      */
     public function setRecurrences($recurrences)
     {
-        if (!is_numeric($recurrences) && !\is_null($recurrences) || $recurrences < 0) {
+        if (!is_numeric($recurrences) && $recurrences !== null || $recurrences < 0) {
             throw new InvalidPeriodParameterException('Invalid number of recurrences.');
         }
 
@@ -1278,7 +1278,7 @@ class CarbonPeriod implements Iterator, Countable, JsonSerializable
      */
     public function setEndDate($date, $inclusive = null)
     {
-        if (!\is_null($date) && !$date = ([$this->dateClass, 'make'])($date)) {
+        if ($date !== null && !$date = ([$this->dateClass, 'make'])($date)) {
             throw new InvalidPeriodDateException('Invalid end date.');
         }
 
@@ -2281,7 +2281,7 @@ class CarbonPeriod implements Iterator, Countable, JsonSerializable
      */
     protected function isCarbonPredicateMethod($callable)
     {
-        return \is_string($callable) && substr($callable, 0, 2) === 'is' &&
+        return \is_string($callable) && str_starts_with($callable, 'is') &&
             (method_exists($this->dateClass, $callable) || ([$this->dateClass, 'hasMacro'])($callable));
     }
 

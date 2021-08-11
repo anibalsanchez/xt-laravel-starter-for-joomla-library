@@ -1,4 +1,7 @@
-<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+
+declare(strict_types=1);
 
 /*
  * This file is part of the league/commonmark package.
@@ -11,7 +14,7 @@
 
 namespace Extly\League\CommonMark\Extension;
 
-use Extly\League\CommonMark\ConfigurableEnvironmentInterface;
+use Extly\League\CommonMark\Environment\EnvironmentBuilderInterface;
 use Extly\League\CommonMark\Extension\Autolink\AutolinkExtension;
 use Extly\League\CommonMark\Extension\DisallowedRawHtml\DisallowedRawHtmlExtension;
 use Extly\League\CommonMark\Extension\Strikethrough\StrikethroughExtension;
@@ -20,7 +23,7 @@ use Extly\League\CommonMark\Extension\TaskList\TaskListExtension;
 
 final class GithubFlavoredMarkdownExtension implements ExtensionInterface
 {
-    public function register(ConfigurableEnvironmentInterface $environment)
+    public function register(EnvironmentBuilderInterface $environment): void
     {
         $environment->addExtension(new AutolinkExtension());
         $environment->addExtension(new DisallowedRawHtmlExtension());

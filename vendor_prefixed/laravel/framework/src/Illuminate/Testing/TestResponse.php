@@ -8,6 +8,7 @@ use Closure;
 use Extly\Illuminate\Contracts\View\View;
 use Extly\Illuminate\Cookie\CookieValuePrefix;
 use Extly\Illuminate\Database\Eloquent\Model;
+use Extly\Illuminate\Http\RedirectResponse;
 use Extly\Illuminate\Support\Arr;
 use Extly\Illuminate\Support\Carbon;
 use Extly\Illuminate\Support\Collection;
@@ -17,7 +18,6 @@ use Extly\Illuminate\Support\Traits\Tappable;
 use Extly\Illuminate\Testing\Assert as PHPUnit;
 use Extly\Illuminate\Testing\Constraints\SeeInOrder;
 use Extly\Illuminate\Testing\Fluent\AssertableJson;
-use Extly\Illuminate\Validation\ValidationException;
 use LogicException;
 use Extly\Symfony\Component\HttpFoundation\StreamedResponse;
 
@@ -81,13 +81,10 @@ class TestResponse implements ArrayAccess
      */
     public function assertSuccessful()
     {
-        $lastException = $this->exceptions->last();
-
-        $message = isset($lastException)
-                    ? $this->statusMessageWithException('>=200, <300', $this->getStatusCode(), $lastException)
-                    : 'Response status code ['.$this->getStatusCode().'] is not a successful status code.';
-
-        PHPUnit::assertTrue($this->isSuccessful(), $message);
+        PHPUnit::assertTrue(
+            $this->isSuccessful(),
+            $this->statusMessageWithDetails('>=200, <300', $this->getStatusCode())
+        );
 
         return $this;
     }
@@ -165,19 +162,45 @@ class TestResponse implements ArrayAccess
      */
     public function assertStatus($status)
     {
-        $actual = $this->getStatusCode();
-
-        $lastException = $actual !== $status && in_array($actual, [422, 500])
-                    ? $this->exceptions->last()
-                    : null;
-
-        $message = isset($lastException)
-                    ? $this->statusMessageWithException($status, $actual, $lastException)
-                    : "Expected status code [{$status}] but received {$actual}.";
+        $message = $this->statusMessageWithDetails($status, $actual = $this->getStatusCode());
 
         PHPUnit::assertSame($actual, $status, $message);
 
         return $this;
+    }
+
+    /**
+     * Get an assertion message for a status assertion containing extra details when available.
+     *
+     * @param  string|int  $expected
+     * @param  string|int  $actual
+     * @return string
+     */
+    protected function statusMessageWithDetails($expected, $actual)
+    {
+        $lastException = $this->exceptions->last();
+
+        if ($lastException) {
+            return $this->statusMessageWithException($expected, $actual, $lastException);
+        }
+
+        if ($this->baseResponse instanceof RedirectResponse) {
+            $session = $this->baseResponse->getSession();
+
+            if (! is_null($session) && $session->has('errors')) {
+                return $this->statusMessageWithErrors($expected, $actual, $session->get('errors')->all());
+            }
+        }
+
+        if ($this->baseResponse->headers->get('Content-Type') === 'application/json') {
+            $testJson = new AssertableJsonString($this->getContent());
+
+            if (isset($testJson['errors'])) {
+                return $this->statusMessageWithErrors($expected, $actual, $testJson->json());
+            }
+        }
+
+        return "Expected response status code [{$expected}] but received {$actual}.";
     }
 
     /**
@@ -190,10 +213,6 @@ class TestResponse implements ArrayAccess
      */
     protected function statusMessageWithException($expected, $actual, $exception)
     {
-        if ($exception instanceof ValidationException) {
-            return $this->statusMessageWithValidationErrors($expected, $actual, $exception);
-        }
-
         $exception = (string) $exception;
 
         return <<<EOF
@@ -206,25 +225,26 @@ EOF;
     }
 
     /**
-     * Get an assertion message for a status assertion that has an unexpected validation exception.
+     * Get an assertion message for a status assertion that contained errors.
      *
      * @param  string|int  $expected
      * @param  string|int  $actual
-     * @param  \Illuminate\Validation\ValidationException $exception;
+     * @param  array  $errors
      * @return string
      */
-    protected function statusMessageWithValidationErrors($expected, $actual, $exception)
+    protected function statusMessageWithErrors($expected, $actual, $errors)
     {
         $errors = $this->baseResponse->headers->get('Content-Type') === 'application/json'
-            ? json_encode($exception->errors(), JSON_PRETTY_PRINT)
-            : implode(PHP_EOL, Arr::flatten($exception->errors()));
+            ? json_encode($errors, JSON_PRETTY_PRINT)
+            : implode(PHP_EOL, Arr::flatten($errors));
 
         return <<<EOF
 Expected response status code [$expected] but received $actual.
 
-The following validation errors occurred during the request:
+The following errors occurred during the request:
 
 $errors
+
 EOF;
     }
 
@@ -1287,6 +1307,7 @@ EOF;
      * @param  string  $offset
      * @return bool
      */
+    #[\ReturnTypeWillChange]
     public function offsetExists($offset)
     {
         return $this->responseHasView()
@@ -1300,6 +1321,7 @@ EOF;
      * @param  string  $offset
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return $this->responseHasView()
@@ -1316,6 +1338,7 @@ EOF;
      *
      * @throws \LogicException
      */
+    #[\ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
         throw new LogicException('Response data may not be mutated using array access.');
@@ -1329,6 +1352,7 @@ EOF;
      *
      * @throws \LogicException
      */
+    #[\ReturnTypeWillChange]
     public function offsetUnset($offset)
     {
         throw new LogicException('Response data may not be mutated using array access.');

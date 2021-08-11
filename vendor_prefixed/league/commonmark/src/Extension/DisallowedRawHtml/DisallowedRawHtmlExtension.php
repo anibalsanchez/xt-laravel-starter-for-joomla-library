@@ -1,4 +1,7 @@
-<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+
+declare(strict_types=1);
 
 /*
  * This file is part of the league/commonmark package.
@@ -11,18 +14,39 @@
 
 namespace Extly\League\CommonMark\Extension\DisallowedRawHtml;
 
-use Extly\League\CommonMark\Block\Element\HtmlBlock;
-use Extly\League\CommonMark\Block\Renderer\HtmlBlockRenderer;
-use Extly\League\CommonMark\ConfigurableEnvironmentInterface;
-use Extly\League\CommonMark\Extension\ExtensionInterface;
-use Extly\League\CommonMark\Inline\Element\HtmlInline;
-use Extly\League\CommonMark\Inline\Renderer\HtmlInlineRenderer;
+use Extly\League\CommonMark\Environment\EnvironmentBuilderInterface;
+use Extly\League\CommonMark\Extension\CommonMark\Node\Block\HtmlBlock;
+use Extly\League\CommonMark\Extension\CommonMark\Node\Inline\HtmlInline;
+use Extly\League\CommonMark\Extension\CommonMark\Renderer\Block\HtmlBlockRenderer;
+use Extly\League\CommonMark\Extension\CommonMark\Renderer\Inline\HtmlInlineRenderer;
+use Extly\League\CommonMark\Extension\ConfigurableExtensionInterface;
+use Extly\League\Config\ConfigurationBuilderInterface;
+use Extly\Nette\Schema\Expect;
 
-final class DisallowedRawHtmlExtension implements ExtensionInterface
+final class DisallowedRawHtmlExtension implements ConfigurableExtensionInterface
 {
-    public function register(ConfigurableEnvironmentInterface $environment)
+    private const DEFAULT_DISALLOWED_TAGS = [
+        'title',
+        'textarea',
+        'style',
+        'xmp',
+        'iframe',
+        'noembed',
+        'noframes',
+        'script',
+        'plaintext',
+    ];
+
+    public function configureSchema(ConfigurationBuilderInterface $builder): void
     {
-        $environment->addBlockRenderer(HtmlBlock::class, new DisallowedRawHtmlBlockRenderer(new HtmlBlockRenderer()), 50);
-        $environment->addInlineRenderer(HtmlInline::class, new DisallowedRawHtmlInlineRenderer(new HtmlInlineRenderer()), 50);
+        $builder->addSchema('disallowed_raw_html', Expect::structure([
+            'disallowed_tags' => Expect::listOf('string')->default(self::DEFAULT_DISALLOWED_TAGS)->mergeDefaults(false),
+        ]));
+    }
+
+    public function register(EnvironmentBuilderInterface $environment): void
+    {
+        $environment->addRenderer(HtmlBlock::class, new DisallowedRawHtmlRenderer(new HtmlBlockRenderer()), 50);
+        $environment->addRenderer(HtmlInline::class, new DisallowedRawHtmlRenderer(new HtmlInlineRenderer()), 50);
     }
 }

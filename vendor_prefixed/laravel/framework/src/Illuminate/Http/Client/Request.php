@@ -264,6 +264,7 @@ class Request implements ArrayAccess
      * @param  string  $offset
      * @return bool
      */
+    #[\ReturnTypeWillChange]
     public function offsetExists($offset)
     {
         return isset($this->data()[$offset]);
@@ -275,6 +276,7 @@ class Request implements ArrayAccess
      * @param  string  $offset
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return $this->data()[$offset];
@@ -289,6 +291,7 @@ class Request implements ArrayAccess
      *
      * @throws \LogicException
      */
+    #[\ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
         throw new LogicException('Request data may not be mutated using array access.');
@@ -302,6 +305,7 @@ class Request implements ArrayAccess
      *
      * @throws \LogicException
      */
+    #[\ReturnTypeWillChange]
     public function offsetUnset($offset)
     {
         throw new LogicException('Request data may not be mutated using array access.');

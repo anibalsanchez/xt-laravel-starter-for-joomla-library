@@ -1,4 +1,5 @@
-<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 
 /*
  * This file is part of the league/commonmark package.
@@ -14,49 +15,74 @@ declare(strict_types=1);
 
 namespace Extly\League\CommonMark\Extension\Footnote\Renderer;
 
-use Extly\League\CommonMark\ElementRendererInterface;
 use Extly\League\CommonMark\Extension\Footnote\Node\FootnoteRef;
-use Extly\League\CommonMark\HtmlElement;
-use Extly\League\CommonMark\Inline\Element\AbstractInline;
-use Extly\League\CommonMark\Inline\Renderer\InlineRendererInterface;
-use Extly\League\CommonMark\Util\ConfigurationAwareInterface;
-use Extly\League\CommonMark\Util\ConfigurationInterface;
+use Extly\League\CommonMark\Node\Node;
+use Extly\League\CommonMark\Renderer\ChildNodeRendererInterface;
+use Extly\League\CommonMark\Renderer\NodeRendererInterface;
+use Extly\League\CommonMark\Util\HtmlElement;
+use Extly\League\CommonMark\Xml\XmlNodeRendererInterface;
+use Extly\League\Config\ConfigurationAwareInterface;
+use Extly\League\Config\ConfigurationInterface;
 
-final class FootnoteRefRenderer implements InlineRendererInterface, ConfigurationAwareInterface
+final class FootnoteRefRenderer implements NodeRendererInterface, XmlNodeRendererInterface, ConfigurationAwareInterface
 {
-    /** @var ConfigurationInterface */
-    private $config;
+    private ConfigurationInterface $config;
 
-    public function render(AbstractInline $inline, ElementRendererInterface $htmlRenderer)
+    /**
+     * @param FootnoteRef $node
+     *
+     * {@inheritDoc}
+     *
+     * @psalm-suppress MoreSpecificImplementedParamType
+     */
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer): \Stringable
     {
-        if (!($inline instanceof FootnoteRef)) {
-            throw new \InvalidArgumentException('Incompatible inline type: ' . \get_class($inline));
-        }
+        FootnoteRef::assertInstanceOf($node);
 
-        $attrs = $inline->getData('attributes', []);
-        $class = $attrs['class'] ?? $this->config->get('footnote/ref_class', 'footnote-ref');
-        $idPrefix = $this->config->get('footnote/ref_id_prefix', 'fnref:');
+        $attrs = $node->data->getData('attributes');
+        $attrs->append('class', $this->config->get('footnote/ref_class'));
+        $attrs->set('href', \mb_strtolower($node->getReference()->getDestination()));
+        $attrs->set('role', 'doc-noteref');
+
+        $idPrefix = $this->config->get('footnote/ref_id_prefix');
 
         return new HtmlElement(
             'sup',
             [
-                'id' => $idPrefix . \mb_strtolower($inline->getReference()->getLabel()),
+                'id' => $idPrefix . \mb_strtolower($node->getReference()->getLabel()),
             ],
-            new HTMLElement(
+            new HtmlElement(
                 'a',
-                [
-                    'class' => $class,
-                    'href'  => \mb_strtolower($inline->getReference()->getDestination()),
-                    'role'  => 'doc-noteref',
-                ],
-                $inline->getReference()->getTitle()
+                $attrs->export(),
+                $node->getReference()->getTitle()
             ),
             true
         );
     }
 
-    public function setConfiguration(ConfigurationInterface $configuration)
+    public function setConfiguration(ConfigurationInterface $configuration): void
     {
         $this->config = $configuration;
+    }
+
+    public function getXmlTagName(Node $node): string
+    {
+        return 'footnote_ref';
+    }
+
+    /**
+     * @param FootnoteRef $node
+     *
+     * @return array<string, scalar>
+     *
+     * @psalm-suppress MoreSpecificImplementedParamType
+     */
+    public function getXmlAttributes(Node $node): array
+    {
+        FootnoteRef::assertInstanceOf($node);
+
+        return [
+            'reference' => $node->getReference()->getLabel(),
+        ];
     }
 }

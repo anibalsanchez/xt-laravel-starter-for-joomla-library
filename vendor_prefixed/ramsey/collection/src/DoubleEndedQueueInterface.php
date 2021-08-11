@@ -1,4 +1,5 @@
-<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 
 /**
  * This file is part of the ramsey/collection library
@@ -160,7 +161,7 @@ use Extly\Ramsey\Collection\Exception\NoSuchElementException;
  * empty.
  *
  * @template T
- * @template-extends QueueInterface<T>
+ * @extends QueueInterface<T>
  */
 interface DoubleEndedQueueInterface extends QueueInterface
 {

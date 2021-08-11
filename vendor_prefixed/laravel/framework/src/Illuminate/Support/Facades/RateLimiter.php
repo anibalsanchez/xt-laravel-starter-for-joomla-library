@@ -13,6 +13,7 @@ namespace Extly\Illuminate\Support\Facades;
  * @method static int retriesLeft($key, $maxAttempts)
  * @method static void clear($key)
  * @method static int availableIn($key)
+ * @method static bool attempt($key, $maxAttempts, \Closure $callback, $decaySeconds = 60)
  *
  * @see \Illuminate\Cache\RateLimiter
  */

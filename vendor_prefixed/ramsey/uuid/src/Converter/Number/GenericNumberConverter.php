@@ -20,7 +20,7 @@ use Extly\Ramsey\Uuid\Math\CalculatorInterface;
 use Extly\Ramsey\Uuid\Type\Integer as IntegerObject;
 
 /**
- * GenericNumberConverter uses the provided calculate to convert decimal
+ * GenericNumberConverter uses the provided calculator to convert decimal
  * numbers to and from hexadecimal values
  *
  * @psalm-immutable
@@ -58,6 +58,7 @@ class GenericNumberConverter implements NumberConverterInterface
      */
     public function toHex(string $number): string
     {
+        /** @phpstan-ignore-next-line PHPStan complains that this is not a non-empty-string. */
         return $this->calculator->toBase(new IntegerObject($number), 16);
     }
 }

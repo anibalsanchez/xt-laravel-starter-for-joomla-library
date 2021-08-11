@@ -1,4 +1,7 @@
-<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+
+declare(strict_types=1);
 
 /*
  * This file is part of the league/commonmark package.
@@ -14,15 +17,15 @@
 
 namespace Extly\League\CommonMark\Extension\SmartPunct;
 
-use Extly\League\CommonMark\Inline\Element\AbstractStringContainer;
+use Extly\League\CommonMark\Node\Inline\AbstractStringContainer;
 
 final class Quote extends AbstractStringContainer
 {
-    public const DOUBLE_QUOTE = '"';
+    public const DOUBLE_QUOTE        = '"';
     public const DOUBLE_QUOTE_OPENER = '“';
     public const DOUBLE_QUOTE_CLOSER = '”';
 
-    public const SINGLE_QUOTE = "'";
+    public const SINGLE_QUOTE        = "'";
     public const SINGLE_QUOTE_OPENER = '‘';
     public const SINGLE_QUOTE_CLOSER = '’';
 }

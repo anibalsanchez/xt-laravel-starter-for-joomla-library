@@ -33,6 +33,12 @@ class Mix
         if (is_file(XT_public_path($manifestDirectory.'/hot'))) {
             $url = rtrim(file_get_contents(XT_public_path($manifestDirectory.'/hot')));
 
+            $customUrl = XT_app('config')->get('app.mix_hot_proxy_url');
+
+            if (! empty($customUrl)) {
+                return new HtmlString("{$customUrl}{$path}");
+            }
+
             if (Str::startsWith($url, ['http://', 'https://'])) {
                 return new HtmlString(Str::after($url, ':').$path);
             }

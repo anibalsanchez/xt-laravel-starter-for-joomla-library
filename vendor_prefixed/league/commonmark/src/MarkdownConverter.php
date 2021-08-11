@@ -1,4 +1,5 @@
-<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 
 declare(strict_types=1);
 
@@ -13,20 +14,62 @@ declare(strict_types=1);
 
 namespace Extly\League\CommonMark;
 
-class MarkdownConverter extends Converter
+use Extly\League\CommonMark\Environment\EnvironmentInterface;
+use Extly\League\CommonMark\Output\RenderedContentInterface;
+use Extly\League\CommonMark\Parser\MarkdownParser;
+use Extly\League\CommonMark\Parser\MarkdownParserInterface;
+use Extly\League\CommonMark\Renderer\HtmlRenderer;
+use Extly\League\CommonMark\Renderer\MarkdownRendererInterface;
+
+class MarkdownConverter implements MarkdownConverterInterface
 {
-    /** @var EnvironmentInterface */
-    protected $environment;
+    /** @psalm-readonly */
+    protected EnvironmentInterface $environment;
+
+    /** @psalm-readonly */
+    protected MarkdownParserInterface $markdownParser;
+
+    /** @psalm-readonly */
+    protected MarkdownRendererInterface $htmlRenderer;
 
     public function __construct(EnvironmentInterface $environment)
     {
         $this->environment = $environment;
 
-        parent::__construct(new DocParser($environment), new HtmlRenderer($environment));
+        $this->markdownParser = new MarkdownParser($environment);
+        $this->htmlRenderer   = new HtmlRenderer($environment);
     }
 
     public function getEnvironment(): EnvironmentInterface
     {
         return $this->environment;
+    }
+
+    /**
+     * Converts Markdown to HTML.
+     *
+     * @param string $markdown The Markdown to convert
+     *
+     * @return RenderedContentInterface Rendered HTML
+     *
+     * @throws \RuntimeException
+     */
+    public function convertToHtml(string $markdown): RenderedContentInterface
+    {
+        $documentAST = $this->markdownParser->parse($markdown);
+
+        return $this->htmlRenderer->renderDocument($documentAST);
+    }
+
+    /**
+     * Converts CommonMark to HTML.
+     *
+     * @see Converter::convertToHtml
+     *
+     * @throws \RuntimeException
+     */
+    public function __invoke(string $markdown): RenderedContentInterface
+    {
+        return $this->convertToHtml($markdown);
     }
 }

@@ -1,4 +1,7 @@
-<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+
+declare(strict_types=1);
 
 /*
  * This file is part of the league/commonmark package.
@@ -14,69 +17,56 @@
 
 namespace Extly\League\CommonMark\Extension\Mention;
 
-use Extly\League\CommonMark\Inline\Element\Link;
-use Extly\League\CommonMark\Inline\Element\Text;
+use Extly\League\CommonMark\Extension\CommonMark\Node\Inline\Link;
+use Extly\League\CommonMark\Node\Inline\Text;
 
 class Mention extends Link
 {
-    /** @var string */
-    private $symbol;
+    private string $name;
 
-    /** @var string */
-    private $identifier;
+    private string $prefix;
 
-    /**
-     * @param string $symbol
-     * @param string $identifier
-     * @param string $label
-     */
-    public function __construct(string $symbol, string $identifier, string $label = null)
+    private string $identifier;
+
+    public function __construct(string $name, string $prefix, string $identifier, ?string $label = null)
     {
-        $this->symbol = $symbol;
+        $this->name       = $name;
+        $this->prefix     = $prefix;
         $this->identifier = $identifier;
 
-        parent::__construct('', $label ?? \sprintf('%s%s', $symbol, $identifier));
+        parent::__construct('', $label ?? \sprintf('%s%s', $prefix, $identifier));
     }
 
-    /**
-     * @return string|null
-     */
     public function getLabel(): ?string
     {
         if (($labelNode = $this->findLabelNode()) === null) {
             return null;
         }
 
-        return $labelNode->getContent();
+        return $labelNode->getLiteral();
     }
 
-    /**
-     * @return string
-     */
     public function getIdentifier(): string
     {
         return $this->identifier;
     }
 
-    /**
-     * @return string
-     */
-    public function getSymbol(): string
+    public function getName(): ?string
     {
-        return $this->symbol;
+        return $this->name;
     }
 
-    /**
-     * @return bool
-     */
+    public function getPrefix(): string
+    {
+        return $this->prefix;
+    }
+
     public function hasUrl(): bool
     {
-        return !empty($this->url);
+        return $this->url !== '';
     }
 
     /**
-     * @param string $label
-     *
      * @return $this
      */
     public function setLabel(string $label): self
@@ -86,7 +76,7 @@ class Mention extends Link
             $this->prependChild($labelNode);
         }
 
-        $labelNode->setContent($label);
+        $labelNode->setLiteral($label);
 
         return $this;
     }

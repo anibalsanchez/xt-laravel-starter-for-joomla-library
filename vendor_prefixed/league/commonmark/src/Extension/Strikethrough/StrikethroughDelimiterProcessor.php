@@ -1,4 +1,7 @@
-<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+
+declare(strict_types=1);
 
 /*
  * This file is part of the league/commonmark package.
@@ -13,7 +16,7 @@ namespace Extly\League\CommonMark\Extension\Strikethrough;
 
 use Extly\League\CommonMark\Delimiter\DelimiterInterface;
 use Extly\League\CommonMark\Delimiter\Processor\DelimiterProcessorInterface;
-use Extly\League\CommonMark\Inline\Element\AbstractStringContainer;
+use Extly\League\CommonMark\Node\Inline\AbstractStringContainer;
 
 final class StrikethroughDelimiterProcessor implements DelimiterProcessorInterface
 {
@@ -39,9 +42,9 @@ final class StrikethroughDelimiterProcessor implements DelimiterProcessorInterfa
         return $min >= 2 ? $min : 0;
     }
 
-    public function process(AbstractStringContainer $opener, AbstractStringContainer $closer, int $delimiterUse)
+    public function process(AbstractStringContainer $opener, AbstractStringContainer $closer, int $delimiterUse): void
     {
-        $strikethrough = new Strikethrough();
+        $strikethrough = new Strikethrough(\str_repeat('~', $delimiterUse));
 
         $tmp = $opener->next();
         while ($tmp !== null && $tmp !== $closer) {

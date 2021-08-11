@@ -65,6 +65,7 @@ trait DelegatesToResource
      * @param  mixed  $offset
      * @return bool
      */
+    #[\ReturnTypeWillChange]
     public function offsetExists($offset)
     {
         return isset($this->resource[$offset]);
@@ -76,6 +77,7 @@ trait DelegatesToResource
      * @param  mixed  $offset
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return $this->resource[$offset];
@@ -88,6 +90,7 @@ trait DelegatesToResource
      * @param  mixed  $value
      * @return void
      */
+    #[\ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
         $this->resource[$offset] = $value;
@@ -99,6 +102,7 @@ trait DelegatesToResource
      * @param  mixed  $offset
      * @return void
      */
+    #[\ReturnTypeWillChange]
     public function offsetUnset($offset)
     {
         unset($this->resource[$offset]);

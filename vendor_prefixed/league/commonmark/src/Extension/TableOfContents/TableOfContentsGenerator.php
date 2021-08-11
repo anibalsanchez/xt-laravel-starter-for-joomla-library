@@ -1,4 +1,7 @@
-<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+
+declare(strict_types=1);
 
 /*
  * This file is part of the league/commonmark package.
@@ -11,46 +14,58 @@
 
 namespace Extly\League\CommonMark\Extension\TableOfContents;
 
-use Extly\League\CommonMark\Block\Element\Document;
-use Extly\League\CommonMark\Block\Element\Heading;
-use Extly\League\CommonMark\Block\Element\ListBlock;
-use Extly\League\CommonMark\Block\Element\ListData;
-use Extly\League\CommonMark\Block\Element\ListItem;
-use Extly\League\CommonMark\Block\Element\Paragraph;
-use Extly\League\CommonMark\Exception\InvalidOptionException;
+use Extly\League\CommonMark\Extension\CommonMark\Node\Block\Heading;
+use Extly\League\CommonMark\Extension\CommonMark\Node\Block\ListBlock;
+use Extly\League\CommonMark\Extension\CommonMark\Node\Block\ListData;
+use Extly\League\CommonMark\Extension\CommonMark\Node\Block\ListItem;
+use Extly\League\CommonMark\Extension\CommonMark\Node\Inline\Link;
 use Extly\League\CommonMark\Extension\HeadingPermalink\HeadingPermalink;
 use Extly\League\CommonMark\Extension\TableOfContents\Node\TableOfContents;
 use Extly\League\CommonMark\Extension\TableOfContents\Normalizer\AsIsNormalizerStrategy;
 use Extly\League\CommonMark\Extension\TableOfContents\Normalizer\FlatNormalizerStrategy;
 use Extly\League\CommonMark\Extension\TableOfContents\Normalizer\NormalizerStrategyInterface;
 use Extly\League\CommonMark\Extension\TableOfContents\Normalizer\RelativeNormalizerStrategy;
-use Extly\League\CommonMark\Inline\Element\AbstractStringContainer;
-use Extly\League\CommonMark\Inline\Element\Link;
+use Extly\League\CommonMark\Node\Block\Document;
+use Extly\League\CommonMark\Node\NodeIterator;
+use Extly\League\CommonMark\Node\RawMarkupContainerInterface;
+use Extly\League\CommonMark\Node\StringContainerHelper;
+use Extly\League\Config\Exception\InvalidConfigurationException;
 
 final class TableOfContentsGenerator implements TableOfContentsGeneratorInterface
 {
-    public const STYLE_BULLET = ListBlock::TYPE_BULLET;
+    public const STYLE_BULLET  = ListBlock::TYPE_BULLET;
     public const STYLE_ORDERED = ListBlock::TYPE_ORDERED;
 
     public const NORMALIZE_DISABLED = 'as-is';
     public const NORMALIZE_RELATIVE = 'relative';
-    public const NORMALIZE_FLAT = 'flat';
+    public const NORMALIZE_FLAT     = 'flat';
 
-    /** @var string */
-    private $style;
-    /** @var string */
-    private $normalizationStrategy;
-    /** @var int */
-    private $minHeadingLevel;
-    /** @var int */
-    private $maxHeadingLevel;
+    /** @psalm-readonly */
+    private string $style;
 
-    public function __construct(string $style, string $normalizationStrategy, int $minHeadingLevel, int $maxHeadingLevel)
+    /** @psalm-readonly */
+    private string $normalizationStrategy;
+
+    /** @psalm-readonly */
+    private int $minHeadingLevel;
+
+    /** @psalm-readonly */
+    private int $maxHeadingLevel;
+
+    /** @psalm-readonly */
+    private string $fragmentPrefix;
+
+    public function __construct(string $style, string $normalizationStrategy, int $minHeadingLevel, int $maxHeadingLevel, string $fragmentPrefix)
     {
-        $this->style = $style;
+        $this->style                 = $style;
         $this->normalizationStrategy = $normalizationStrategy;
-        $this->minHeadingLevel = $minHeadingLevel;
-        $this->maxHeadingLevel = $maxHeadingLevel;
+        $this->minHeadingLevel       = $minHeadingLevel;
+        $this->maxHeadingLevel       = $maxHeadingLevel;
+        $this->fragmentPrefix        = $fragmentPrefix;
+
+        if ($fragmentPrefix !== '') {
+            $this->fragmentPrefix .= '-';
+        }
     }
 
     public function generate(Document $document): ?TableOfContents
@@ -64,7 +79,7 @@ final class TableOfContentsGenerator implements TableOfContentsGeneratorInterfac
         foreach ($this->getHeadingLinks($document) as $headingLink) {
             $heading = $headingLink->parent();
             // Make sure this is actually tied to a heading
-            if (!$heading instanceof Heading) {
+            if (! $heading instanceof Heading) {
                 continue;
             }
 
@@ -74,30 +89,26 @@ final class TableOfContentsGenerator implements TableOfContentsGeneratorInterfac
             }
 
             // Keep track of the first heading we see - we might need this later
-            $firstHeading = $firstHeading ?? $heading;
+            $firstHeading ??= $heading;
 
             // Keep track of the start and end lines
             $toc->setStartLine($firstHeading->getStartLine());
             $toc->setEndLine($heading->getEndLine());
 
             // Create the new link
-            $link = new Link('#' . $headingLink->getSlug(), self::getHeadingText($heading));
-            $paragraph = new Paragraph();
-            $paragraph->setStartLine($heading->getStartLine());
-            $paragraph->setEndLine($heading->getEndLine());
-            $paragraph->appendChild($link);
+            $link = new Link('#' . $this->fragmentPrefix . $headingLink->getSlug(), StringContainerHelper::getChildText($heading, [RawMarkupContainerInterface::class]));
 
             $listItem = new ListItem($toc->getListData());
             $listItem->setStartLine($heading->getStartLine());
             $listItem->setEndLine($heading->getEndLine());
-            $listItem->appendChild($paragraph);
+            $listItem->appendChild($link);
 
             // Add it to the correct place
             $normalizer->addItem($heading->getLevel(), $listItem);
         }
 
         // Don't add the TOC if no headings were present
-        if (!$toc->hasChildren() || $firstHeading === null) {
+        if (! $toc->hasChildren() || $firstHeading === null) {
             return null;
         }
 
@@ -113,7 +124,7 @@ final class TableOfContentsGenerator implements TableOfContentsGeneratorInterfac
         } elseif ($this->style === self::STYLE_ORDERED) {
             $listData->type = ListBlock::TYPE_ORDERED;
         } else {
-            throw new InvalidOptionException(\sprintf('Invalid table of contents list style "%s"', $this->style));
+            throw new InvalidConfigurationException(\sprintf('Invalid table of contents list style: "%s"', $this->style));
         }
 
         $toc = new TableOfContents($listData);
@@ -125,16 +136,19 @@ final class TableOfContentsGenerator implements TableOfContentsGeneratorInterfac
     }
 
     /**
-     * @param Document $document
-     *
      * @return iterable<HeadingPermalink>
      */
-    private function getHeadingLinks(Document $document)
+    private function getHeadingLinks(Document $document): iterable
     {
-        $walker = $document->walker();
-        while ($event = $walker->next()) {
-            if ($event->isEntering() && ($node = $event->getNode()) instanceof HeadingPermalink) {
-                yield $node;
+        foreach ($document->iterator(NodeIterator::FLAG_BLOCKS_ONLY) as $node) {
+            if (! $node instanceof Heading) {
+                continue;
+            }
+
+            foreach ($node->children() as $child) {
+                if ($child instanceof HeadingPermalink) {
+                    yield $child;
+                }
             }
         }
     }
@@ -149,24 +163,7 @@ final class TableOfContentsGenerator implements TableOfContentsGeneratorInterfac
             case self::NORMALIZE_FLAT:
                 return new FlatNormalizerStrategy($toc);
             default:
-                throw new InvalidOptionException(\sprintf('Invalid table of contents normalization strategy "%s"', $this->normalizationStrategy));
+                throw new InvalidConfigurationException(\sprintf('Invalid table of contents normalization strategy: "%s"', $this->normalizationStrategy));
         }
-    }
-
-    /**
-     * @return string
-     */
-    private static function getHeadingText(Heading $heading)
-    {
-        $text = '';
-
-        $walker = $heading->walker();
-        while ($event = $walker->next()) {
-            if ($event->isEntering() && ($child = $event->getNode()) instanceof AbstractStringContainer) {
-                $text .= $child->getContent();
-            }
-        }
-
-        return $text;
     }
 }

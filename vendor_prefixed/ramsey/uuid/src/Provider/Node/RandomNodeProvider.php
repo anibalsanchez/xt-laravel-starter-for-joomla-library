@@ -18,6 +18,7 @@ namespace Extly\Ramsey\Uuid\Provider\Node;
 use Extly\Ramsey\Uuid\Exception\RandomSourceException;
 use Extly\Ramsey\Uuid\Provider\NodeProviderInterface;
 use Extly\Ramsey\Uuid\Type\Hexadecimal;
+use Throwable;
 
 use function bin2hex;
 use function dechex;
@@ -39,7 +40,7 @@ class RandomNodeProvider implements NodeProviderInterface
     {
         try {
             $nodeBytes = random_bytes(6);
-        } catch (\Throwable $exception) {
+        } catch (Throwable $exception) {
             throw new RandomSourceException(
                 $exception->getMessage(),
                 (int) $exception->getCode(),

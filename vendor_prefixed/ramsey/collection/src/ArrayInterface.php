@@ -1,4 +1,5 @@
-<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 
 /**
  * This file is part of the ramsey/collection library
@@ -23,6 +24,8 @@ use Serializable;
  * `ArrayInterface` provides traversable array functionality to data types.
  *
  * @template T
+ * @extends ArrayAccess<array-key, T>
+ * @extends IteratorAggregate<array-key, T>
  */
 interface ArrayInterface extends
     ArrayAccess,

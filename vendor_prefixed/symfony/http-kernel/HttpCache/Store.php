@@ -299,7 +299,7 @@ class Store implements StoreInterface
             return [];
         }
 
-        return unserialize($entries);
+        return unserialize($entries) ?: [];
     }
 
     /**

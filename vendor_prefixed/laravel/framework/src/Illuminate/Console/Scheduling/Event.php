@@ -11,7 +11,6 @@ use Extly\Illuminate\Contracts\Container\Container;
 use Extly\Illuminate\Contracts\Debug\ExceptionHandler;
 use Extly\Illuminate\Contracts\Mail\Mailer;
 use Extly\Illuminate\Support\Arr;
-use Extly\Illuminate\Support\Carbon;
 use Extly\Illuminate\Support\Facades\Date;
 use Extly\Illuminate\Support\Reflector;
 use Extly\Illuminate\Support\Stringable;
@@ -323,10 +322,10 @@ class Event
      */
     protected function expressionPasses()
     {
-        $date = Carbon::now();
+        $date = Date::now();
 
         if ($this->timezone) {
-            $date->setTimezone($this->timezone);
+            $date = $date->setTimezone($this->timezone);
         }
 
         return (new CronExpression($this->expression))->isDue($date->toDateTimeString());

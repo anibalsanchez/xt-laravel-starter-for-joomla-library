@@ -56,7 +56,9 @@ class HttpKernelBrowser extends AbstractBrowser
     }
 
     /**
-     * Makes a request.
+     * {@inheritdoc}
+     *
+     * @param Request $request
      *
      * @return Response A Response instance
      */
@@ -72,7 +74,9 @@ class HttpKernelBrowser extends AbstractBrowser
     }
 
     /**
-     * Returns the script to execute when the request must be insulated.
+     * {@inheritdoc}
+     *
+     * @param Request $request
      *
      * @return string
      */
@@ -126,7 +130,7 @@ EOF;
     }
 
     /**
-     * Converts the BrowserKit request to a HttpKernel request.
+     * {@inheritdoc}
      *
      * @return Request A Request instance
      */
@@ -188,7 +192,9 @@ EOF;
     }
 
     /**
-     * Converts the HttpKernel response to a BrowserKit response.
+     * {@inheritdoc}
+     *
+     * @param Request $request
      *
      * @return DomResponse A DomResponse instance
      */

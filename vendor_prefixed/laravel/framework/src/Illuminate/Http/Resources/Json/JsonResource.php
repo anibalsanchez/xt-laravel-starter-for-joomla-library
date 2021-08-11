@@ -12,7 +12,6 @@ use Extly\Illuminate\Database\Eloquent\JsonEncodingException;
 use Extly\Illuminate\Http\Resources\ConditionallyLoadsAttributes;
 use Extly\Illuminate\Http\Resources\DelegatesToResource;
 use JsonSerializable;
-use ReturnTypeWillChange;
 
 class JsonResource implements ArrayAccess, JsonSerializable, Responsable, UrlRoutable
 {
@@ -228,7 +227,7 @@ class JsonResource implements ArrayAccess, JsonSerializable, Responsable, UrlRou
      *
      * @return array
      */
-    #[ReturnTypeWillChange]
+    #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
         return $this->resolve(Container::getInstance()->make('XT_request'));

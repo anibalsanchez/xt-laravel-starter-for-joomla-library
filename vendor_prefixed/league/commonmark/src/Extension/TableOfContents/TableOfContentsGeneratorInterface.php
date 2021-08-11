@@ -1,4 +1,7 @@
-<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+
+declare(strict_types=1);
 
 /*
  * This file is part of the league/commonmark package.
@@ -11,13 +14,10 @@
 
 namespace Extly\League\CommonMark\Extension\TableOfContents;
 
-use Extly\League\CommonMark\Block\Element\Document;
 use Extly\League\CommonMark\Extension\TableOfContents\Node\TableOfContents;
+use Extly\League\CommonMark\Node\Block\Document;
 
 interface TableOfContentsGeneratorInterface
 {
     public function generate(Document $document): ?TableOfContents;
 }
-
-// Trigger autoload without causing a deprecated error
-\class_exists(TableOfContents::class);

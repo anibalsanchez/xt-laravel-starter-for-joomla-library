@@ -1,4 +1,5 @@
-<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 
 /**
  * This file is part of the ramsey/collection library
@@ -22,7 +23,7 @@ use Extly\Ramsey\Collection\ArrayInterface;
  * A map cannot contain duplicate keys; each key can map to at most one value.
  *
  * @template T
- * @template-extends ArrayInterface<T>
+ * @extends ArrayInterface<T>
  */
 interface MapInterface extends ArrayInterface
 {

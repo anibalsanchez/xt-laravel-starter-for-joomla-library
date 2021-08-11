@@ -212,9 +212,9 @@ abstract class Factory
     public function createMany(iterable $records)
     {
         return new EloquentCollection(
-            array_map(function ($record) {
+            XT_collect($records)->map(function ($record) {
                 return $this->state($record)->create();
-            }, $records)
+            })
         );
     }
 

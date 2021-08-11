@@ -1,4 +1,7 @@
-<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+
+declare(strict_types=1);
 
 /*
  * This file is part of the league/commonmark package.
@@ -11,34 +14,21 @@
 
 namespace Extly\League\CommonMark\Extension\InlinesOnly;
 
-use Extly\League\CommonMark\Block\Element\AbstractBlock;
-use Extly\League\CommonMark\Block\Element\Document;
-use Extly\League\CommonMark\Block\Element\InlineContainerInterface;
-use Extly\League\CommonMark\Block\Renderer\BlockRendererInterface;
-use Extly\League\CommonMark\ElementRendererInterface;
-use Extly\League\CommonMark\Inline\Element\AbstractInline;
+use Extly\League\CommonMark\Node\Block\Document;
+use Extly\League\CommonMark\Node\Node;
+use Extly\League\CommonMark\Renderer\ChildNodeRendererInterface;
+use Extly\League\CommonMark\Renderer\NodeRendererInterface;
 
 /**
  * Simply renders child elements as-is, adding newlines as needed.
  */
-final class ChildRenderer implements BlockRendererInterface
+final class ChildRenderer implements NodeRendererInterface
 {
-    public function render(AbstractBlock $block, ElementRendererInterface $htmlRenderer, bool $inTightList = false)
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer): string
     {
-        $out = '';
-
-        if ($block instanceof InlineContainerInterface) {
-            /** @var iterable<AbstractInline> $children */
-            $children = $block->children();
-            $out .= $htmlRenderer->renderInlines($children);
-        } else {
-            /** @var iterable<AbstractBlock> $children */
-            $children = $block->children();
-            $out .= $htmlRenderer->renderBlocks($children);
-        }
-
-        if (!($block instanceof Document)) {
-            $out .= "\n";
+        $out = $childRenderer->renderNodes($node->children());
+        if (! $node instanceof Document) {
+            $out .= $childRenderer->getBlockSeparator();
         }
 
         return $out;

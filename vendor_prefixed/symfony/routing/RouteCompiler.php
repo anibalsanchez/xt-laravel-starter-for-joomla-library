@@ -139,7 +139,7 @@ class RouteCompiler implements RouteCompilerInterface
             } else {
                 $precedingChar = substr($precedingText, -1);
             }
-            $isSeparator = '' !== $precedingChar && false !== strpos(static::SEPARATORS, $precedingChar);
+            $isSeparator = '' !== $precedingChar && str_contains(static::SEPARATORS, $precedingChar);
 
             // A PCRE subpattern name must start with a non-digit. Also a PHP variable cannot start with a digit so the
             // variable would not be usable as a Controller action argument.
@@ -284,7 +284,7 @@ class RouteCompiler implements RouteCompilerInterface
             preg_match('/^./u', $pattern, $pattern);
         }
 
-        return false !== strpos(static::SEPARATORS, $pattern[0]) ? $pattern[0] : '';
+        return str_contains(static::SEPARATORS, $pattern[0]) ? $pattern[0] : '';
     }
 
     /**

@@ -32,10 +32,10 @@ class InputArgument
     private $description;
 
     /**
-     * @param string               $name        The argument name
-     * @param int|null             $mode        The argument mode: self::REQUIRED or self::OPTIONAL
-     * @param string               $description A description text
-     * @param string|string[]|null $default     The default value (for self::OPTIONAL mode only)
+     * @param string                           $name        The argument name
+     * @param int|null                         $mode        The argument mode: self::REQUIRED or self::OPTIONAL
+     * @param string                           $description A description text
+     * @param string|bool|int|float|array|null $default     The default value (for self::OPTIONAL mode only)
      *
      * @throws InvalidArgumentException When argument mode is not valid
      */
@@ -87,7 +87,7 @@ class InputArgument
     /**
      * Sets the default value.
      *
-     * @param string|string[]|null $default The default value
+     * @param string|bool|int|float|array|null $default
      *
      * @throws LogicException When incorrect default value is given
      */
@@ -111,7 +111,7 @@ class InputArgument
     /**
      * Returns the default value.
      *
-     * @return string|string[]|null The default value
+     * @return string|bool|int|float|array|null
      */
     public function getDefault()
     {

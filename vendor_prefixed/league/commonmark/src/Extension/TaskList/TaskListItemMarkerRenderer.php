@@ -1,4 +1,7 @@
-<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+
+declare(strict_types=1);
 
 /*
  * This file is part of the league/commonmark package.
@@ -11,28 +14,28 @@
 
 namespace Extly\League\CommonMark\Extension\TaskList;
 
-use Extly\League\CommonMark\ElementRendererInterface;
-use Extly\League\CommonMark\HtmlElement;
-use Extly\League\CommonMark\Inline\Element\AbstractInline;
-use Extly\League\CommonMark\Inline\Renderer\InlineRendererInterface;
+use Extly\League\CommonMark\Node\Node;
+use Extly\League\CommonMark\Renderer\ChildNodeRendererInterface;
+use Extly\League\CommonMark\Renderer\NodeRendererInterface;
+use Extly\League\CommonMark\Util\HtmlElement;
+use Extly\League\CommonMark\Xml\XmlNodeRendererInterface;
 
-final class TaskListItemMarkerRenderer implements InlineRendererInterface
+final class TaskListItemMarkerRenderer implements NodeRendererInterface, XmlNodeRendererInterface
 {
     /**
-     * @param TaskListItemMarker       $inline
-     * @param ElementRendererInterface $htmlRenderer
+     * @param TaskListItemMarker $node
      *
-     * @return HtmlElement|string|null
+     * {@inheritDoc}
+     *
+     * @psalm-suppress MoreSpecificImplementedParamType
      */
-    public function render(AbstractInline $inline, ElementRendererInterface $htmlRenderer)
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer): \Stringable
     {
-        if (!($inline instanceof TaskListItemMarker)) {
-            throw new \InvalidArgumentException('Incompatible inline type: ' . \get_class($inline));
-        }
+        TaskListItemMarker::assertInstanceOf($node);
 
         $checkbox = new HtmlElement('input', [], '', true);
 
-        if ($inline->isChecked()) {
+        if ($node->isChecked()) {
             $checkbox->setAttribute('checked', '');
         }
 
@@ -40,5 +43,28 @@ final class TaskListItemMarkerRenderer implements InlineRendererInterface
         $checkbox->setAttribute('type', 'checkbox');
 
         return $checkbox;
+    }
+
+    public function getXmlTagName(Node $node): string
+    {
+        return 'task_list_item_marker';
+    }
+
+    /**
+     * @param TaskListItemMarker $node
+     *
+     * @return array<string, scalar>
+     *
+     * @psalm-suppress MoreSpecificImplementedParamType
+     */
+    public function getXmlAttributes(Node $node): array
+    {
+        TaskListItemMarker::assertInstanceOf($node);
+
+        if ($node->isChecked()) {
+            return ['checked' => 'checked'];
+        }
+
+        return [];
     }
 }

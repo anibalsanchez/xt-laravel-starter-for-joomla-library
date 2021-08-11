@@ -1,4 +1,5 @@
-<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 
 declare(strict_types=1);
 
@@ -15,25 +16,58 @@ declare(strict_types=1);
 
 namespace Extly\League\CommonMark\Extension\Table;
 
-use Extly\League\CommonMark\Block\Element\AbstractBlock;
-use Extly\League\CommonMark\Block\Renderer\BlockRendererInterface;
-use Extly\League\CommonMark\ElementRendererInterface;
-use Extly\League\CommonMark\HtmlElement;
+use Extly\League\CommonMark\Node\Node;
+use Extly\League\CommonMark\Renderer\ChildNodeRendererInterface;
+use Extly\League\CommonMark\Renderer\NodeRendererInterface;
+use Extly\League\CommonMark\Util\HtmlElement;
+use Extly\League\CommonMark\Xml\XmlNodeRendererInterface;
 
-final class TableCellRenderer implements BlockRendererInterface
+final class TableCellRenderer implements NodeRendererInterface, XmlNodeRendererInterface
 {
-    public function render(AbstractBlock $block, ElementRendererInterface $htmlRenderer, bool $inTightList = false)
+    /**
+     * @param TableCell $node
+     *
+     * {@inheritDoc}
+     *
+     * @psalm-suppress MoreSpecificImplementedParamType
+     */
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer): \Stringable
     {
-        if (!$block instanceof TableCell) {
-            throw new \InvalidArgumentException('Incompatible block type: ' . get_class($block));
+        TableCell::assertInstanceOf($node);
+
+        $attrs = $node->data->get('attributes');
+
+        if ($node->getAlign() !== null) {
+            $attrs['align'] = $node->getAlign();
         }
 
-        $attrs = $block->getData('attributes', []);
+        $tag = $node->getType() === TableCell::TYPE_HEADER ? 'th' : 'td';
 
-        if ($block->align !== null) {
-            $attrs['align'] = $block->align;
+        return new HtmlElement($tag, $attrs, $childRenderer->renderNodes($node->children()));
+    }
+
+    public function getXmlTagName(Node $node): string
+    {
+        return 'table_cell';
+    }
+
+    /**
+     * @param TableCell $node
+     *
+     * @return array<string, scalar>
+     *
+     * @psalm-suppress MoreSpecificImplementedParamType
+     */
+    public function getXmlAttributes(Node $node): array
+    {
+        TableCell::assertInstanceOf($node);
+
+        $ret = ['type' => $node->getType()];
+
+        if (($align = $node->getAlign()) !== null) {
+            $ret['align'] = $align;
         }
 
-        return new HtmlElement($block->type, $attrs, $htmlRenderer->renderInlines($block->children()));
+        return $ret;
     }
 }

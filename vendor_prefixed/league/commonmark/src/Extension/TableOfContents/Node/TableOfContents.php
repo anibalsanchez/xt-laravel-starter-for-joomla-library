@@ -1,4 +1,7 @@
-<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+
+declare(strict_types=1);
 
 /*
  * This file is part of the league/commonmark package.
@@ -11,11 +14,8 @@
 
 namespace Extly\League\CommonMark\Extension\TableOfContents\Node;
 
-use Extly\League\CommonMark\Block\Element\ListBlock;
-use Extly\League\CommonMark\Extension\TableOfContents\TableOfContents as DeprecatedTableOfContents;
+use Extly\League\CommonMark\Extension\CommonMark\Node\Block\ListBlock;
 
 final class TableOfContents extends ListBlock
 {
 }
-
-\class_exists(DeprecatedTableOfContents::class);

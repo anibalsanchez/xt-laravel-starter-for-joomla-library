@@ -1,4 +1,7 @@
-<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+
+declare(strict_types=1);
 
 /*
  * This file is part of the league/commonmark package.
@@ -11,13 +14,13 @@
 
 namespace Extly\League\CommonMark\Extension\TableOfContents\Normalizer;
 
-use Extly\League\CommonMark\Block\Element\ListItem;
+use Extly\League\CommonMark\Extension\CommonMark\Node\Block\ListItem;
 use Extly\League\CommonMark\Extension\TableOfContents\Node\TableOfContents;
 
 final class FlatNormalizerStrategy implements NormalizerStrategyInterface
 {
-    /** @var TableOfContents */
-    private $toc;
+    /** @psalm-readonly */
+    private TableOfContents $toc;
 
     public function __construct(TableOfContents $toc)
     {
@@ -29,6 +32,3 @@ final class FlatNormalizerStrategy implements NormalizerStrategyInterface
         $this->toc->appendChild($listItemToAdd);
     }
 }
-
-// Trigger autoload without causing a deprecated error
-\class_exists(TableOfContents::class);

@@ -60,6 +60,7 @@ trait CollectsResources
      *
      * @return \ArrayIterator
      */
+    #[\ReturnTypeWillChange]
     public function getIterator()
     {
         return $this->collection->getIterator();

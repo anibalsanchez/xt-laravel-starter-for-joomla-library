@@ -125,7 +125,7 @@ trait BroadcastsEvents
      */
     public function newBroadcastableModelEvent($event)
     {
-        return XT_tap(new BroadcastableModelEventOccurred($this, $event), function ($event) {
+        return XT_tap($this->newBroadcastableEvent($event), function ($event) {
             $event->connection = property_exists($this, 'broadcastConnection')
                             ? $this->broadcastConnection
                             : $this->broadcastConnection();
@@ -138,6 +138,17 @@ trait BroadcastsEvents
                             ? $this->broadcastAfterCommit
                             : $this->broadcastAfterCommit();
         });
+    }
+
+    /**
+     * Create a new broadcastable model event for the model.
+     *
+     * @param  string  $event
+     * @return \Illuminate\Database\Eloquent\BroadcastableModelEventOccurred
+     */
+    protected function newBroadcastableEvent($event)
+    {
+        return new BroadcastableModelEventOccurred($this, $event);
     }
 
     /**

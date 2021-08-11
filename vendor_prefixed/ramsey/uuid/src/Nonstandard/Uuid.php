@@ -19,14 +19,13 @@ use Extly\Ramsey\Uuid\Codec\CodecInterface;
 use Extly\Ramsey\Uuid\Converter\NumberConverterInterface;
 use Extly\Ramsey\Uuid\Converter\TimeConverterInterface;
 use Extly\Ramsey\Uuid\Uuid as BaseUuid;
-use Extly\Ramsey\Uuid\UuidInterface;
 
 /**
  * Nonstandard\Uuid is a UUID that doesn't conform to RFC 4122
  *
  * @psalm-immutable
  */
-final class Uuid extends BaseUuid implements UuidInterface
+final class Uuid extends BaseUuid
 {
     public function __construct(
         Fields $fields,

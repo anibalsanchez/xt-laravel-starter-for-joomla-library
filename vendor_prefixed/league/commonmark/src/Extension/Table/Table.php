@@ -1,4 +1,5 @@
-<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 
 declare(strict_types=1);
 
@@ -15,55 +16,8 @@ declare(strict_types=1);
 
 namespace Extly\League\CommonMark\Extension\Table;
 
-use Extly\League\CommonMark\Block\Element\AbstractBlock;
-use Extly\League\CommonMark\Block\Element\AbstractStringContainerBlock;
-use Extly\League\CommonMark\Block\Element\InlineContainerInterface;
-use Extly\League\CommonMark\ContextInterface;
-use Extly\League\CommonMark\Cursor;
+use Extly\League\CommonMark\Node\Block\AbstractBlock;
 
-final class Table extends AbstractStringContainerBlock implements InlineContainerInterface
+final class Table extends AbstractBlock
 {
-    /** @var TableSection */
-    private $head;
-    /** @var TableSection */
-    private $body;
-    /** @var \Closure */
-    private $parser;
-
-    public function __construct(\Closure $parser)
-    {
-        parent::__construct();
-        $this->appendChild($this->head = new TableSection(TableSection::TYPE_HEAD));
-        $this->appendChild($this->body = new TableSection(TableSection::TYPE_BODY));
-        $this->parser = $parser;
-    }
-
-    public function canContain(AbstractBlock $block): bool
-    {
-        return $block instanceof TableSection;
-    }
-
-    public function isCode(): bool
-    {
-        return false;
-    }
-
-    public function getHead(): TableSection
-    {
-        return $this->head;
-    }
-
-    public function getBody(): TableSection
-    {
-        return $this->body;
-    }
-
-    public function matchesNextLine(Cursor $cursor): bool
-    {
-        return call_user_func($this->parser, $cursor, $this);
-    }
-
-    public function handleRemainingContents(ContextInterface $context, Cursor $cursor): void
-    {
-    }
 }

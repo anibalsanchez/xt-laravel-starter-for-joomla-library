@@ -1,4 +1,5 @@
-<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 
 declare(strict_types=1);
 
@@ -15,20 +16,19 @@ declare(strict_types=1);
 
 namespace Extly\League\CommonMark\Extension\Table;
 
-use Extly\League\CommonMark\ConfigurableEnvironmentInterface;
+use Extly\League\CommonMark\Environment\EnvironmentBuilderInterface;
 use Extly\League\CommonMark\Extension\ExtensionInterface;
 
 final class TableExtension implements ExtensionInterface
 {
-    public function register(ConfigurableEnvironmentInterface $environment): void
+    public function register(EnvironmentBuilderInterface $environment): void
     {
         $environment
-            ->addBlockParser(new TableParser())
+            ->addBlockStartParser(new TableStartParser())
 
-            ->addBlockRenderer(Table::class, new TableRenderer())
-            ->addBlockRenderer(TableSection::class, new TableSectionRenderer())
-            ->addBlockRenderer(TableRow::class, new TableRowRenderer())
-            ->addBlockRenderer(TableCell::class, new TableCellRenderer())
-        ;
+            ->addRenderer(Table::class, new TableRenderer())
+            ->addRenderer(TableSection::class, new TableSectionRenderer())
+            ->addRenderer(TableRow::class, new TableRowRenderer())
+            ->addRenderer(TableCell::class, new TableCellRenderer());
     }
 }

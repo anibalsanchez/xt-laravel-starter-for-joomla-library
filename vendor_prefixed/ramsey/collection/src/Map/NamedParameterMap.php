@@ -1,4 +1,5 @@
-<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 
 /**
  * This file is part of the ramsey/collection library
@@ -26,7 +27,7 @@ use function is_int;
  * `NamedParameterMap` represents a mapping of values to a set of named keys
  * that may optionally be typed
  *
- * @template-extends AbstractMap<mixed>
+ * @extends AbstractMap<mixed>
  */
 class NamedParameterMap extends AbstractMap
 {

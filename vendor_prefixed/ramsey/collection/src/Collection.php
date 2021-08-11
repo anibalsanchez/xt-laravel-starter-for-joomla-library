@@ -1,4 +1,5 @@
-<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 
 /**
  * This file is part of the ramsey/collection library
@@ -71,7 +72,7 @@ namespace Extly\Ramsey\Collection;
  * ```
  *
  * @template T
- * @template-extends AbstractCollection<T>
+ * @extends AbstractCollection<T>
  */
 class Collection extends AbstractCollection
 {
