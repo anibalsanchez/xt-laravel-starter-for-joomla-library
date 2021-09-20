@@ -12,7 +12,7 @@
 
 namespace Extly\Symfony\Component\HttpKernel\EventListener;
 
-use Psr\Log\LoggerInterface;
+use Extly\Psr\Log\LoggerInterface;
 use Extly\Symfony\Component\Debug\Exception\FlattenException as LegacyFlattenException;
 use Extly\Symfony\Component\ErrorHandler\Exception\FlattenException;
 use Extly\Symfony\Component\EventDispatcher\EventSubscriberInterface;

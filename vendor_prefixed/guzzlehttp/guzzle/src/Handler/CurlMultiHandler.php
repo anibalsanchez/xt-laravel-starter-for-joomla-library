@@ -7,7 +7,7 @@ use Extly\GuzzleHttp\Promise as P;
 use Extly\GuzzleHttp\Promise\Promise;
 use Extly\GuzzleHttp\Promise\PromiseInterface;
 use Extly\GuzzleHttp\Utils;
-use Psr\Http\Message\RequestInterface;
+use Extly\Psr\Http\Message\RequestInterface;
 
 /**
  * Returns an asynchronous response using curl_multi_* functions.

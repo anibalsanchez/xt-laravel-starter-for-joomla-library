@@ -3,13 +3,13 @@ declare(strict_types=1);
 
 namespace Extly\PhpParser;
 
+use Extly\PhpParser\Node\ComplexType;
 use Extly\PhpParser\Node\Expr;
 use Extly\PhpParser\Node\Identifier;
 use Extly\PhpParser\Node\Name;
 use Extly\PhpParser\Node\NullableType;
 use Extly\PhpParser\Node\Scalar;
 use Extly\PhpParser\Node\Stmt;
-use Extly\PhpParser\Node\UnionType;
 
 /**
  * This class defines helpers used in the implementation of builders. Don't use it directly.
@@ -105,29 +105,6 @@ final class BuilderHelpers
      * @return Name The normalized name
      */
     public static function normalizeName($name) : Name {
-        return self::normalizeNameCommon($name, false);
-    }
-
-    /**
-     * Normalizes a name: Converts string names to Name nodes, while also allowing expressions.
-     *
-     * @param Expr|Name|string $name The name to normalize
-     *
-     * @return Name|Expr The normalized name or expression
-     */
-    public static function normalizeNameOrExpr($name) {
-        return self::normalizeNameCommon($name, true);
-    }
-
-    /**
-     * Normalizes a name: Converts string names to Name nodes, optionally allowing expressions.
-     *
-     * @param Expr|Name|string $name      The name to normalize
-     * @param bool             $allowExpr Whether to also allow expressions
-     *
-     * @return Name|Expr The normalized name, or expression (if allowed)
-     */
-    private static function normalizeNameCommon($name, bool $allowExpr) {
         if ($name instanceof Name) {
             return $name;
         }
@@ -148,16 +125,28 @@ final class BuilderHelpers
             return new Name($name);
         }
 
-        if ($allowExpr) {
-            if ($name instanceof Expr) {
-                return $name;
-            }
+        throw new \LogicException('Name must be a string or an instance of Node\Name');
+    }
+
+    /**
+     * Normalizes a name: Converts string names to Name nodes, while also allowing expressions.
+     *
+     * @param Expr|Name|string $name The name to normalize
+     *
+     * @return Name|Expr The normalized name or expression
+     */
+    public static function normalizeNameOrExpr($name) {
+        if ($name instanceof Expr) {
+            return $name;
+        }
+
+        if (!is_string($name) && !($name instanceof Name)) {
             throw new \LogicException(
                 'Name must be a string or an instance of Node\Name or Node\Expr'
             );
         }
 
-        throw new \LogicException('Name must be a string or an instance of Node\Name');
+        return self::normalizeName($name);
     }
 
     /**
@@ -166,18 +155,18 @@ final class BuilderHelpers
      * In particular, builtin types become Identifiers, custom types become Names and nullables
      * are wrapped in NullableType nodes.
      *
-     * @param string|Name|Identifier|NullableType|UnionType $type The type to normalize
+     * @param string|Name|Identifier|ComplexType $type The type to normalize
      *
-     * @return Name|Identifier|NullableType|UnionType The normalized type
+     * @return Name|Identifier|ComplexType The normalized type
      */
     public static function normalizeType($type) {
         if (!is_string($type)) {
             if (
                 !$type instanceof Name && !$type instanceof Identifier &&
-                !$type instanceof NullableType && !$type instanceof UnionType
+                !$type instanceof ComplexType
             ) {
                 throw new \LogicException(
-                    'Type must be a string, or an instance of Name, Identifier, NullableType or UnionType'
+                    'Type must be a string, or an instance of Name, Identifier or ComplexType'
                 );
             }
             return $type;

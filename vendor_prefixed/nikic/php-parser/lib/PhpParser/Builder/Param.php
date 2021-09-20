@@ -48,7 +48,7 @@ class Param implements PhpParser\Builder
     /**
      * Sets type for the parameter.
      *
-     * @param string|Node\Name|Node\NullableType|Node\UnionType $type Parameter type
+     * @param string|Node\Name|Node\Identifier|Node\ComplexType $type Parameter type
      *
      * @return $this The builder instance (for fluid interface)
      */
@@ -64,7 +64,7 @@ class Param implements PhpParser\Builder
     /**
      * Sets type for the parameter.
      *
-     * @param string|Node\Name|Node\NullableType|Node\UnionType $type Parameter type
+     * @param string|Node\Name|Node\Identifier|Node\ComplexType $type Parameter type
      *
      * @return $this The builder instance (for fluid interface)
      *

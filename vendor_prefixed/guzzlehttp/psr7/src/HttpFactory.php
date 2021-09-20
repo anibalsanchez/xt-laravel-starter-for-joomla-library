@@ -1,21 +1,22 @@
-<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 
 declare(strict_types=1);
 
 namespace Extly\GuzzleHttp\Psr7;
 
-use Psr\Http\Message\RequestFactoryInterface;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseFactoryInterface;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestFactoryInterface;
-use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Message\StreamFactoryInterface;
-use Psr\Http\Message\StreamInterface;
-use Psr\Http\Message\UploadedFileFactoryInterface;
-use Psr\Http\Message\UploadedFileInterface;
-use Psr\Http\Message\UriFactoryInterface;
-use Psr\Http\Message\UriInterface;
+use Extly\Psr\Http\Message\RequestFactoryInterface;
+use Extly\Psr\Http\Message\RequestInterface;
+use Extly\Psr\Http\Message\ResponseFactoryInterface;
+use Extly\Psr\Http\Message\ResponseInterface;
+use Extly\Psr\Http\Message\ServerRequestFactoryInterface;
+use Extly\Psr\Http\Message\ServerRequestInterface;
+use Extly\Psr\Http\Message\StreamFactoryInterface;
+use Extly\Psr\Http\Message\StreamInterface;
+use Extly\Psr\Http\Message\UploadedFileFactoryInterface;
+use Extly\Psr\Http\Message\UploadedFileInterface;
+use Extly\Psr\Http\Message\UriFactoryInterface;
+use Extly\Psr\Http\Message\UriInterface;
 
 /**
  * Implements all of the PSR-17 interfaces.

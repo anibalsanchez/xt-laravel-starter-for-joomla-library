@@ -12,7 +12,7 @@
 
 namespace Extly\Symfony\Component\ErrorHandler\ErrorRenderer;
 
-use Psr\Log\LoggerInterface;
+use Extly\Psr\Log\LoggerInterface;
 use Extly\Symfony\Component\ErrorHandler\Exception\FlattenException;
 use Extly\Symfony\Component\HttpFoundation\RequestStack;
 use Extly\Symfony\Component\HttpFoundation\Response;

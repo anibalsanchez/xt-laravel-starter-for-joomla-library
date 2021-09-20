@@ -43,7 +43,7 @@ abstract class Helper implements HelperInterface
     /**
      * Returns the length of a string, using mb_strwidth if it is available.
      *
-     * @deprecated since 5.3
+     * @deprecated since Symfony 5.3
      *
      * @return int The length of the string
      */
@@ -155,7 +155,7 @@ abstract class Helper implements HelperInterface
     }
 
     /**
-     * @deprecated since 5.3
+     * @deprecated since Symfony 5.3
      */
     public static function strlenWithoutDecoration(OutputFormatterInterface $formatter, ?string $string)
     {
@@ -171,7 +171,7 @@ abstract class Helper implements HelperInterface
         // remove <...> formatting
         $string = $formatter->format($string ?? '');
         // remove already formatted characters
-        $string = preg_replace("/\033\[[^m]*m/", '', $string);
+        $string = preg_replace("/\033\[[^m]*m/", '', $string ?? '');
         $formatter->setDecorated($isDecorated);
 
         return $string;

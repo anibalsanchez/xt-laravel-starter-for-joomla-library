@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Extly\PhpParser\Node;
 
+use Extly\PhpParser\Node\VariadicPlaceholder;
 use Extly\PhpParser\NodeAbstract;
 
 class Arg extends NodeAbstract

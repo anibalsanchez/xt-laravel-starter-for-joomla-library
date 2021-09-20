@@ -1,4 +1,5 @@
-<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 declare(strict_types=1);
 
 /*
@@ -13,7 +14,7 @@ declare(strict_types=1);
 namespace Extly\Monolog\Processor;
 
 use Extly\Monolog\Logger;
-use Psr\Log\LogLevel;
+use Extly\Psr\Log\LogLevel;
 
 /**
  * Injects line/file:class/function where the log message came from

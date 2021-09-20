@@ -9,9 +9,9 @@ use Extly\GuzzleHttp\Promise as P;
 use Extly\GuzzleHttp\Promise\PromiseInterface;
 use Extly\GuzzleHttp\TransferStats;
 use Extly\GuzzleHttp\Utils;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\StreamInterface;
+use Extly\Psr\Http\Message\RequestInterface;
+use Extly\Psr\Http\Message\ResponseInterface;
+use Extly\Psr\Http\Message\StreamInterface;
 
 /**
  * Handler that returns responses or throw exceptions from a queue.

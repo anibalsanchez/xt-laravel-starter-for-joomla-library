@@ -12,7 +12,7 @@
 
 namespace Extly\Symfony\Component\HttpKernel\EventListener;
 
-use Psr\Container\ContainerInterface;
+use Extly\Psr\Container\ContainerInterface;
 use Extly\Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Extly\Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
 use Extly\Symfony\Component\HttpKernel\Event\RequestEvent;

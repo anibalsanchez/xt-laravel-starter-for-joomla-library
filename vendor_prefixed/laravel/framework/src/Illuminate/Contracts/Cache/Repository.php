@@ -4,7 +4,7 @@
 namespace Extly\Illuminate\Contracts\Cache;
 
 use Closure;
-use Psr\SimpleCache\CacheInterface;
+use Extly\Psr\SimpleCache\CacheInterface;
 
 interface Repository extends CacheInterface
 {

@@ -1,4 +1,5 @@
-<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 declare(strict_types=1);
 
 /*
@@ -37,7 +38,7 @@ class SocketHandler extends AbstractProcessingHandler
     private $writingTimeout = 10.0;
     /** @var ?int */
     private $lastSentBytes = null;
-    /** @var int */
+    /** @var ?int */
     private $chunkSize = null;
     /** @var bool */
     private $persistent = false;
@@ -198,7 +199,7 @@ class SocketHandler extends AbstractProcessingHandler
     /**
      * Get current chunk size
      */
-    public function getChunkSize(): int
+    public function getChunkSize(): ?int
     {
         return $this->chunkSize;
     }
@@ -264,6 +265,10 @@ class SocketHandler extends AbstractProcessingHandler
     {
         if (!is_resource($this->resource)) {
             throw new \LogicException('streamSetChunkSize called but $this->resource is not a resource');
+        }
+
+        if (null === $this->chunkSize) {
+            throw new \LogicException('streamSetChunkSize called but $this->chunkSize is not set');
         }
 
         return stream_set_chunk_size($this->resource, $this->chunkSize);

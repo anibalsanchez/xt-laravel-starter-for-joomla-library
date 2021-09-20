@@ -116,6 +116,17 @@ class BroadcastableModelEventOccurred implements ShouldBroadcast
     }
 
     /**
+     * Determine if the event should be broadcast synchronously.
+     *
+     * @return bool
+     */
+    public function shouldBroadcastNow()
+    {
+        return $this->event === 'deleted' &&
+               ! method_exists($this->model, 'bootSoftDeletes');
+    }
+
+    /**
      * Get the event name.
      *
      * @return string

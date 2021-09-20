@@ -1,6 +1,6 @@
-<?php
+<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 
-namespace Psr\Log;
+namespace Extly\Psr\Log;
 
 /**
  * This Logger can be used to avoid conditional log calls.

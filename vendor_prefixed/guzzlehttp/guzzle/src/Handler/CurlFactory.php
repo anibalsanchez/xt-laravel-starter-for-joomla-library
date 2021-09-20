@@ -11,7 +11,7 @@ use Extly\GuzzleHttp\Promise\PromiseInterface;
 use Extly\GuzzleHttp\Psr7\LazyOpenStream;
 use Extly\GuzzleHttp\TransferStats;
 use Extly\GuzzleHttp\Utils;
-use Psr\Http\Message\RequestInterface;
+use Extly\Psr\Http\Message\RequestInterface;
 
 /**
  * Creates curl resources from a request

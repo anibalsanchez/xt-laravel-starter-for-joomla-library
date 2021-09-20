@@ -12,9 +12,9 @@
 
 namespace Extly\Symfony\Component\Console\Logger;
 
-use Psr\Log\AbstractLogger;
-use Psr\Log\InvalidArgumentException;
-use Psr\Log\LogLevel;
+use Extly\Psr\Log\AbstractLogger;
+use Extly\Psr\Log\InvalidArgumentException;
+use Extly\Psr\Log\LogLevel;
 use Extly\Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Extly\Symfony\Component\Console\Output\OutputInterface;
 

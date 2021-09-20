@@ -12,7 +12,7 @@
 
 namespace Extly\Symfony\Component\HttpKernel\DependencyInjection;
 
-use Psr\Log\LoggerInterface;
+use Extly\Psr\Log\LoggerInterface;
 use Extly\Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Extly\Symfony\Component\DependencyInjection\ContainerBuilder;
 use Extly\Symfony\Component\HttpKernel\Log\Logger;

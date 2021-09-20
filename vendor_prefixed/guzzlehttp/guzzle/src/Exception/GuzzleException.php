@@ -3,7 +3,7 @@
 
 namespace Extly\GuzzleHttp\Exception;
 
-use Psr\Http\Client\ClientExceptionInterface;
+use Extly\Psr\Http\Client\ClientExceptionInterface;
 
 interface GuzzleException extends ClientExceptionInterface
 {

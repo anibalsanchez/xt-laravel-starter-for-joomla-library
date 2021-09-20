@@ -1,4 +1,5 @@
-<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 
 /*
  * This file is part of the Symfony package.
@@ -12,7 +13,7 @@
 namespace Extly\Symfony\Contracts\Service\Test;
 
 use PHPUnit\Framework\TestCase;
-use Psr\Container\ContainerInterface;
+use Extly\Psr\Container\ContainerInterface;
 use Extly\Symfony\Contracts\Service\ServiceLocatorTrait;
 
 abstract class ServiceLocatorTest extends TestCase
@@ -67,7 +68,7 @@ abstract class ServiceLocatorTest extends TestCase
     public function testThrowsOnUndefinedInternalService()
     {
         if (!$this->getExpectedException()) {
-            $this->expectException(\Psr\Container\NotFoundExceptionInterface::class);
+            $this->expectException(\Extly\Psr\Container\NotFoundExceptionInterface::class);
             $this->expectExceptionMessage('The service "foo" has a dependency on a non-existent service "bar". This locator only knows about the "foo" service.');
         }
         $locator = $this->getServiceLocator([
@@ -79,7 +80,7 @@ abstract class ServiceLocatorTest extends TestCase
 
     public function testThrowsOnCircularReference()
     {
-        $this->expectException(\Psr\Container\ContainerExceptionInterface::class);
+        $this->expectException(\Extly\Psr\Container\ContainerExceptionInterface::class);
         $this->expectExceptionMessage('Circular reference detected for service "bar", path: "bar -> baz -> bar".');
         $locator = $this->getServiceLocator([
             'foo' => function () use (&$locator) { return $locator->get('bar'); },

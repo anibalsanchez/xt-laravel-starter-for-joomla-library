@@ -1,4 +1,5 @@
-<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 
 /*
  * This file is part of the Symfony package.
@@ -11,7 +12,7 @@
 
 namespace Extly\Symfony\Contracts\EventDispatcher;
 
-use Psr\EventDispatcher\StoppableEventInterface;
+use Extly\Psr\EventDispatcher\StoppableEventInterface;
 
 /**
  * Event is the base class for classes containing event data.

@@ -1,4 +1,5 @@
-<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 declare(strict_types=1);
 
 /*
@@ -14,7 +15,7 @@ namespace Extly\Monolog\Handler;
 
 use Extly\Monolog\Logger;
 use Extly\Monolog\ResettableInterface;
-use Psr\Log\LogLevel;
+use Extly\Psr\Log\LogLevel;
 
 /**
  * Base Handler class providing basic level/bubble support

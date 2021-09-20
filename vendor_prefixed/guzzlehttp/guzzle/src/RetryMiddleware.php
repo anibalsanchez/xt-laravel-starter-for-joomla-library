@@ -5,8 +5,8 @@ namespace Extly\GuzzleHttp;
 
 use Extly\GuzzleHttp\Promise as P;
 use Extly\GuzzleHttp\Promise\PromiseInterface;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
+use Extly\Psr\Http\Message\RequestInterface;
+use Extly\Psr\Http\Message\ResponseInterface;
 
 /**
  * Middleware that retries requests based on the boolean result of

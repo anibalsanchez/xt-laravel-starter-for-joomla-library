@@ -12,7 +12,7 @@
 
 namespace Extly\Symfony\Component\EventDispatcher;
 
-use Psr\EventDispatcher\StoppableEventInterface;
+use Extly\Psr\EventDispatcher\StoppableEventInterface;
 use Extly\Symfony\Component\EventDispatcher\Debug\WrappedListener;
 
 /**

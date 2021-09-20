@@ -6,6 +6,7 @@ namespace Extly\Illuminate\Foundation\Testing\Concerns;
 use Extly\Illuminate\Support\Facades\View as ViewFacade;
 use Extly\Illuminate\Support\MessageBag;
 use Extly\Illuminate\Support\ViewErrorBag;
+use Extly\Illuminate\Testing\TestComponent;
 use Extly\Illuminate\Testing\TestView;
 use Extly\Illuminate\View\View;
 
@@ -52,7 +53,7 @@ trait InteractsWithViews
      *
      * @param  string  $componentClass
      * @param  \Illuminate\Contracts\Support\Arrayable|array  $data
-     * @return \Illuminate\Testing\TestView
+     * @return \Illuminate\Testing\TestComponent
      */
     protected function component(string $componentClass, array $data = [])
     {
@@ -60,9 +61,11 @@ trait InteractsWithViews
 
         $view = XT_value($component->resolveView(), $data);
 
-        return $view instanceof View
-                ? new TestView($view->with($component->data()))
-                : new TestView(XT_view($view, $component->data()));
+        $view = $view instanceof View
+            ? $view->with($component->data())
+            : XT_view($view, $component->data());
+
+        return new TestComponent($component, $view);
     }
 
     /**

@@ -1,6 +1,6 @@
-<?php
+<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 
-namespace Psr\Http\Message;
+namespace Extly\Psr\Http\Message;
 
 /**
  * Representation of an outgoing, client-side request.

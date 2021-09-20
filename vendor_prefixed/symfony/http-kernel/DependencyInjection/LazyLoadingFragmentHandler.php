@@ -12,7 +12,7 @@
 
 namespace Extly\Symfony\Component\HttpKernel\DependencyInjection;
 
-use Psr\Container\ContainerInterface;
+use Extly\Psr\Container\ContainerInterface;
 use Extly\Symfony\Component\HttpFoundation\RequestStack;
 use Extly\Symfony\Component\HttpKernel\Fragment\FragmentHandler;
 

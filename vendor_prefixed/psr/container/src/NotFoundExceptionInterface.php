@@ -1,6 +1,6 @@
-<?php
+<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 
-namespace Psr\Container;
+namespace Extly\Psr\Container;
 
 /**
  * No entry was found in the container.

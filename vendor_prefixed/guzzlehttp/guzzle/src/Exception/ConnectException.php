@@ -3,8 +3,8 @@
 
 namespace Extly\GuzzleHttp\Exception;
 
-use Psr\Http\Client\NetworkExceptionInterface;
-use Psr\Http\Message\RequestInterface;
+use Extly\Psr\Http\Client\NetworkExceptionInterface;
+use Extly\Psr\Http\Message\RequestInterface;
 
 /**
  * Exception thrown when a connection cannot be established.

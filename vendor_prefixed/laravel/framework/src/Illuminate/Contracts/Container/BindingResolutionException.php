@@ -4,7 +4,7 @@
 namespace Extly\Illuminate\Contracts\Container;
 
 use Exception;
-use Psr\Container\ContainerExceptionInterface;
+use Extly\Psr\Container\ContainerExceptionInterface;
 
 class BindingResolutionException extends Exception implements ContainerExceptionInterface
 {

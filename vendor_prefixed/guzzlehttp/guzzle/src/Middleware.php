@@ -7,9 +7,9 @@ use Extly\GuzzleHttp\Cookie\CookieJarInterface;
 use Extly\GuzzleHttp\Exception\RequestException;
 use Extly\GuzzleHttp\Promise as P;
 use Extly\GuzzleHttp\Promise\PromiseInterface;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Log\LoggerInterface;
+use Extly\Psr\Http\Message\RequestInterface;
+use Extly\Psr\Http\Message\ResponseInterface;
+use Extly\Psr\Log\LoggerInterface;
 
 /**
  * Functions used to create and wrap handlers with handler middleware.

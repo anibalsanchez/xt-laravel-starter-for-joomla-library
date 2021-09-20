@@ -34,7 +34,7 @@ class Application extends Container implements ApplicationContract, CachesConfig
      *
      * @var string
      */
-    const VERSION = '8.54.0';
+    const VERSION = '8.61.0';
 
     /**
      * The base path for the Laravel installation.
@@ -352,7 +352,7 @@ class Application extends Container implements ApplicationContract, CachesConfig
     /**
      * Get the base path of the Laravel installation.
      *
-     * @param  string  $path Optionally, a path to append to the base path
+     * @param  string  $path
      * @return string
      */
     public function basePath($path = '')
@@ -363,7 +363,7 @@ class Application extends Container implements ApplicationContract, CachesConfig
     /**
      * Get the path to the bootstrap directory.
      *
-     * @param  string  $path Optionally, a path to append to the bootstrap path
+     * @param  string  $path
      * @return string
      */
     public function bootstrapPath($path = '')
@@ -374,7 +374,7 @@ class Application extends Container implements ApplicationContract, CachesConfig
     /**
      * Get the path to the application configuration files.
      *
-     * @param  string  $path Optionally, a path to append to the config path
+     * @param  string  $path
      * @return string
      */
     public function configPath($path = '')
@@ -385,7 +385,7 @@ class Application extends Container implements ApplicationContract, CachesConfig
     /**
      * Get the path to the database directory.
      *
-     * @param  string  $path Optionally, a path to append to the database path
+     * @param  string  $path
      * @return string
      */
     public function databasePath($path = '')
@@ -1294,13 +1294,13 @@ class Application extends Container implements ApplicationContract, CachesConfig
     public function registerCoreContainerAliases()
     {
         foreach ([
-            'app' => [self::class, \Extly\Illuminate\Contracts\Container\Container::class, \Extly\Illuminate\Contracts\Foundation\Application::class, \Psr\Container\ContainerInterface::class],
+            'app' => [self::class, \Extly\Illuminate\Contracts\Container\Container::class, \Extly\Illuminate\Contracts\Foundation\Application::class, \Extly\Psr\Container\ContainerInterface::class],
             'auth' => [\Extly\Illuminate\Auth\AuthManager::class, \Extly\Illuminate\Contracts\Auth\Factory::class],
             'auth.driver' => [\Extly\Illuminate\Contracts\Auth\Guard::class],
             'blade.compiler' => [\Extly\Illuminate\View\Compilers\BladeCompiler::class],
             'cache' => [\Extly\Illuminate\Cache\CacheManager::class, \Extly\Illuminate\Contracts\Cache\Factory::class],
-            'cache.store' => [\Extly\Illuminate\Cache\Repository::class, \Extly\Illuminate\Contracts\Cache\Repository::class, \Psr\SimpleCache\CacheInterface::class],
-            'cache.psr6' => [\Extly\Symfony\Component\Cache\Adapter\Psr16Adapter::class, \Extly\Symfony\Component\Cache\Adapter\AdapterInterface::class, \Psr\Cache\CacheItemPoolInterface::class],
+            'cache.store' => [\Extly\Illuminate\Cache\Repository::class, \Extly\Illuminate\Contracts\Cache\Repository::class, \Extly\Psr\SimpleCache\CacheInterface::class],
+            'cache.psr6' => [\Extly\Symfony\Component\Cache\Adapter\Psr16Adapter::class, \Extly\Symfony\Component\Cache\Adapter\AdapterInterface::class, \Extly\Psr\Cache\CacheItemPoolInterface::class],
             'config' => [\Extly\Illuminate\Config\Repository::class, \Extly\Illuminate\Contracts\Config\Repository::class],
             'cookie' => [\Extly\Illuminate\Cookie\CookieJar::class, \Extly\Illuminate\Contracts\Cookie\Factory::class, \Extly\Illuminate\Contracts\Cookie\QueueingFactory::class],
             'db' => [\Extly\Illuminate\Database\DatabaseManager::class, \Extly\Illuminate\Database\ConnectionResolverInterface::class],
@@ -1314,7 +1314,7 @@ class Application extends Container implements ApplicationContract, CachesConfig
             'hash' => [\Extly\Illuminate\Hashing\HashManager::class],
             'hash.driver' => [\Extly\Illuminate\Contracts\Hashing\Hasher::class],
             'translator' => [\Extly\Illuminate\Translation\Translator::class, \Extly\Illuminate\Contracts\Translation\Translator::class],
-            'log' => [\Extly\Illuminate\Log\LogManager::class, \Psr\Log\LoggerInterface::class],
+            'log' => [\Extly\Illuminate\Log\LogManager::class, \Extly\Psr\Log\LoggerInterface::class],
             'mail.manager' => [\Extly\Illuminate\Mail\MailManager::class, \Extly\Illuminate\Contracts\Mail\Factory::class],
             'mailer' => [\Extly\Illuminate\Mail\Mailer::class, \Extly\Illuminate\Contracts\Mail\Mailer::class, \Extly\Illuminate\Contracts\Mail\MailQueue::class],
             'auth.password' => [\Extly\Illuminate\Auth\Passwords\PasswordBrokerManager::class, \Extly\Illuminate\Contracts\Auth\PasswordBrokerFactory::class],

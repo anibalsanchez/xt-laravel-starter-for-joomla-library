@@ -3,7 +3,7 @@
 
 namespace Extly\GuzzleHttp\Handler;
 
-use Psr\Http\Message\RequestInterface;
+use Extly\Psr\Http\Message\RequestInterface;
 
 interface CurlFactoryInterface
 {

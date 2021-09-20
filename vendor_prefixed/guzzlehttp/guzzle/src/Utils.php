@@ -8,7 +8,7 @@ use Extly\GuzzleHttp\Handler\CurlHandler;
 use Extly\GuzzleHttp\Handler\CurlMultiHandler;
 use Extly\GuzzleHttp\Handler\Proxy;
 use Extly\GuzzleHttp\Handler\StreamHandler;
-use Psr\Http\Message\UriInterface;
+use Extly\Psr\Http\Message\UriInterface;
 
 final class Utils
 {

@@ -1,4 +1,5 @@
-<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 declare(strict_types=1);
 
 /*
@@ -91,6 +92,10 @@ class TelegramBotHandler extends AbstractProcessingHandler
         bool $disableWebPagePreview = null,
         bool $disableNotification = null
     ) {
+        if (!extension_loaded('curl')) {
+            throw new MissingExtensionException('The curl extension is needed to use the TelegramBotHandler');
+        }
+
         parent::__construct($level, $bubble);
 
         $this->apiKey = $apiKey;

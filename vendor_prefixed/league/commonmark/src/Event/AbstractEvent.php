@@ -17,7 +17,7 @@ declare(strict_types=1);
 
 namespace Extly\League\CommonMark\Event;
 
-use Psr\EventDispatcher\StoppableEventInterface;
+use Extly\Psr\EventDispatcher\StoppableEventInterface;
 
 /**
  * Base class for classes containing event data.

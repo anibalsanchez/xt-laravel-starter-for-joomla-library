@@ -12,7 +12,7 @@
 
 namespace Extly\Symfony\Component\HttpKernel\Controller;
 
-use Psr\Log\LoggerInterface;
+use Extly\Psr\Log\LoggerInterface;
 use Extly\Symfony\Component\HttpFoundation\Request;
 
 /**

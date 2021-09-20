@@ -12,7 +12,7 @@
 
 namespace Extly\Symfony\Component\HttpKernel\Controller\ArgumentResolver;
 
-use Psr\Container\ContainerInterface;
+use Extly\Psr\Container\ContainerInterface;
 use Extly\Symfony\Component\DependencyInjection\Exception\RuntimeException;
 use Extly\Symfony\Component\HttpFoundation\Request;
 use Extly\Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;

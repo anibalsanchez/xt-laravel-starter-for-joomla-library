@@ -12,9 +12,9 @@
 
 namespace Extly\Symfony\Component\HttpKernel\Log;
 
-use Psr\Log\AbstractLogger;
-use Psr\Log\InvalidArgumentException;
-use Psr\Log\LogLevel;
+use Extly\Psr\Log\AbstractLogger;
+use Extly\Psr\Log\InvalidArgumentException;
+use Extly\Psr\Log\LogLevel;
 
 /**
  * Minimalist PSR-3 logger designed to write in stderr or any other stream.

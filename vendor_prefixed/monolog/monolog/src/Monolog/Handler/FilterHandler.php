@@ -1,4 +1,5 @@
-<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 declare(strict_types=1);
 
 /*
@@ -15,7 +16,7 @@ namespace Extly\Monolog\Handler;
 use Extly\Monolog\Logger;
 use Extly\Monolog\ResettableInterface;
 use Extly\Monolog\Formatter\FormatterInterface;
-use Psr\Log\LogLevel;
+use Extly\Psr\Log\LogLevel;
 
 /**
  * Simple handler wrapper that filters records based on a list of levels
@@ -45,7 +46,7 @@ class FilterHandler extends Handler implements ProcessableHandlerInterface, Rese
      * Minimum level for logs that are passed to handler
      *
      * @var int[]
-     * @phpstan-var Level[]
+     * @phpstan-var array<Level, int>
      */
     protected $acceptedLevels;
 
@@ -79,7 +80,7 @@ class FilterHandler extends Handler implements ProcessableHandlerInterface, Rese
     }
 
     /**
-     * @phpstan-return Level[]
+     * @phpstan-return array<int, Level>
      */
     public function getAcceptedLevels(): array
     {

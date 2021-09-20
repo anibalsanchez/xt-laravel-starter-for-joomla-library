@@ -5,9 +5,9 @@ namespace Extly\GuzzleHttp;
 
 use Extly\GuzzleHttp\Exception\GuzzleException;
 use Extly\GuzzleHttp\Promise\PromiseInterface;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\UriInterface;
+use Extly\Psr\Http\Message\RequestInterface;
+use Extly\Psr\Http\Message\ResponseInterface;
+use Extly\Psr\Http\Message\UriInterface;
 
 /**
  * Client interface for sending HTTP requests.

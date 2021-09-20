@@ -9,6 +9,7 @@ use Extly\PhpParser\Lexer;
 use Extly\PhpParser\Lexer\TokenEmulator\AttributeEmulator;
 use Extly\PhpParser\Lexer\TokenEmulator\EnumTokenEmulator;
 use Extly\PhpParser\Lexer\TokenEmulator\CoaleseEqualTokenEmulator;
+use Extly\PhpParser\Lexer\TokenEmulator\ExplicitOctalEmulator;
 use Extly\PhpParser\Lexer\TokenEmulator\FlexibleDocStringEmulator;
 use Extly\PhpParser\Lexer\TokenEmulator\FnTokenEmulator;
 use Extly\PhpParser\Lexer\TokenEmulator\MatchTokenEmulator;
@@ -56,6 +57,7 @@ class Emulative extends Lexer
             new AttributeEmulator(),
             new EnumTokenEmulator(),
             new ReadonlyTokenEmulator(),
+            new ExplicitOctalEmulator(),
         ];
 
         // Collect emulators that are relevant for the PHP version we're running

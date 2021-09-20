@@ -34,7 +34,6 @@ use Extly\League\CommonMark\Parser\Block\DocumentBlockParser;
 use Extly\League\CommonMark\Parser\Block\ParagraphParser;
 use Extly\League\CommonMark\Reference\ReferenceInterface;
 use Extly\League\CommonMark\Reference\ReferenceMap;
-use Extly\League\CommonMark\Util\RegexHelper;
 
 final class MarkdownParser implements MarkdownParserInterface
 {
@@ -137,17 +136,12 @@ final class MarkdownParser implements MarkdownParserInterface
                 break;
             }
 
-            if (! $this->cursor->isIndented() && RegexHelper::isLetter($this->cursor->getNextNonSpaceCharacter())) {
-                $this->cursor->advanceToNextNonSpaceOrTab();
-                break;
-            }
-
             if ($blockParser->getBlock()->getDepth() >= $this->maxNestingLevel) {
                 break;
             }
 
             $blockStart = $this->findBlockStart($blockParser);
-            if ($blockStart === null) {
+            if ($blockStart === null || $blockStart->isAborting()) {
                 $this->cursor->advanceToNextNonSpaceOrTab();
                 break;
             }

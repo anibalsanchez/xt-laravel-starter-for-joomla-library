@@ -3,7 +3,7 @@
 
 namespace Extly\Illuminate\Mail\Transport;
 
-use Psr\Log\LoggerInterface;
+use Extly\Psr\Log\LoggerInterface;
 use Swift_Mime_SimpleMessage;
 use Swift_Mime_SimpleMimeEntity;
 

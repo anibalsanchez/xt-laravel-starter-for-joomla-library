@@ -15,7 +15,7 @@ use Extly\Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Extly\Illuminate\Contracts\Bus\Dispatcher as BusDispatcherContract;
 use Extly\Illuminate\Contracts\Foundation\CachesRoutes;
 use InvalidArgumentException;
-use Psr\Log\LoggerInterface;
+use Extly\Psr\Log\LoggerInterface;
 use Pusher\Pusher;
 
 /**
@@ -113,7 +113,10 @@ class BroadcastManager implements FactoryContract
      */
     public function queue($event)
     {
-        if ($event instanceof ShouldBroadcastNow) {
+        if ($event instanceof ShouldBroadcastNow ||
+            (is_object($event) &&
+             method_exists($event, 'shouldBroadcastNow') &&
+             $event->shouldBroadcastNow())) {
             return $this->app->make(BusDispatcherContract::class)->dispatchNow(new BroadcastEvent(clone $event));
         }
 

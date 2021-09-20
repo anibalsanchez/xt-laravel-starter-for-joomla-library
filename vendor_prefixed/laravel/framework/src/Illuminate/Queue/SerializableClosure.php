@@ -12,7 +12,7 @@ class SerializableClosure extends OpisSerializableClosure
     /**
      * Transform the use variables before serialization.
      *
-     * @param  array  $data The Closure's use variables
+     * @param  array  $data
      * @return array
      */
     protected function transformUseVariables($data)
@@ -27,7 +27,7 @@ class SerializableClosure extends OpisSerializableClosure
     /**
      * Resolve the use variables after unserialization.
      *
-     * @param  array  $data The Closure's transformed use variables
+     * @param  array  $data
      * @return array
      */
     protected function resolveUseVariables($data)

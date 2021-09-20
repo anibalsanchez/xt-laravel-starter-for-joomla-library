@@ -3,6 +3,8 @@
 
 namespace Extly\Illuminate\Http\Client;
 
+use GuzzleHttp\Utils;
+
 /**
  * @mixin \Illuminate\Http\Client\Factory
  */
@@ -16,11 +18,11 @@ class Pool
     protected $factory;
 
     /**
-     * The client instance.
+     * The handler function for the Guzzle client.
      *
-     * @var \GuzzleHttp\Client
+     * @var callable
      */
-    protected $client;
+    protected $handler;
 
     /**
      * The pool of requests.
@@ -39,7 +41,11 @@ class Pool
     {
         $this->factory = $factory ?: new Factory();
 
-        $this->client = $this->factory->buildClient();
+        if (method_exists(Utils::class, 'chooseHandler')) {
+            $this->handler = Utils::chooseHandler();
+        } else {
+            $this->handler = \GuzzleHttp\choose_handler();
+        }
     }
 
     /**
@@ -60,7 +66,7 @@ class Pool
      */
     protected function asyncRequest()
     {
-        return $this->factory->setClient($this->client)->async();
+        return $this->factory->setHandler($this->handler)->async();
     }
 
     /**

@@ -3,9 +3,7 @@ declare(strict_types=1);
 
 namespace Extly\PhpParser\Node;
 
-use Extly\PhpParser\NodeAbstract;
-
-class NullableType extends NodeAbstract
+class NullableType extends ComplexType
 {
     /** @var Identifier|Name Type */
     public $type;

@@ -12,7 +12,7 @@
 
 namespace Extly\Symfony\Component\HttpKernel\Profiler;
 
-use Psr\Log\LoggerInterface;
+use Extly\Psr\Log\LoggerInterface;
 use Extly\Symfony\Component\HttpFoundation\Exception\ConflictingHeadersException;
 use Extly\Symfony\Component\HttpFoundation\Request;
 use Extly\Symfony\Component\HttpFoundation\Response;

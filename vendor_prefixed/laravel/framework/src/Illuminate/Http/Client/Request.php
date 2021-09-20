@@ -121,9 +121,7 @@ class Request implements ArrayAccess
      */
     public function headers()
     {
-        return XT_collect($this->request->getHeaders())->mapWithKeys(function ($values, $header) {
-            return [$header => $values];
-        })->all();
+        return $this->request->getHeaders();
     }
 
     /**

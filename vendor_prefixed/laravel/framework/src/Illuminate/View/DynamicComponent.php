@@ -121,7 +121,7 @@ EOF;
     protected function compileSlots(array $slots)
     {
         return XT_collect($slots)->map(function ($slot, $name) {
-            return $name === '__default' ? null : '<x-slot name="'.$name.'">{{ $'.$name.' }}</x-slot>';
+            return $name === '__default' ? null : '<x-slot name="'.$name.'" '.((string) $slot->attributes).'>{{ $'.$name.' }}</x-slot>';
         })->filter()->implode(PHP_EOL);
     }
 

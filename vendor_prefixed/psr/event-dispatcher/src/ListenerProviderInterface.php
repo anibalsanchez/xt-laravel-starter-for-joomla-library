@@ -1,7 +1,7 @@
-<?php
+<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 declare(strict_types=1);
 
-namespace Psr\EventDispatcher;
+namespace Extly\Psr\EventDispatcher;
 
 /**
  * Mapper from an event to the listeners that are applicable to that event.

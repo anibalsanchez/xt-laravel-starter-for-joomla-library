@@ -3,7 +3,7 @@
 
 namespace Extly\Illuminate\Broadcasting\Broadcasters;
 
-use Psr\Log\LoggerInterface;
+use Extly\Psr\Log\LoggerInterface;
 
 class LogBroadcaster extends Broadcaster
 {

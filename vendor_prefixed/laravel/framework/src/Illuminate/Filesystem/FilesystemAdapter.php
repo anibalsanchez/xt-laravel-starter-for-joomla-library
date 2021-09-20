@@ -24,8 +24,8 @@ use Extly\League\Flysystem\FileNotFoundException;
 use Extly\League\Flysystem\FilesystemInterface;
 use Extly\League\Flysystem\Sftp\SftpAdapter as Sftp;
 use PHPUnit\Framework\Assert as PHPUnit;
-use Psr\Http\Message\StreamInterface;
-use Psr\Http\Message\UriInterface;
+use Extly\Psr\Http\Message\StreamInterface;
+use Extly\Psr\Http\Message\UriInterface;
 use RuntimeException;
 use Extly\Symfony\Component\HttpFoundation\StreamedResponse;
 

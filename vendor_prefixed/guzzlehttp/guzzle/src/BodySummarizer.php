@@ -3,7 +3,7 @@
 
 namespace Extly\GuzzleHttp;
 
-use Psr\Http\Message\MessageInterface;
+use Extly\Psr\Http\Message\MessageInterface;
 
 final class BodySummarizer implements BodySummarizerInterface
 {

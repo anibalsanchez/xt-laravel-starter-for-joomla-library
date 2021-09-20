@@ -1,4 +1,5 @@
-<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
+<?php
+/* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 declare(strict_types=1);
 
 /*
@@ -17,7 +18,7 @@ use Extly\Monolog\Handler\FingersCrossed\ActivationStrategyInterface;
 use Extly\Monolog\Logger;
 use Extly\Monolog\ResettableInterface;
 use Extly\Monolog\Formatter\FormatterInterface;
-use Psr\Log\LogLevel;
+use Extly\Psr\Log\LogLevel;
 
 /**
  * Buffers all records until a certain level is reached

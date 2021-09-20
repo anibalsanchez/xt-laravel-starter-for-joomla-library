@@ -5,7 +5,7 @@ namespace Extly\GuzzleHttp\Handler;
 
 use Extly\GuzzleHttp\Promise\PromiseInterface;
 use Extly\GuzzleHttp\RequestOptions;
-use Psr\Http\Message\RequestInterface;
+use Extly\Psr\Http\Message\RequestInterface;
 
 /**
  * Provides basic proxies for handlers.

@@ -13,7 +13,7 @@
 namespace Extly\Symfony\Component\Translation\Test;
 
 use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
+use Extly\Psr\Log\LoggerInterface;
 use Extly\Symfony\Component\HttpClient\MockHttpClient;
 use Extly\Symfony\Component\Translation\Dumper\XliffFileDumper;
 use Extly\Symfony\Component\Translation\Exception\IncompleteDsnException;

@@ -4,10 +4,9 @@ declare(strict_types=1);
 namespace Extly\PhpParser\Node\Stmt;
 
 use Extly\PhpParser\Node;
+use Extly\PhpParser\Node\ComplexType;
 use Extly\PhpParser\Node\Identifier;
 use Extly\PhpParser\Node\Name;
-use Extly\PhpParser\Node\NullableType;
-use Extly\PhpParser\Node\UnionType;
 
 class Property extends Node\Stmt
 {
@@ -15,7 +14,7 @@ class Property extends Node\Stmt
     public $flags;
     /** @var PropertyProperty[] Properties */
     public $props;
-    /** @var null|Identifier|Name|NullableType|UnionType Type declaration */
+    /** @var null|Identifier|Name|ComplexType Type declaration */
     public $type;
     /** @var Node\AttributeGroup[] PHP attribute groups */
     public $attrGroups;
@@ -23,11 +22,11 @@ class Property extends Node\Stmt
     /**
      * Constructs a class property list node.
      *
-     * @param int                                                $flags      Modifiers
-     * @param PropertyProperty[]                                 $props      Properties
-     * @param array                                              $attributes Additional attributes
-     * @param null|string|Identifier|Name|NullableType|UnionType $type       Type declaration
-     * @param Node\AttributeGroup[]                              $attrGroups PHP attribute groups
+     * @param int                                     $flags      Modifiers
+     * @param PropertyProperty[]                      $props      Properties
+     * @param array                                   $attributes Additional attributes
+     * @param null|string|Identifier|Name|ComplexType $type       Type declaration
+     * @param Node\AttributeGroup[]                   $attrGroups PHP attribute groups
      */
     public function __construct(int $flags, array $props, array $attributes = [], $type = null, array $attrGroups = []) {
         $this->attributes = $attributes;

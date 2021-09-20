@@ -8,7 +8,7 @@ use Extly\Illuminate\Contracts\Events\Dispatcher;
 use Extly\Illuminate\Contracts\Support\Arrayable;
 use Extly\Illuminate\Contracts\Support\Jsonable;
 use Extly\Illuminate\Log\Events\MessageLogged;
-use Psr\Log\LoggerInterface;
+use Extly\Psr\Log\LoggerInterface;
 use RuntimeException;
 
 class Logger implements LoggerInterface

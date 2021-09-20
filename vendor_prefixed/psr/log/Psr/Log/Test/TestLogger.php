@@ -1,8 +1,8 @@
-<?php
+<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 
-namespace Psr\Log\Test;
+namespace Extly\Psr\Log\Test;
 
-use Psr\Log\AbstractLogger;
+use Extly\Psr\Log\AbstractLogger;
 
 /**
  * Used for testing purposes.

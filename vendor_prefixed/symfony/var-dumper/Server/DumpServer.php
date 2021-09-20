@@ -12,7 +12,7 @@
 
 namespace Extly\Symfony\Component\VarDumper\Server;
 
-use Psr\Log\LoggerInterface;
+use Extly\Psr\Log\LoggerInterface;
 use Extly\Symfony\Component\VarDumper\Cloner\Data;
 use Extly\Symfony\Component\VarDumper\Cloner\Stub;
 

@@ -5,7 +5,6 @@ namespace Extly\Illuminate\Http\Concerns;
 
 use Extly\Illuminate\Http\UploadedFile;
 use Extly\Illuminate\Support\Arr;
-use Extly\Illuminate\Support\Str;
 use SplFileInfo;
 use stdClass;
 use Extly\Symfony\Component\VarDumper\VarDumper;
@@ -56,8 +55,12 @@ trait InteractsWithInput
     {
         $header = $this->header('Authorization', '');
 
-        if (Str::startsWith($header, 'Bearer ')) {
-            return Str::substr($header, 7);
+        $position = strrpos($header, 'Bearer');
+
+        if ($position !== false) {
+            $header = substr($header, $position + 7);
+
+            return strpos($header, ',') !== false ? strstr(',', $header, true) : $header;
         }
     }
 

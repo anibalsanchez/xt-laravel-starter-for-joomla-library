@@ -12,8 +12,8 @@
 
 namespace Extly\Symfony\Component\EventDispatcher\Debug;
 
-use Psr\EventDispatcher\StoppableEventInterface;
-use Psr\Log\LoggerInterface;
+use Extly\Psr\EventDispatcher\StoppableEventInterface;
+use Extly\Psr\Log\LoggerInterface;
 use Extly\Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Extly\Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Extly\Symfony\Component\HttpFoundation\Request;

@@ -27,7 +27,7 @@ use Extly\Illuminate\Support\Traits\ReflectsClosures;
 use Extly\Illuminate\Support\ViewErrorBag;
 use Extly\Illuminate\Validation\ValidationException;
 use InvalidArgumentException;
-use Psr\Log\LoggerInterface;
+use Extly\Psr\Log\LoggerInterface;
 use Extly\Symfony\Component\Console\Application as ConsoleApplication;
 use Extly\Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer;
 use Extly\Symfony\Component\HttpFoundation\Exception\SuspiciousOperationException;
@@ -333,11 +333,13 @@ class Handler implements ExceptionHandlerContract
         $e = $this->prepareException($this->mapException($e));
 
         foreach ($this->renderCallbacks as $renderCallback) {
-            if (is_a($e, $this->firstClosureParameterType($renderCallback))) {
-                $response = $renderCallback($e, $request);
+            foreach ($this->firstClosureParameterTypes($renderCallback) as $type) {
+                if (is_a($e, $type)) {
+                    $response = $renderCallback($e, $request);
 
-                if (! is_null($response)) {
-                    return $response;
+                    if (! is_null($response)) {
+                        return $response;
+                    }
                 }
             }
         }

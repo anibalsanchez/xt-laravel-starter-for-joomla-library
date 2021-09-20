@@ -12,7 +12,7 @@
 
 namespace Extly\Symfony\Component\HttpKernel\EventListener;
 
-use Psr\Log\LoggerInterface;
+use Extly\Psr\Log\LoggerInterface;
 use Extly\Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Extly\Symfony\Component\HttpFoundation\Request;
 use Extly\Symfony\Component\HttpFoundation\RequestStack;

@@ -12,7 +12,7 @@
 
 namespace Extly\Symfony\Component\EventDispatcher\Debug;
 
-use Psr\EventDispatcher\StoppableEventInterface;
+use Extly\Psr\EventDispatcher\StoppableEventInterface;
 use Extly\Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Extly\Symfony\Component\Stopwatch\Stopwatch;
 use Extly\Symfony\Component\VarDumper\Caster\ClassStub;

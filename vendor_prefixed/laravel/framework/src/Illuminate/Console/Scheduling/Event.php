@@ -16,7 +16,7 @@ use Extly\Illuminate\Support\Reflector;
 use Extly\Illuminate\Support\Stringable;
 use Extly\Illuminate\Support\Traits\Macroable;
 use Extly\Illuminate\Support\Traits\ReflectsClosures;
-use Psr\Http\Client\ClientExceptionInterface;
+use Extly\Psr\Http\Client\ClientExceptionInterface;
 use Extly\Symfony\Component\Process\Process;
 
 class Event
@@ -580,7 +580,7 @@ class Event
         return function (Container $container, HttpClient $http) use ($url) {
             try {
                 $http->request('GET', $url);
-            } catch (ClientExceptionInterface | TransferException $e) {
+            } catch (ClientExceptionInterface|TransferException $e) {
                 $container->make(ExceptionHandler::class)->report($e);
             }
         };

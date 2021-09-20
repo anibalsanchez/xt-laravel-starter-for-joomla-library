@@ -1,6 +1,6 @@
-<?php
+<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 
-namespace Psr\SimpleCache;
+namespace Extly\Psr\SimpleCache;
 
 interface CacheInterface
 {

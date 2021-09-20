@@ -11,8 +11,8 @@ use Extly\Illuminate\Routing\Contracts\ControllerDispatcher as ControllerDispatc
 use Extly\Illuminate\Support\ServiceProvider;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Nyholm\Psr7\Response as PsrResponse;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
+use Extly\Psr\Http\Message\ResponseInterface;
+use Extly\Psr\Http\Message\ServerRequestInterface;
 use Extly\Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory;
 
 class RoutingServiceProvider extends ServiceProvider

@@ -1,6 +1,6 @@
-<?php
+<?php /* This file has been prefixed by <PHP-Prefixer> for "XT Laravel Starter for Joomla" */
 
-namespace Psr\Log;
+namespace Extly\Psr\Log;
 
 /**
  * This is a simple Logger trait that classes unable to extend AbstractLogger

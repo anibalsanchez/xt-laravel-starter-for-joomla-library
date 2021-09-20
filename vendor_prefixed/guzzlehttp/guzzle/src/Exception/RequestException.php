@@ -5,10 +5,10 @@ namespace Extly\GuzzleHttp\Exception;
 
 use Extly\GuzzleHttp\BodySummarizer;
 use Extly\GuzzleHttp\BodySummarizerInterface;
-use Psr\Http\Client\RequestExceptionInterface;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\UriInterface;
+use Extly\Psr\Http\Client\RequestExceptionInterface;
+use Extly\Psr\Http\Message\RequestInterface;
+use Extly\Psr\Http\Message\ResponseInterface;
+use Extly\Psr\Http\Message\UriInterface;
 
 /**
  * HTTP Request exception

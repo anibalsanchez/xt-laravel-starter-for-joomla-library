@@ -4,7 +4,7 @@
 namespace Extly\GuzzleHttp;
 
 use Extly\GuzzleHttp\Promise\PromiseInterface;
-use Psr\Http\Message\RequestInterface;
+use Extly\Psr\Http\Message\RequestInterface;
 
 /**
  * Prepares requests that contain a body, adding the Content-Length,

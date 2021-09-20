@@ -12,8 +12,8 @@
 
 namespace Extly\Symfony\Component\ErrorHandler;
 
-use Psr\Log\LoggerInterface;
-use Psr\Log\LogLevel;
+use Extly\Psr\Log\LoggerInterface;
+use Extly\Psr\Log\LogLevel;
 use Extly\Symfony\Component\ErrorHandler\Error\FatalError;
 use Extly\Symfony\Component\ErrorHandler\Error\OutOfMemoryError;
 use Extly\Symfony\Component\ErrorHandler\ErrorEnhancer\ClassNotFoundErrorEnhancer;

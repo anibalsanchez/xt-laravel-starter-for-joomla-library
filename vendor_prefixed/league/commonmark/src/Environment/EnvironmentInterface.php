@@ -22,7 +22,7 @@ use Extly\League\CommonMark\Parser\Block\BlockStartParserInterface;
 use Extly\League\CommonMark\Parser\Inline\InlineParserInterface;
 use Extly\League\CommonMark\Renderer\NodeRendererInterface;
 use Extly\League\Config\ConfigurationProviderInterface;
-use Psr\EventDispatcher\EventDispatcherInterface;
+use Extly\Psr\EventDispatcher\EventDispatcherInterface;
 
 interface EnvironmentInterface extends ConfigurationProviderInterface, EventDispatcherInterface
 {

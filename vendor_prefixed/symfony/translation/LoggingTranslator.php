@@ -12,7 +12,7 @@
 
 namespace Extly\Symfony\Component\Translation;
 
-use Psr\Log\LoggerInterface;
+use Extly\Psr\Log\LoggerInterface;
 use Extly\Symfony\Component\Translation\Exception\InvalidArgumentException;
 use Extly\Symfony\Contracts\Translation\LocaleAwareInterface;
 use Extly\Symfony\Contracts\Translation\TranslatorInterface;

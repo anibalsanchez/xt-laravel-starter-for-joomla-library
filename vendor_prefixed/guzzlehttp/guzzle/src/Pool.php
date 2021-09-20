@@ -7,7 +7,7 @@ use Extly\GuzzleHttp\Promise as P;
 use Extly\GuzzleHttp\Promise\EachPromise;
 use Extly\GuzzleHttp\Promise\PromiseInterface;
 use Extly\GuzzleHttp\Promise\PromisorInterface;
-use Psr\Http\Message\RequestInterface;
+use Extly\Psr\Http\Message\RequestInterface;
 
 /**
  * Sends an iterator of requests concurrently using a capped pool size.

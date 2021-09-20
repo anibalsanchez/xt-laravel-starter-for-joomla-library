@@ -22,11 +22,23 @@ class DiscoverEvents
      */
     public static function within($listenerPath, $basePath)
     {
-        return XT_collect(static::getListenerEvents(
+        $listeners = XT_collect(static::getListenerEvents(
             (new Finder)->files()->in($listenerPath), $basePath
-        ))->mapToDictionary(function ($event, $listener) {
-            return [$event => $listener];
-        })->all();
+        ));
+
+        $discoveredEvents = [];
+
+        foreach ($listeners as $listener => $events) {
+            foreach ($events as $event) {
+                if (! isset($discoveredEvents[$event])) {
+                    $discoveredEvents[$event] = [];
+                }
+
+                $discoveredEvents[$event][] = $listener;
+            }
+        }
+
+        return $discoveredEvents;
     }
 
     /**
@@ -60,7 +72,7 @@ class DiscoverEvents
                 }
 
                 $listenerEvents[$listener->name.'@'.$method->name] =
-                                Reflector::getParameterClassName($method->getParameters()[0]);
+                                Reflector::getParameterClassNames($method->getParameters()[0]);
             }
         }
 

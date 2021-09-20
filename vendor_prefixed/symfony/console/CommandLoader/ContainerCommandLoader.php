@@ -12,7 +12,7 @@
 
 namespace Extly\Symfony\Component\Console\CommandLoader;
 
-use Psr\Container\ContainerInterface;
+use Extly\Psr\Container\ContainerInterface;
 use Extly\Symfony\Component\Console\Exception\CommandNotFoundException;
 
 /**

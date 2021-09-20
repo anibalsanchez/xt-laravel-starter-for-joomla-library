@@ -34,7 +34,6 @@ use Extly\Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Extly\Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 // Help opcache.preload discover always-needed symbols
-class_exists(LegacyEventDispatcherProxy::class);
 class_exists(ControllerArgumentsEvent::class);
 class_exists(ControllerEvent::class);
 class_exists(ExceptionEvent::class);

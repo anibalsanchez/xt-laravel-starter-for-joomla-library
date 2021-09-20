@@ -12,7 +12,7 @@
 
 namespace Extly\Symfony\Component\Console\EventListener;
 
-use Psr\Log\LoggerInterface;
+use Extly\Psr\Log\LoggerInterface;
 use Extly\Symfony\Component\Console\ConsoleEvents;
 use Extly\Symfony\Component\Console\Event\ConsoleErrorEvent;
 use Extly\Symfony\Component\Console\Event\ConsoleEvent;

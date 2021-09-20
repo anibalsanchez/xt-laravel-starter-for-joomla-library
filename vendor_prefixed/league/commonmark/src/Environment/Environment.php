@@ -31,6 +31,7 @@ use Extly\League\CommonMark\Normalizer\TextNormalizerInterface;
 use Extly\League\CommonMark\Normalizer\UniqueSlugNormalizer;
 use Extly\League\CommonMark\Normalizer\UniqueSlugNormalizerInterface;
 use Extly\League\CommonMark\Parser\Block\BlockStartParserInterface;
+use Extly\League\CommonMark\Parser\Block\SkipLinesStartingWithLettersParser;
 use Extly\League\CommonMark\Parser\Inline\InlineParserInterface;
 use Extly\League\CommonMark\Renderer\NodeRendererInterface;
 use Extly\League\CommonMark\Util\HtmlFilter;
@@ -39,9 +40,9 @@ use Extly\League\Config\Configuration;
 use Extly\League\Config\ConfigurationAwareInterface;
 use Extly\League\Config\ConfigurationInterface;
 use Extly\Nette\Schema\Expect;
-use Psr\EventDispatcher\EventDispatcherInterface;
-use Psr\EventDispatcher\ListenerProviderInterface;
-use Psr\EventDispatcher\StoppableEventInterface;
+use Extly\Psr\EventDispatcher\EventDispatcherInterface;
+use Extly\Psr\EventDispatcher\ListenerProviderInterface;
+use Extly\Psr\EventDispatcher\StoppableEventInterface;
 
 final class Environment implements EnvironmentInterface, EnvironmentBuilderInterface, ListenerProviderInterface
 {
@@ -112,6 +113,10 @@ final class Environment implements EnvironmentInterface, EnvironmentBuilderInter
         $this->inlineParsers       = new PrioritizedList();
         $this->listenerData        = new PrioritizedList();
         $this->delimiterProcessors = new DelimiterProcessorCollection();
+
+        // Performance optimization: always include a block "parser" that aborts parsing if a line starts with a letter
+        // and is therefore unlikely to match any lines as a block start.
+        $this->addBlockStartParser(new SkipLinesStartingWithLettersParser(), 249);
     }
 
     public function getConfiguration(): ConfigurationInterface

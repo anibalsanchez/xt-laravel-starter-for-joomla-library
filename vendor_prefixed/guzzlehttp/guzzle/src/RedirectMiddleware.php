@@ -6,9 +6,9 @@ namespace Extly\GuzzleHttp;
 use Extly\GuzzleHttp\Exception\BadResponseException;
 use Extly\GuzzleHttp\Exception\TooManyRedirectsException;
 use Extly\GuzzleHttp\Promise\PromiseInterface;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\UriInterface;
+use Extly\Psr\Http\Message\RequestInterface;
+use Extly\Psr\Http\Message\ResponseInterface;
+use Extly\Psr\Http\Message\UriInterface;
 
 /**
  * Request redirect middleware.

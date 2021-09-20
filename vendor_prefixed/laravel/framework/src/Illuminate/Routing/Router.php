@@ -22,7 +22,7 @@ use Extly\Illuminate\Support\Str;
 use Extly\Illuminate\Support\Stringable;
 use Extly\Illuminate\Support\Traits\Macroable;
 use JsonSerializable;
-use Psr\Http\Message\ResponseInterface as PsrResponseInterface;
+use Extly\Psr\Http\Message\ResponseInterface as PsrResponseInterface;
 use ReflectionClass;
 use Extly\Symfony\Bridge\PsrHttpMessage\Factory\HttpFoundationFactory;
 use Extly\Symfony\Component\HttpFoundation\Response as SymfonyResponse;

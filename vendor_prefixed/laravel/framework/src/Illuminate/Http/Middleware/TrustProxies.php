@@ -11,7 +11,7 @@ class TrustProxies
     /**
      * The trusted proxies for the application.
      *
-     * @var string|array|null
+     * @var array|string|null
      */
     protected $proxies;
 
@@ -48,7 +48,7 @@ class TrustProxies
      */
     protected function setTrustedProxyIpAddresses(Request $request)
     {
-        $trustedIps = $this->proxies;
+        $trustedIps = $this->proxies();
 
         if ($trustedIps === '*' || $trustedIps === '**') {
             return $this->setTrustedProxyIpAddressesToTheCallingIp($request);
@@ -123,5 +123,15 @@ class TrustProxies
         }
 
         return $this->headers;
+    }
+
+    /**
+     * Get the trusted proxies.
+     *
+     * @return array|string|null
+     */
+    protected function proxies()
+    {
+        return $this->proxies;
     }
 }

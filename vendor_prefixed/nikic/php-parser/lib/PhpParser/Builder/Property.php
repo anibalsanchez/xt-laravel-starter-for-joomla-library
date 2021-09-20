@@ -8,8 +8,8 @@ use Extly\PhpParser\BuilderHelpers;
 use Extly\PhpParser\Node;
 use Extly\PhpParser\Node\Identifier;
 use Extly\PhpParser\Node\Name;
-use Extly\PhpParser\Node\NullableType;
 use Extly\PhpParser\Node\Stmt;
+use Extly\PhpParser\Node\ComplexType;
 
 class Property implements PhpParser\Builder
 {
@@ -120,7 +120,7 @@ class Property implements PhpParser\Builder
     /**
      * Sets the property type for PHP 7.4+.
      *
-     * @param string|Name|NullableType|Identifier $type
+     * @param string|Name|Identifier|ComplexType $type
      *
      * @return $this
      */

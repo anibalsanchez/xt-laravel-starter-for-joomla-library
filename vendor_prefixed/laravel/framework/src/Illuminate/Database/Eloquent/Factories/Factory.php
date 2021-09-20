@@ -204,6 +204,17 @@ abstract class Factory
     }
 
     /**
+     * Create a single model and persist it to the database.
+     *
+     * @param  array  $attributes
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function createOneQuietly($attributes = [])
+    {
+        return $this->count(null)->createQuietly($attributes);
+    }
+
+    /**
      * Create a collection of models and persist them to the database.
      *
      * @param  iterable  $records
@@ -216,6 +227,19 @@ abstract class Factory
                 return $this->state($record)->create();
             })
         );
+    }
+
+    /**
+     * Create a collection of models and persist them to the database.
+     *
+     * @param  iterable  $records
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function createManyQuietly(iterable $records)
+    {
+        return Model::withoutEvents(function () use ($records) {
+            return $this->createMany($records);
+        });
     }
 
     /**
@@ -244,6 +268,20 @@ abstract class Factory
         }
 
         return $results;
+    }
+
+    /**
+     * Create a collection of models and persist them to the database.
+     *
+     * @param  array  $attributes
+     * @param  \Illuminate\Database\Eloquent\Model|null  $parent
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
+     */
+    public function createQuietly($attributes = [], ?Model $parent = null)
+    {
+        return Model::withoutEvents(function () use ($attributes, $parent) {
+            return $this->create($attributes, $parent);
+        });
     }
 
     /**

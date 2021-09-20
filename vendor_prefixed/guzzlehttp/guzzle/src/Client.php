@@ -8,14 +8,14 @@ use Extly\GuzzleHttp\Exception\GuzzleException;
 use Extly\GuzzleHttp\Exception\InvalidArgumentException;
 use Extly\GuzzleHttp\Promise as P;
 use Extly\GuzzleHttp\Promise\PromiseInterface;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\UriInterface;
+use Extly\Psr\Http\Message\RequestInterface;
+use Extly\Psr\Http\Message\ResponseInterface;
+use Extly\Psr\Http\Message\UriInterface;
 
 /**
  * @final
  */
-class Client implements ClientInterface, \Psr\Http\Client\ClientInterface
+class Client implements ClientInterface, \Extly\Psr\Http\Client\ClientInterface
 {
     use ClientTrait;
 

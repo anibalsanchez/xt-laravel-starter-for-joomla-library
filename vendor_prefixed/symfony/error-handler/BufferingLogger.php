@@ -12,7 +12,7 @@
 
 namespace Extly\Symfony\Component\ErrorHandler;
 
-use Psr\Log\AbstractLogger;
+use Extly\Psr\Log\AbstractLogger;
 
 /**
  * A buffering logger that stacks logs for later.

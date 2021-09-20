@@ -12,8 +12,8 @@
 
 namespace Extly\Symfony\Component\HttpKernel\Controller;
 
-use Psr\Container\ContainerInterface;
-use Psr\Log\LoggerInterface;
+use Extly\Psr\Container\ContainerInterface;
+use Extly\Psr\Log\LoggerInterface;
 use Extly\Symfony\Component\DependencyInjection\Container;
 
 /**

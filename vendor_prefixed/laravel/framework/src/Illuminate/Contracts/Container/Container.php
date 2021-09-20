@@ -4,7 +4,7 @@
 namespace Extly\Illuminate\Contracts\Container;
 
 use Closure;
-use Psr\Container\ContainerInterface;
+use Extly\Psr\Container\ContainerInterface;
 
 interface Container extends ContainerInterface
 {
