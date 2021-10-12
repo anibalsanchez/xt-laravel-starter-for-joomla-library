@@ -37,6 +37,8 @@ class ArraySessionHandler implements SessionHandlerInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return bool
      */
     #[\ReturnTypeWillChange]
     public function open($savePath, $sessionName)
@@ -46,6 +48,8 @@ class ArraySessionHandler implements SessionHandlerInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return bool
      */
     #[\ReturnTypeWillChange]
     public function close()
@@ -55,6 +59,8 @@ class ArraySessionHandler implements SessionHandlerInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return string|false
      */
     #[\ReturnTypeWillChange]
     public function read($sessionId)
@@ -76,6 +82,8 @@ class ArraySessionHandler implements SessionHandlerInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return bool
      */
     #[\ReturnTypeWillChange]
     public function write($sessionId, $data)
@@ -90,6 +98,8 @@ class ArraySessionHandler implements SessionHandlerInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return bool
      */
     #[\ReturnTypeWillChange]
     public function destroy($sessionId)
@@ -103,6 +113,8 @@ class ArraySessionHandler implements SessionHandlerInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return int|false
      */
     #[\ReturnTypeWillChange]
     public function gc($lifetime)

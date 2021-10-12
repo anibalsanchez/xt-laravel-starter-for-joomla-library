@@ -7,7 +7,7 @@ use Closure;
 use Extly\Illuminate\Bus\Events\BatchDispatched;
 use Extly\Illuminate\Contracts\Container\Container;
 use Extly\Illuminate\Contracts\Events\Dispatcher as EventDispatcher;
-use Extly\Illuminate\Queue\SerializableClosure;
+use Extly\Illuminate\Queue\SerializableClosureFactory;
 use Extly\Illuminate\Support\Arr;
 use Extly\Illuminate\Support\Collection;
 use Throwable;
@@ -79,7 +79,7 @@ class PendingBatch
     public function then($callback)
     {
         $this->options['then'][] = $callback instanceof Closure
-                        ? new SerializableClosure($callback)
+                        ? SerializableClosureFactory::make($callback)
                         : $callback;
 
         return $this;
@@ -104,7 +104,7 @@ class PendingBatch
     public function catch($callback)
     {
         $this->options['catch'][] = $callback instanceof Closure
-                    ? new SerializableClosure($callback)
+                    ? SerializableClosureFactory::make($callback)
                     : $callback;
 
         return $this;
@@ -129,7 +129,7 @@ class PendingBatch
     public function finally($callback)
     {
         $this->options['finally'][] = $callback instanceof Closure
-                    ? new SerializableClosure($callback)
+                    ? SerializableClosureFactory::make($callback)
                     : $callback;
 
         return $this;

@@ -49,7 +49,7 @@ use Extly\Symfony\Component\Console\Output\OutputInterface;
  */
 class Shell extends Application
 {
-    const VERSION = 'v0.10.8';
+    const VERSION = 'v0.10.9';
 
     const PROMPT = '>>> ';
     const BUFF_PROMPT = '... ';
@@ -1347,7 +1347,7 @@ class Shell extends Application
     /**
      * Get the current input prompt.
      *
-     * @return string | null
+     * @return string|null
      */
     protected function getPrompt()
     {

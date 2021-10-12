@@ -8,7 +8,6 @@ use Closure;
 use Extly\Illuminate\Contracts\Queue\Factory as QueueFactory;
 use Extly\Illuminate\Contracts\Support\Arrayable;
 use Extly\Illuminate\Queue\CallQueuedClosure;
-use Extly\Illuminate\Queue\SerializableClosure;
 use Extly\Illuminate\Support\Arr;
 use Extly\Illuminate\Support\Collection;
 use JsonSerializable;
@@ -421,7 +420,7 @@ class Batch implements Arrayable, JsonSerializable
     /**
      * Invoke a batch callback handler.
      *
-     * @param  \Illuminate\Queue\SerializableClosure|callable  $handler
+     * @param  callable  $handler
      * @param  \Illuminate\Bus\Batch  $batch
      * @param  \Throwable|null  $e
      * @return void
@@ -429,9 +428,7 @@ class Batch implements Arrayable, JsonSerializable
     protected function invokeHandlerCallback($handler, Batch $batch, Throwable $e = null)
     {
         try {
-            return $handler instanceof SerializableClosure
-                ? $handler->__invoke($batch, $e)
-                : call_user_func($handler, $batch, $e);
+            return $handler($batch, $e);
         } catch (Throwable $e) {
             if (function_exists('XT_report')) {
                 XT_report($e);

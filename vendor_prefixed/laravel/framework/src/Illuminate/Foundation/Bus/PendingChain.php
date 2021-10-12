@@ -6,7 +6,7 @@ namespace Extly\Illuminate\Foundation\Bus;
 use Closure;
 use Extly\Illuminate\Contracts\Bus\Dispatcher;
 use Extly\Illuminate\Queue\CallQueuedClosure;
-use Extly\Illuminate\Queue\SerializableClosure;
+use Extly\Illuminate\Queue\SerializableClosureFactory;
 
 class PendingChain
 {
@@ -113,7 +113,7 @@ class PendingChain
     public function catch($callback)
     {
         $this->catchCallbacks[] = $callback instanceof Closure
-                        ? new SerializableClosure($callback)
+                        ? SerializableClosureFactory::make($callback)
                         : $callback;
 
         return $this;

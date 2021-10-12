@@ -3,7 +3,7 @@
 
 namespace Extly\Illuminate\Support\Facades;
 
-use Laravel\Ui\UiServiceProvider;
+use Extly\Laravel\Ui\UiServiceProvider;
 use RuntimeException;
 
 /**

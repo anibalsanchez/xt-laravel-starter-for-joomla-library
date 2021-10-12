@@ -27,6 +27,8 @@ class ArrayTransport extends Transport
 
     /**
      * {@inheritdoc}
+     *
+     * @return int
      */
     public function send(Swift_Mime_SimpleMessage $message, &$failedRecipients = null)
     {

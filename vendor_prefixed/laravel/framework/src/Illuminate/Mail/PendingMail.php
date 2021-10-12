@@ -6,9 +6,12 @@ namespace Extly\Illuminate\Mail;
 use Extly\Illuminate\Contracts\Mail\Mailable as MailableContract;
 use Extly\Illuminate\Contracts\Mail\Mailer as MailerContract;
 use Extly\Illuminate\Contracts\Translation\HasLocalePreference;
+use Extly\Illuminate\Support\Traits\Conditionable;
 
 class PendingMail
 {
+    use Conditionable;
+
     /**
      * The mailer instance.
      *

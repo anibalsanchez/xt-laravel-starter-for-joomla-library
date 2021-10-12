@@ -188,7 +188,9 @@ class Container implements ArrayAccess, ContainerContract
     }
 
     /**
-     *  {@inheritdoc}
+     * {@inheritdoc}
+     *
+     * @return bool
      */
     public function has($id)
     {
@@ -693,7 +695,9 @@ class Container implements ArrayAccess, ContainerContract
     }
 
     /**
-     *  {@inheritdoc}
+     * {@inheritdoc}
+     *
+     * @return mixed
      */
     public function get($id)
     {

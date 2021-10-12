@@ -6,7 +6,7 @@ namespace Extly\Fruitcake\Cors;
 use Extly\Asm89\Stack\CorsService;
 use Extly\Illuminate\Foundation\Application as LaravelApplication;
 use Extly\Illuminate\Support\ServiceProvider as BaseServiceProvider;
-use Laravel\Lumen\Application as LumenApplication;
+use Extly\Laravel\Lumen\Application as LumenApplication;
 use Extly\Illuminate\Foundation\Http\Events\RequestHandled;
 
 class CorsServiceProvider extends BaseServiceProvider

@@ -5,6 +5,7 @@ namespace Extly\Illuminate\Foundation\Console;
 
 use Exception;
 use Extly\Illuminate\Console\Command;
+use Extly\Illuminate\Foundation\Events\MaintenanceModeDisabled;
 
 class UpCommand extends Command
 {
@@ -41,6 +42,8 @@ class UpCommand extends Command
             if (is_file(XT_storage_path('framework/maintenance.php'))) {
                 unlink(XT_storage_path('framework/maintenance.php'));
             }
+
+            $this->laravel->get('events')->dispatch(MaintenanceModeDisabled::class);
 
             $this->info('Application is now live.');
         } catch (Exception $e) {

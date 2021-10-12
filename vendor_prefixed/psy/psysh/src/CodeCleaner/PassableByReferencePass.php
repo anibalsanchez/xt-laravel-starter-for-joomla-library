@@ -15,6 +15,7 @@ namespace Extly\Psy\CodeCleaner;
 use Extly\PhpParser\Node;
 use Extly\PhpParser\Node\Expr;
 use Extly\PhpParser\Node\Expr\Array_;
+use Extly\PhpParser\Node\Expr\ArrayDimFetch;
 use Extly\PhpParser\Node\Expr\ClassConstFetch;
 use Extly\PhpParser\Node\Expr\FuncCall;
 use Extly\PhpParser\Node\Expr\MethodCall;
@@ -82,7 +83,8 @@ class PassableByReferencePass extends CodeCleanerPass
             $arg->value instanceof Variable ||
             $arg->value instanceof FuncCall ||
             $arg->value instanceof MethodCall ||
-            $arg->value instanceof StaticCall;
+            $arg->value instanceof StaticCall ||
+            $arg->value instanceof ArrayDimFetch;
     }
 
     /**

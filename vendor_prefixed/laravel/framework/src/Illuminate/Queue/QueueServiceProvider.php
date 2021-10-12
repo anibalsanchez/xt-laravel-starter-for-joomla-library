@@ -18,9 +18,12 @@ use Extly\Illuminate\Queue\Failed\DynamoDbFailedJobProvider;
 use Extly\Illuminate\Queue\Failed\NullFailedJobProvider;
 use Extly\Illuminate\Support\Arr;
 use Extly\Illuminate\Support\ServiceProvider;
+use Extly\Laravel\SerializableClosure\SerializableClosure;
 
 class QueueServiceProvider extends ServiceProvider implements DeferrableProvider
 {
+    use SerializesAndRestoresModelIdentifiers;
+
     /**
      * Register the service provider.
      *
@@ -28,11 +31,37 @@ class QueueServiceProvider extends ServiceProvider implements DeferrableProvider
      */
     public function register()
     {
+        $this->configureSerializableClosureUses();
+
         $this->registerManager();
         $this->registerConnection();
         $this->registerWorker();
         $this->registerListener();
         $this->registerFailedJobServices();
+    }
+
+    /**
+     * Configure serializable closures uses.
+     *
+     * @return void
+     */
+    protected function configureSerializableClosureUses()
+    {
+        SerializableClosure::transformUseVariablesUsing(function ($data) {
+            foreach ($data as $key => $value) {
+                $data[$key] = $this->getSerializedPropertyValue($value);
+            }
+
+            return $data;
+        });
+
+        SerializableClosure::resolveUseVariablesUsing(function ($data) {
+            foreach ($data as $key => $value) {
+                $data[$key] = $this->getRestoredPropertyValue($value);
+            }
+
+            return $data;
+        });
     }
 
     /**

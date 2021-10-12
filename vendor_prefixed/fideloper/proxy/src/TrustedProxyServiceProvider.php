@@ -5,7 +5,7 @@ namespace Extly\Fideloper\Proxy;
 
 use Extly\Illuminate\Foundation\Application as LaravelApplication;
 use Extly\Illuminate\Support\ServiceProvider;
-use Laravel\Lumen\Application as LumenApplication;
+use Extly\Laravel\Lumen\Application as LumenApplication;
 
 class TrustedProxyServiceProvider extends ServiceProvider
 {

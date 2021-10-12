@@ -48,7 +48,10 @@ class FileSessionHandler implements SessionHandlerInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return bool
      */
+    #[\ReturnTypeWillChange]
     public function open($savePath, $sessionName)
     {
         return true;
@@ -56,7 +59,10 @@ class FileSessionHandler implements SessionHandlerInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return bool
      */
+    #[\ReturnTypeWillChange]
     public function close()
     {
         return true;
@@ -64,7 +70,10 @@ class FileSessionHandler implements SessionHandlerInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return string|false
      */
+    #[\ReturnTypeWillChange]
     public function read($sessionId)
     {
         if ($this->files->isFile($path = $this->path.'/'.$sessionId)) {
@@ -78,7 +87,10 @@ class FileSessionHandler implements SessionHandlerInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return bool
      */
+    #[\ReturnTypeWillChange]
     public function write($sessionId, $data)
     {
         $this->files->put($this->path.'/'.$sessionId, $data, true);
@@ -88,7 +100,10 @@ class FileSessionHandler implements SessionHandlerInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return bool
      */
+    #[\ReturnTypeWillChange]
     public function destroy($sessionId)
     {
         $this->files->delete($this->path.'/'.$sessionId);
@@ -98,7 +113,10 @@ class FileSessionHandler implements SessionHandlerInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return int|false
      */
+    #[\ReturnTypeWillChange]
     public function gc($lifetime)
     {
         $files = Finder::create()

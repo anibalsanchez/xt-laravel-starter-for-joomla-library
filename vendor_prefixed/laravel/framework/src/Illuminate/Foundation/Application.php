@@ -34,7 +34,7 @@ class Application extends Container implements ApplicationContract, CachesConfig
      *
      * @var string
      */
-    const VERSION = '8.61.0';
+    const VERSION = '8.63.0';
 
     /**
      * The base path for the Laravel installation.
@@ -959,6 +959,8 @@ class Application extends Container implements ApplicationContract, CachesConfig
 
     /**
      * {@inheritdoc}
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function handle(SymfonyRequest $request, int $type = self::MASTER_REQUEST, bool $catch = true)
     {

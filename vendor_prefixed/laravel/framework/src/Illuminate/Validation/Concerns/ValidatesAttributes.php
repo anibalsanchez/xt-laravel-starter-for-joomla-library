@@ -1972,7 +1972,7 @@ trait ValidatesAttributes
             return $value->getSize() / 1024;
         }
 
-        return mb_strlen($value);
+        return mb_strlen($value ?? '');
     }
 
     /**

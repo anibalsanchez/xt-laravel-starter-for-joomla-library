@@ -15,8 +15,9 @@ use Extly\Illuminate\Routing\Matching\UriValidator;
 use Extly\Illuminate\Support\Arr;
 use Extly\Illuminate\Support\Str;
 use Extly\Illuminate\Support\Traits\Macroable;
+use Extly\Laravel\SerializableClosure\SerializableClosure;
 use LogicException;
-use Extly\Opis\Closure\SerializableClosure;
+use Extly\Opis\Closure\SerializableClosure as OpisSerializableClosure;
 use ReflectionFunction;
 use Extly\Symfony\Component\Routing\Route as SymfonyRoute;
 
@@ -976,9 +977,10 @@ class Route
         $missing = $this->action['missing'] ?? null;
 
         return is_string($missing) &&
-            Str::startsWith($missing, 'C:32:"Extly\\Opis\\Closure\\SerializableClosure')
-                ? unserialize($missing)
-                : $missing;
+            Str::startsWith($missing, [
+                'C:32:"Extly\\Opis\\Closure\\SerializableClosure',
+                'O:47:"Extly\\Laravel\\SerializableClosure\\SerializableClosure',
+            ]) ? unserialize($missing) : $missing;
     }
 
     /**
@@ -1227,11 +1229,17 @@ class Route
     public function prepareForSerialization()
     {
         if ($this->action['uses'] instanceof Closure) {
-            $this->action['uses'] = serialize(new SerializableClosure($this->action['uses']));
+            $this->action['uses'] = serialize(\PHP_VERSION_ID < 70400
+                ? new OpisSerializableClosure($this->action['uses'])
+                : new SerializableClosure($this->action['uses'])
+            );
         }
 
         if (isset($this->action['missing']) && $this->action['missing'] instanceof Closure) {
-            $this->action['missing'] = serialize(new SerializableClosure($this->action['missing']));
+            $this->action['missing'] = serialize(\PHP_VERSION_ID < 70400
+                ? new OpisSerializableClosure($this->action['missing'])
+                : new SerializableClosure($this->action['missing'])
+            );
         }
 
         $this->compileRoute();

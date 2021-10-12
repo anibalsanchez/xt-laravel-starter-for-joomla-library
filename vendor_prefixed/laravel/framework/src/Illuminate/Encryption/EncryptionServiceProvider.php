@@ -5,7 +5,8 @@ namespace Extly\Illuminate\Encryption;
 
 use Extly\Illuminate\Support\ServiceProvider;
 use Extly\Illuminate\Support\Str;
-use Extly\Opis\Closure\SerializableClosure;
+use Extly\Laravel\SerializableClosure\SerializableClosure;
+use Extly\Opis\Closure\SerializableClosure as OpisSerializableClosure;
 
 class EncryptionServiceProvider extends ServiceProvider
 {
@@ -18,6 +19,7 @@ class EncryptionServiceProvider extends ServiceProvider
     {
         $this->registerEncrypter();
         $this->registerOpisSecurityKey();
+        $this->registerSerializableClosureSecurityKey();
     }
 
     /**
@@ -38,8 +40,28 @@ class EncryptionServiceProvider extends ServiceProvider
      * Configure Opis Closure signing for security.
      *
      * @return void
+     *
+     * @deprecated Will be removed in a future Laravel version.
      */
     protected function registerOpisSecurityKey()
+    {
+        if (\PHP_VERSION_ID < 80100) {
+            $config = $this->app->make('config')->get('app');
+
+            if (! class_exists(OpisSerializableClosure::class) || empty($config['key'])) {
+                return;
+            }
+
+            OpisSerializableClosure::setSecretKey($this->parseKey($config));
+        }
+    }
+
+    /**
+     * Configure Serializable Closure signing for security.
+     *
+     * @return void
+     */
+    protected function registerSerializableClosureSecurityKey()
     {
         $config = $this->app->make('config')->get('app');
 

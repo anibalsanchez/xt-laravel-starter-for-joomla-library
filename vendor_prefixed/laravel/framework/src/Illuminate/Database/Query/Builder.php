@@ -1961,7 +1961,7 @@ class Builder
     /**
      * Add an "order by" clause to the query.
      *
-     * @param  \Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Query\Expression|string  $column
+     * @param  \Closure|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder|\Illuminate\Database\Query\Expression|string  $column
      * @param  string  $direction
      * @return $this
      *
@@ -1994,7 +1994,7 @@ class Builder
     /**
      * Add a descending "order by" clause to the query.
      *
-     * @param  \Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Query\Expression|string  $column
+     * @param  \Closure|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder|\Illuminate\Database\Query\Expression|string  $column
      * @return $this
      */
     public function orderByDesc($column)
@@ -2005,7 +2005,7 @@ class Builder
     /**
      * Add an "order by" clause for a timestamp to the query.
      *
-     * @param  \Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Query\Expression|string  $column
+     * @param  \Closure|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder|\Illuminate\Database\Query\Expression|string  $column
      * @return $this
      */
     public function latest($column = 'created_at')
@@ -2016,7 +2016,7 @@ class Builder
     /**
      * Add an "order by" clause for a timestamp to the query.
      *
-     * @param  \Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Query\Expression|string  $column
+     * @param  \Closure|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder|\Illuminate\Database\Query\Expression|string  $column
      * @return $this
      */
     public function oldest($column = 'created_at')

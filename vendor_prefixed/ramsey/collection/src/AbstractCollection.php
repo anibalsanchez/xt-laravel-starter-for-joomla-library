@@ -33,6 +33,7 @@ use function array_uintersect;
 use function current;
 use function end;
 use function in_array;
+use function is_int;
 use function reset;
 use function sprintf;
 use function unserialize;
@@ -239,7 +240,7 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
 
     public function merge(CollectionInterface ...$collections): CollectionInterface
     {
-        $temp = [$this->data];
+        $mergedCollection = clone $this;
 
         foreach ($collections as $index => $collection) {
             if (!$collection instanceof static) {
@@ -256,15 +257,16 @@ abstract class AbstractCollection extends AbstractArray implements CollectionInt
                 );
             }
 
-            $temp[] = $collection->toArray();
+            foreach ($collection as $key => $value) {
+                if (is_int($key)) {
+                    $mergedCollection[] = $value;
+                } else {
+                    $mergedCollection[$key] = $value;
+                }
+            }
         }
 
-        $merge = array_merge(...$temp);
-
-        $collection = clone $this;
-        $collection->data = $merge;
-
-        return $collection;
+        return $mergedCollection;
     }
 
     /**

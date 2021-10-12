@@ -10,6 +10,7 @@ use Extly\Illuminate\Support\Arr;
 use Extly\Illuminate\Support\Facades\DB;
 use Extly\Illuminate\Testing\Constraints\CountInDatabase;
 use Extly\Illuminate\Testing\Constraints\HasInDatabase;
+use Extly\Illuminate\Testing\Constraints\NotSoftDeletedInDatabase;
 use Extly\Illuminate\Testing\Constraints\SoftDeletedInDatabase;
 use PHPUnit\Framework\Constraint\LogicalNot as ReverseConstraint;
 
@@ -104,6 +105,28 @@ trait InteractsWithDatabase
 
         $this->assertThat(
             $this->getTable($table), new SoftDeletedInDatabase($this->getConnection($connection), $data, $deletedAtColumn)
+        );
+
+        return $this;
+    }
+
+    /**
+     * Assert the given record has not been "soft deleted".
+     *
+     * @param  \Illuminate\Database\Eloquent\Model|string  $table
+     * @param  array  $data
+     * @param  string|null  $connection
+     * @param  string|null  $deletedAtColumn
+     * @return $this
+     */
+    protected function assertNotSoftDeleted($table, array $data = [], $connection = null, $deletedAtColumn = 'deleted_at')
+    {
+        if ($this->isSoftDeletableModel($table)) {
+            return $this->assertNotSoftDeleted($table->getTable(), [$table->getKeyName() => $table->getKey()], $table->getConnectionName(), $table->getDeletedAtColumn());
+        }
+
+        $this->assertThat(
+            $this->getTable($table), new NotSoftDeletedInDatabase($this->getConnection($connection), $data, $deletedAtColumn)
         );
 
         return $this;

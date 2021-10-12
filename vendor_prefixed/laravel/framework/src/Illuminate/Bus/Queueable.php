@@ -5,7 +5,6 @@ namespace Extly\Illuminate\Bus;
 
 use Closure;
 use Extly\Illuminate\Queue\CallQueuedClosure;
-use Extly\Illuminate\Queue\SerializableClosure;
 use Extly\Illuminate\Support\Arr;
 use RuntimeException;
 
@@ -246,7 +245,7 @@ trait Queueable
     public function invokeChainCatchCallbacks($e)
     {
         XT_collect($this->chainCatchCallbacks)->each(function ($callback) use ($e) {
-            $callback instanceof SerializableClosure ? $callback->__invoke($e) : call_user_func($callback, $e);
+            $callback($e);
         });
     }
 }
